@@ -3954,6 +3954,21 @@ const getDataFiduciaryItems = (userRoles)=>{
                     href: "/cms/data-fiduciary/notices"
                 }
             ]
+        },
+        {
+            title: "DEVELOPER CENTER",
+            icon: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$icons$2f$sidebar$2d$icons$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DPOCenterIcon"],
+            defaultOpen: false,
+            items: [
+                {
+                    title: "API Keys",
+                    href: "/cms/data-fiduciary/api-keys"
+                },
+                {
+                    title: "Webhooks",
+                    href: "/cms/data-fiduciary/webhooks"
+                }
+            ]
         }
     ];
     return sections;

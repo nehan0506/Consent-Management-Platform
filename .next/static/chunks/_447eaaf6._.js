@@ -674,6 +674,13 @@ function BusinessProcessView(param) {
             return "Until purpose met";
         }
         const durationInHours = config.consentDuration || 0;
+        if (durationInHours < 1) {
+            const durationInMinutes = Math.round(durationInHours * 60);
+            return "".concat(durationInMinutes, " ").concat(durationInMinutes === 1 ? "minute" : "minutes");
+        }
+        if (durationInHours < 24) {
+            return "".concat(durationInHours, " ").concat(durationInHours === 1 ? "hour" : "hours");
+        }
         const durationInDays = Math.round(durationInHours / 24);
         return "".concat(durationInDays, " days");
     };
@@ -702,7 +709,7 @@ function BusinessProcessView(param) {
                                         children: (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.name) || "Process"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                        lineNumber: 100,
+                                        lineNumber: 107,
                                         columnNumber: 13
                                     }, this),
                                     (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.updatedAt) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -714,7 +721,7 @@ function BusinessProcessView(param) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                        lineNumber: 104,
+                                        lineNumber: 111,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -723,13 +730,13 @@ function BusinessProcessView(param) {
                                         children: (businessProcess === null || businessProcess === void 0 ? void 0 : (_businessProcess_status = businessProcess.status) === null || _businessProcess_status === void 0 ? void 0 : _businessProcess_status.toUpperCase()) || "DRAFT"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                        lineNumber: 108,
+                                        lineNumber: 115,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                lineNumber: 99,
+                                lineNumber: 106,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -741,18 +748,18 @@ function BusinessProcessView(param) {
                                     children: "Edit"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 124,
+                                    lineNumber: 131,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                lineNumber: 123,
+                                lineNumber: 130,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                        lineNumber: 98,
+                        lineNumber: 105,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -760,13 +767,13 @@ function BusinessProcessView(param) {
                         children: "View process details"
                     }, void 0, false, {
                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                        lineNumber: 133,
+                        lineNumber: 140,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                lineNumber: 97,
+                lineNumber: 104,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -782,7 +789,7 @@ function BusinessProcessView(param) {
                                     children: "General Information"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 141,
+                                    lineNumber: 148,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -798,7 +805,7 @@ function BusinessProcessView(param) {
                                                             children: "Process Name:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 146,
+                                                            lineNumber: 153,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -806,13 +813,13 @@ function BusinessProcessView(param) {
                                                             children: (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.name) || "Not specified"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 149,
+                                                            lineNumber: 156,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                    lineNumber: 145,
+                                                    lineNumber: 152,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -822,7 +829,7 @@ function BusinessProcessView(param) {
                                                             children: "Department:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 154,
+                                                            lineNumber: 161,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -830,13 +837,13 @@ function BusinessProcessView(param) {
                                                             children: (businessProcess === null || businessProcess === void 0 ? void 0 : (_businessProcess_businessUnit = businessProcess.businessUnit) === null || _businessProcess_businessUnit === void 0 ? void 0 : _businessProcess_businessUnit.name) || "Not specified"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 157,
+                                                            lineNumber: 164,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                    lineNumber: 153,
+                                                    lineNumber: 160,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -846,7 +853,7 @@ function BusinessProcessView(param) {
                                                             children: "Code:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 162,
+                                                            lineNumber: 169,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -854,19 +861,19 @@ function BusinessProcessView(param) {
                                                             children: (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.code) || "Not specified"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 165,
+                                                            lineNumber: 172,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                    lineNumber: 161,
+                                                    lineNumber: 168,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                            lineNumber: 144,
+                                            lineNumber: 151,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -879,7 +886,7 @@ function BusinessProcessView(param) {
                                                             children: "Grant Description:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 174,
+                                                            lineNumber: 181,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -887,13 +894,13 @@ function BusinessProcessView(param) {
                                                             children: (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.grantDescription) || "No description provided"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 177,
+                                                            lineNumber: 184,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                    lineNumber: 173,
+                                                    lineNumber: 180,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -903,7 +910,7 @@ function BusinessProcessView(param) {
                                                             children: "Revoke Description:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 183,
+                                                            lineNumber: 190,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -911,13 +918,13 @@ function BusinessProcessView(param) {
                                                             children: (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.revokeDescription) || "No description provided"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 186,
+                                                            lineNumber: 193,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                    lineNumber: 182,
+                                                    lineNumber: 189,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -927,7 +934,7 @@ function BusinessProcessView(param) {
                                                             children: "Reconsent Description:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 192,
+                                                            lineNumber: 199,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -935,31 +942,31 @@ function BusinessProcessView(param) {
                                                             children: (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.reconsentDescription) || "No description provided"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 195,
+                                                            lineNumber: 202,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                    lineNumber: 191,
+                                                    lineNumber: 198,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                            lineNumber: 172,
+                                            lineNumber: 179,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 142,
+                                    lineNumber: 149,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                            lineNumber: 140,
+                            lineNumber: 147,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -970,7 +977,7 @@ function BusinessProcessView(param) {
                                     children: "List of Purpose Masters"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 205,
+                                    lineNumber: 212,
                                     columnNumber: 13
                                 }, this),
                                 consentPurposeConfigs.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -987,7 +994,7 @@ function BusinessProcessView(param) {
                                                             children: "Name of Purpose Master"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 212,
+                                                            lineNumber: 219,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -995,7 +1002,7 @@ function BusinessProcessView(param) {
                                                             children: "Consent Duration"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 215,
+                                                            lineNumber: 222,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -1003,7 +1010,7 @@ function BusinessProcessView(param) {
                                                             children: "Name of Purpose Sub Master"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 218,
+                                                            lineNumber: 225,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -1011,7 +1018,7 @@ function BusinessProcessView(param) {
                                                             children: "Attributes"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 221,
+                                                            lineNumber: 228,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -1019,7 +1026,7 @@ function BusinessProcessView(param) {
                                                             children: "Mandatory"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 224,
+                                                            lineNumber: 231,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -1027,7 +1034,7 @@ function BusinessProcessView(param) {
                                                             children: "Re-consentable by Principal"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 227,
+                                                            lineNumber: 234,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -1035,7 +1042,7 @@ function BusinessProcessView(param) {
                                                             children: "Revocable by Principal"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 230,
+                                                            lineNumber: 237,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -1043,18 +1050,18 @@ function BusinessProcessView(param) {
                                                             children: "Retention Duration"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 233,
+                                                            lineNumber: 240,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                    lineNumber: 211,
+                                                    lineNumber: 218,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                lineNumber: 210,
+                                                lineNumber: 217,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -1073,7 +1080,7 @@ function BusinessProcessView(param) {
                                                                     children: ((_config_consentPurpose1 = config.consentPurpose) === null || _config_consentPurpose1 === void 0 ? void 0 : _config_consentPurpose1.name) || "Unnamed Purpose"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 249,
+                                                                    lineNumber: 256,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1081,7 +1088,7 @@ function BusinessProcessView(param) {
                                                                     children: convertDurationToDays(config)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 252,
+                                                                    lineNumber: 259,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1090,13 +1097,13 @@ function BusinessProcessView(param) {
                                                                     children: "No processing rules configured"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 255,
+                                                                    lineNumber: 262,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             ]
                                                         }, "".concat(config.id, "-empty"), true, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 248,
+                                                            lineNumber: 255,
                                                             columnNumber: 27
                                                         }, this);
                                                     }
@@ -1117,7 +1124,7 @@ function BusinessProcessView(param) {
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 269,
+                                                                    lineNumber: 276,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 ruleIndex === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1126,7 +1133,7 @@ function BusinessProcessView(param) {
                                                                     children: convertDurationToDays(config)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 278,
+                                                                    lineNumber: 285,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1134,7 +1141,7 @@ function BusinessProcessView(param) {
                                                                     children: ((_rule_processingPurpose = rule.processingPurpose) === null || _rule_processingPurpose === void 0 ? void 0 : _rule_processingPurpose.name) || "Unknown Processing Purpose"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 285,
+                                                                    lineNumber: 292,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1149,7 +1156,7 @@ function BusinessProcessView(param) {
                                                                                     children: attrName
                                                                                 }, attrName, false, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                                    lineNumber: 295,
+                                                                                    lineNumber: 302,
                                                                                     columnNumber: 35
                                                                                 }, this);
                                                                             }),
@@ -1158,18 +1165,18 @@ function BusinessProcessView(param) {
                                                                                 children: "No attributes"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                                lineNumber: 307,
-                                                                                columnNumber: 35
+                                                                                lineNumber: 314,
+                                                                                columnNumber: 33
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 290,
+                                                                        lineNumber: 297,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 289,
+                                                                    lineNumber: 296,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1179,12 +1186,12 @@ function BusinessProcessView(param) {
                                                                         disabled: true
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 314,
+                                                                        lineNumber: 321,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 313,
+                                                                    lineNumber: 320,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1194,12 +1201,12 @@ function BusinessProcessView(param) {
                                                                         disabled: true
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 317,
+                                                                        lineNumber: 324,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 316,
+                                                                    lineNumber: 323,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1209,43 +1216,43 @@ function BusinessProcessView(param) {
                                                                         disabled: true
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 323,
+                                                                        lineNumber: 330,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 322,
+                                                                    lineNumber: 329,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
                                                                     children: rule.retentionDurationValue && rule.retentionDurationUnit ? "".concat(rule.retentionDurationValue, " ").concat(rule.retentionDurationUnit) : "-"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 328,
+                                                                    lineNumber: 335,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, "".concat(config.id, "-").concat(ruleIndex), true, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 267,
+                                                            lineNumber: 274,
                                                             columnNumber: 25
                                                         }, this);
                                                     });
                                                 })
                                             }, void 0, false, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                lineNumber: 238,
+                                                lineNumber: 245,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                        lineNumber: 209,
+                                        lineNumber: 216,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 208,
+                                    lineNumber: 215,
                                     columnNumber: 15
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "rounded-lg border border-dashed p-8 text-center",
@@ -1254,18 +1261,18 @@ function BusinessProcessView(param) {
                                         children: "No consent purposes selected"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                        lineNumber: 342,
+                                        lineNumber: 349,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 341,
+                                    lineNumber: 348,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                            lineNumber: 204,
+                            lineNumber: 211,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1276,7 +1283,7 @@ function BusinessProcessView(param) {
                                     children: "List of Redirectional URLs"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 350,
+                                    lineNumber: 357,
                                     columnNumber: 13
                                 }, this),
                                 legalDocumentEntries.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1291,7 +1298,7 @@ function BusinessProcessView(param) {
                                                             children: "Redirectional URL Name"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 357,
+                                                            lineNumber: 364,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -1299,18 +1306,18 @@ function BusinessProcessView(param) {
                                                             children: "Link"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                            lineNumber: 360,
+                                                            lineNumber: 367,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                    lineNumber: 356,
+                                                    lineNumber: 363,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                lineNumber: 355,
+                                                lineNumber: 362,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -1324,7 +1331,7 @@ function BusinessProcessView(param) {
                                                                 children: title
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                lineNumber: 366,
+                                                                lineNumber: 373,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -1337,7 +1344,7 @@ function BusinessProcessView(param) {
                                                                             children: link
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                            lineNumber: 371,
+                                                                            lineNumber: 378,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1349,46 +1356,46 @@ function BusinessProcessView(param) {
                                                                                 className: "h-3 w-3"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                                lineNumber: 385,
+                                                                                lineNumber: 392,
                                                                                 columnNumber: 31
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                            lineNumber: 377,
+                                                                            lineNumber: 384,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                    lineNumber: 370,
+                                                                    lineNumber: 377,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                lineNumber: 369,
+                                                                lineNumber: 376,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, index, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                        lineNumber: 365,
+                                                        lineNumber: 372,
                                                         columnNumber: 23
                                                     }, this);
                                                 })
                                             }, void 0, false, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                lineNumber: 363,
+                                                lineNumber: 370,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                        lineNumber: 354,
+                                        lineNumber: 361,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 353,
+                                    lineNumber: 360,
                                     columnNumber: 15
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "rounded-lg border border-dashed p-8 text-center",
@@ -1397,18 +1404,18 @@ function BusinessProcessView(param) {
                                         children: "No Redirectional URLs added"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                        lineNumber: 396,
+                                        lineNumber: 403,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 395,
+                                    lineNumber: 402,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                            lineNumber: 349,
+                            lineNumber: 356,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1419,7 +1426,7 @@ function BusinessProcessView(param) {
                                     children: "Translations (22 Indian Languages)"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 405,
+                                    lineNumber: 412,
                                     columnNumber: 13
                                 }, this),
                                 (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.supportedLanguages) && businessProcess.supportedLanguages.filter((code)=>code !== "en").length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1446,7 +1453,7 @@ function BusinessProcessView(param) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                        lineNumber: 430,
+                                                        lineNumber: 437,
                                                         columnNumber: 27
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1459,7 +1466,7 @@ function BusinessProcessView(param) {
                                                                         children: "Name:"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 435,
+                                                                        lineNumber: 442,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     " ",
@@ -1467,13 +1474,13 @@ function BusinessProcessView(param) {
                                                                         children: (translation === null || translation === void 0 ? void 0 : translation.name) || "-"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 438,
+                                                                        lineNumber: 445,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                lineNumber: 434,
+                                                                lineNumber: 441,
                                                                 columnNumber: 29
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1483,7 +1490,7 @@ function BusinessProcessView(param) {
                                                                         children: "Grant Description:"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 441,
+                                                                        lineNumber: 448,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     " ",
@@ -1492,13 +1499,13 @@ function BusinessProcessView(param) {
                                                                         children: (translation === null || translation === void 0 ? void 0 : translation.grantDescription) || "-"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 444,
+                                                                        lineNumber: 451,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                lineNumber: 440,
+                                                                lineNumber: 447,
                                                                 columnNumber: 29
                                                             }, this),
                                                             (translation === null || translation === void 0 ? void 0 : translation.revokeDescription) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1508,7 +1515,7 @@ function BusinessProcessView(param) {
                                                                         children: "Revoke Description:"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 450,
+                                                                        lineNumber: 457,
                                                                         columnNumber: 33
                                                                     }, this),
                                                                     " ",
@@ -1517,13 +1524,13 @@ function BusinessProcessView(param) {
                                                                         children: translation.revokeDescription
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 453,
+                                                                        lineNumber: 460,
                                                                         columnNumber: 33
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                lineNumber: 449,
+                                                                lineNumber: 456,
                                                                 columnNumber: 31
                                                             }, this),
                                                             (translation === null || translation === void 0 ? void 0 : translation.reconsentDescription) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1533,7 +1540,7 @@ function BusinessProcessView(param) {
                                                                         children: "Reconsent Description:"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 460,
+                                                                        lineNumber: 467,
                                                                         columnNumber: 33
                                                                     }, this),
                                                                     " ",
@@ -1542,36 +1549,36 @@ function BusinessProcessView(param) {
                                                                         children: translation.reconsentDescription
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                        lineNumber: 463,
+                                                                        lineNumber: 470,
                                                                         columnNumber: 33
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                                lineNumber: 459,
+                                                                lineNumber: 466,
                                                                 columnNumber: 31
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                        lineNumber: 433,
+                                                        lineNumber: 440,
                                                         columnNumber: 27
                                                     }, this)
                                                 ]
                                             }, langCode, true, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                                lineNumber: 426,
+                                                lineNumber: 433,
                                                 columnNumber: 25
                                             }, this);
                                         })
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                        lineNumber: 414,
+                                        lineNumber: 421,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 413,
+                                    lineNumber: 420,
                                     columnNumber: 15
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "rounded-lg border border-dashed p-8 text-center",
@@ -1580,35 +1587,35 @@ function BusinessProcessView(param) {
                                         children: "No translations available. Add translations from the edit page."
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                        lineNumber: 476,
+                                        lineNumber: 483,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                                    lineNumber: 475,
+                                    lineNumber: 482,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                            lineNumber: 404,
+                            lineNumber: 411,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                    lineNumber: 139,
+                    lineNumber: 146,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-                lineNumber: 137,
+                lineNumber: 144,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/business-process-view.tsx",
-        lineNumber: 95,
+        lineNumber: 102,
         columnNumber: 5
     }, this);
 }

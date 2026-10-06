@@ -1227,12 +1227,12 @@ function NoticesTable(param) {
     const columns = [
         {
             accessorKey: "dataPrincipalId",
-            header: "User ID",
+            header: "Data Principal ID",
             cell: (param)=>{
                 let { row } = param;
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CopyCell, {
                     value: row.getValue("dataPrincipalId"),
-                    label: "User ID"
+                    label: "Principal ID"
                 }, void 0, false, {
                     fileName: "[project]/app/cms/data-fiduciary/notices/notices-table.tsx",
                     lineNumber: 122,

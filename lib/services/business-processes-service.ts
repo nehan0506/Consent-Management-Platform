@@ -21,7 +21,7 @@ interface ConsentPurposeConfig {
   consentPurposeId: number;
   durationType: "until_purpose_met" | "custom_duration";
   consentDuration?: number;
-  durationUnit?: "days" | "weeks" | "months" | "years";
+  durationUnit?: "minutes" | "hours" | "days" | "weeks" | "months" | "years";
   processingRules: Array<{
     processingPurposeId: number;
     userAttributeNames?: string[];
@@ -47,6 +47,68 @@ interface BusinessProcessFormData {
 
   // Step 3 data
   legalDocuments?: Record<string, string>;
+}
+
+function getConsentDurationInHours(
+  consentConfig: ConsentPurposeConfig,
+): number | null {
+  if (consentConfig.durationType !== "custom_duration") {
+    return null;
+  }
+
+  const duration = Number(consentConfig.consentDuration);
+  if (!Number.isFinite(duration) || duration <= 0) {
+    throw new Error(
+      `Consent purpose ${consentConfig.consentPurposeId}: Custom consent duration must be greater than 0`,
+    );
+  }
+
+  switch (consentConfig.durationUnit || "days") {
+    case "minutes":
+      return duration / 60;
+    case "hours":
+      return duration;
+    case "days":
+      return duration * 24;
+    case "weeks":
+      return duration * 24 * 7;
+    case "months":
+      return duration * 24 * 30;
+    case "years":
+      return duration * 24 * 365;
+    default:
+      return duration * 24;
+  }
+}
+
+async function syncConsentPurposeDurations(
+  tx: any,
+  businessProcessId: number,
+  consentPurposes: ConsentPurposeConfig[],
+) {
+  for (const consentConfig of consentPurposes) {
+    const consentDuration = getConsentDurationInHours(consentConfig);
+
+    const updateResult = await tx.businessProcessToConsentPurpose.updateMany({
+      where: {
+        businessProcessId,
+        consentPurposeId: consentConfig.consentPurposeId,
+      },
+      data: {
+        consentDuration,
+      },
+    });
+
+    if (updateResult.count === 0) {
+      await tx.businessProcessToConsentPurpose.create({
+        data: {
+          businessProcessId,
+          consentPurposeId: consentConfig.consentPurposeId,
+          consentDuration,
+        },
+      });
+    }
+  }
 }
 
 // Basic CRUD operations for business processes
@@ -185,7 +247,10 @@ export async function getBusinessProcessById(id: number) {
             rule.retentionDuration !== undefined
           ) {
             const hours = rule.retentionDuration;
-            if (hours % (24 * 365) === 0) {
+            if (hours < 24) {
+              value = hours;
+              unit = "hours";
+            } else if (hours % (24 * 365) === 0) {
               value = hours / (24 * 365);
               unit = "years";
             } else if (hours % (24 * 30) === 0) {
@@ -396,33 +461,7 @@ export async function saveOrUpdateBusinessProcess(
       // Only do this if consent purposes are provided and not empty
       if (formData.consentPurposes && formData.consentPurposes.length > 0) {
         for (const consentConfig of formData.consentPurposes) {
-          // Calculate duration in hours
-          let durationInHours: number | null = null;
-
-          if (
-            consentConfig.durationType === "custom_duration" &&
-            consentConfig.consentDuration
-          ) {
-            const duration = consentConfig.consentDuration;
-            const unit = consentConfig.durationUnit || "days";
-
-            switch (unit) {
-              case "days":
-                durationInHours = duration * 24;
-                break;
-              case "weeks":
-                durationInHours = duration * 24 * 7;
-                break;
-              case "months":
-                durationInHours = duration * 24 * 30; // approximate
-                break;
-              case "years":
-                durationInHours = duration * 24 * 365; // approximate
-                break;
-              default:
-                durationInHours = duration * 24; // default to days
-            }
-          }
+          const durationInHours = getConsentDurationInHours(consentConfig);
 
           // Create BusinessProcessToConsentPurpose record
           await tx.businessProcessToConsentPurpose.create({
@@ -445,22 +484,22 @@ export async function saveOrUpdateBusinessProcess(
                 revocableByPrincipal: rule.isRevocable,
                 retentionDuration:
                   rule.retentionDurationValue !== undefined &&
-                    rule.retentionDurationValue !== null &&
-                    rule.retentionDurationUnit
+                  rule.retentionDurationValue !== null &&
+                  rule.retentionDurationUnit
                     ? (() => {
-                      const val = rule.retentionDurationValue;
-                      switch (rule.retentionDurationUnit) {
-                        case "years":
-                          return val * 365 * 24;
-                        case "months":
-                          return val * 30 * 24;
-                        case "weeks":
-                          return val * 7 * 24;
-                        case "days":
-                        default:
-                          return val * 24;
-                      }
-                    })()
+                        const val = rule.retentionDurationValue;
+                        switch (rule.retentionDurationUnit) {
+                          case "years":
+                            return val * 365 * 24;
+                          case "months":
+                            return val * 30 * 24;
+                          case "weeks":
+                            return val * 7 * 24;
+                          case "days":
+                          default:
+                            return val * 24;
+                        }
+                      })()
                     : null,
                 createdBy,
               },
@@ -506,33 +545,7 @@ export async function saveBusinessProcess(
 
       // 2. Create BusinessProcessToConsentPurpose records and BusinessProcessRules
       for (const consentConfig of formData.consentPurposes) {
-        // Calculate duration in hours
-        let durationInHours: number | null = null;
-
-        if (
-          consentConfig.durationType === "custom_duration" &&
-          consentConfig.consentDuration
-        ) {
-          const duration = consentConfig.consentDuration;
-          const unit = consentConfig.durationUnit || "days";
-
-          switch (unit) {
-            case "days":
-              durationInHours = duration * 24;
-              break;
-            case "weeks":
-              durationInHours = duration * 24 * 7;
-              break;
-            case "months":
-              durationInHours = duration * 24 * 30; // approximate
-              break;
-            case "years":
-              durationInHours = duration * 24 * 365; // approximate
-              break;
-            default:
-              durationInHours = duration * 24; // default to days
-          }
-        }
+        const durationInHours = getConsentDurationInHours(consentConfig);
 
         // Create BusinessProcessToConsentPurpose record
         await tx.businessProcessToConsentPurpose.create({
@@ -555,22 +568,22 @@ export async function saveBusinessProcess(
               revocableByPrincipal: rule.isRevocable,
               retentionDuration:
                 rule.retentionDurationValue !== undefined &&
-                  rule.retentionDurationValue !== null &&
-                  rule.retentionDurationUnit
+                rule.retentionDurationValue !== null &&
+                rule.retentionDurationUnit
                   ? (() => {
-                    const val = rule.retentionDurationValue;
-                    switch (rule.retentionDurationUnit) {
-                      case "years":
-                        return val * 365 * 24;
-                      case "months":
-                        return val * 30 * 24;
-                      case "weeks":
-                        return val * 7 * 24;
-                      case "days":
-                      default:
-                        return val * 24;
-                    }
-                  })()
+                      const val = rule.retentionDurationValue;
+                      switch (rule.retentionDurationUnit) {
+                        case "years":
+                          return val * 365 * 24;
+                        case "months":
+                          return val * 30 * 24;
+                        case "weeks":
+                          return val * 7 * 24;
+                        case "days":
+                        default:
+                          return val * 24;
+                      }
+                    })()
                   : null,
               createdBy,
             },
@@ -875,33 +888,7 @@ export async function saveOrUpdateBusinessProcessWithVersioning(
         // Create new rules (for new versions, new BPs, or when Step 2 has changes)
         const consentPurposes = clientState.consentPurposes || [];
         for (const consentConfig of consentPurposes) {
-          // Calculate duration in hours
-          let durationInHours: number | null = null;
-
-          if (
-            consentConfig.durationType === "custom_duration" &&
-            consentConfig.consentDuration
-          ) {
-            const duration = consentConfig.consentDuration;
-            const unit = consentConfig.durationUnit || "days";
-
-            switch (unit) {
-              case "days":
-                durationInHours = duration * 24;
-                break;
-              case "weeks":
-                durationInHours = duration * 24 * 7;
-                break;
-              case "months":
-                durationInHours = duration * 24 * 30;
-                break;
-              case "years":
-                durationInHours = duration * 24 * 365;
-                break;
-              default:
-                durationInHours = duration * 24;
-            }
-          }
+          const durationInHours = getConsentDurationInHours(consentConfig);
 
           // Create BusinessProcessToConsentPurpose record
           await tx.businessProcessToConsentPurpose.create({
@@ -924,28 +911,36 @@ export async function saveOrUpdateBusinessProcessWithVersioning(
                 revocableByPrincipal: rule.isRevocable,
                 retentionDuration:
                   rule.retentionDurationValue !== undefined &&
-                    rule.retentionDurationValue !== null &&
-                    rule.retentionDurationUnit
+                  rule.retentionDurationValue !== null &&
+                  rule.retentionDurationUnit
                     ? (() => {
-                      const val = rule.retentionDurationValue;
-                      switch (rule.retentionDurationUnit) {
-                        case "years":
-                          return val * 365 * 24;
-                        case "months":
-                          return val * 30 * 24;
-                        case "weeks":
-                          return val * 7 * 24;
-                        case "days":
-                        default:
-                          return val * 24;
-                      }
-                    })()
+                        const val = rule.retentionDurationValue;
+                        switch (rule.retentionDurationUnit) {
+                          case "years":
+                            return val * 365 * 24;
+                          case "months":
+                            return val * 30 * 24;
+                          case "weeks":
+                            return val * 7 * 24;
+                          case "days":
+                          default:
+                            return val * 24;
+                        }
+                      })()
                     : null,
                 createdBy,
               },
             });
           }
         }
+      }
+
+      if (bpId && !hasStep2Changes && clientState.consentPurposes?.length) {
+        await syncConsentPurposeDurations(
+          tx,
+          bpId,
+          clientState.consentPurposes,
+        );
       }
 
       return {

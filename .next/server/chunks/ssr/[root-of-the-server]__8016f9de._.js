@@ -928,18 +928,11 @@ async function createConsents(noticePublicId, selections, language = "en") {
             if (!rule) {
                 throw new Error(`Process rule not found for ID: ${selection.ruleId}`);
             }
-            // Calculate expiration date with proper priority
+            // Each selected consent purpose has its own duration (stored in hours).
             let expiresAt = undefined;
-            // Priority 1: Notice-level consent duration (if provided and not 0)
-            // consentDuration in Notice is stored in HOURS
-            if (notice.consentDuration && notice.consentDuration > 0) {
-                expiresAt = new Date(Date.now() + notice.consentDuration * 60 * 60 * 1000);
-            } else {
-                const configuredDuration = durationsMap.get(rule.consentPurpose.id);
-                if (configuredDuration && configuredDuration > 0) {
-                    expiresAt = new Date(Date.now() + configuredDuration * 60 * 60 * 1000);
-                }
-            // If both are null/0, expiresAt remains undefined (until purpose met)
+            const configuredDuration = durationsMap.get(rule.consentPurpose.id);
+            if (configuredDuration && configuredDuration > 0) {
+                expiresAt = new Date(Date.now() + configuredDuration * 60 * 60 * 1000);
             }
             return {
                 requestId,
@@ -955,6 +948,7 @@ async function createConsents(noticePublicId, selections, language = "en") {
                 majorDataPrincipalId,
                 language,
                 status: "accepted",
+                consentDuration: configuredDuration ?? undefined,
                 expiresAt
             };
         });
@@ -1379,8 +1373,9 @@ function groupConsentsByLatestRule(consents) {
     return latestConsentsByRule;
 }
 function formatConsentsForValidation(consents) {
+    const now = Date.now();
     return consents.map((consent)=>({
-            is_active: consent.status === "accepted" && !consent.isExpired,
+            is_active: consent.status === "accepted" && !consent.isExpired && (!consent.expiresAt || consent.expiresAt.getTime() > now),
             data_principal_id: consent.dataPrincipalId,
             processing_purpose_code: consent.processingPurpose.purposeOfProcessing.code,
             consent_id: consent.publicId,
@@ -1389,7 +1384,8 @@ function formatConsentsForValidation(consents) {
             business_process_version: consent.businessProcess.version,
             consent_purpose_code: consent.consentPurpose.code,
             consent_purpose_version: consent.consentPurpose.version,
-            recorded_at: consent.insertedAt.toISOString()
+            recorded_at: consent.insertedAt.toISOString(),
+            expires_at: consent.expiresAt ? consent.expiresAt.toISOString() : null
         }));
 }
 async function expireConsents() {

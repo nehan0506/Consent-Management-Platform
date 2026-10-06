@@ -771,7 +771,7 @@ async function createConsents(noticePublicId, selections, language = "en") {
         const consentData = selectedRules.map((selection)=>{
             const rule = businessProcess.businessProcessRules.find((r)=>r.id === selection.ruleId);
             if (!rule) {
-                throw new Error(`Business process rule not found for ID: ${selection.ruleId}`);
+                throw new Error(`Process rule not found for ID: ${selection.ruleId}`);
             }
             // Calculate expiration date with proper priority
             let expiresAt = undefined;
@@ -3030,7 +3030,7 @@ async function calculateBusinessProcessDiff(currentBpPublicId) {
         }
     });
     if (!currentBp) {
-        throw new Error("Business process not found");
+        throw new Error("Process not found");
     }
     // Check for newer version
     const latestBp = await getLatestBusinessProcessVersion(currentBp.code, currentBp.version);

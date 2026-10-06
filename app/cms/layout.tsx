@@ -27,11 +27,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Privy",
-  description: "Privy Consent Management System by IDfy",
-  icons: {
-    icon: "/cms/favicon.ico",
-  },
+  title: "Consent Management Platform",
+  description: "Consent Management Platform",
 };
 
 export const viewport: Viewport = {

@@ -604,7 +604,7 @@ async function getBusinessProcessWithFullDataById(businessProcessId) {
         return transformedBusinessProcess;
     } catch (error) {
         console.error("Error fetching business process with full data by ID:", error);
-        throw new Error("Failed to fetch business process with full data");
+        throw new Error("Failed to fetch process with full data");
     }
 }
 async function getNoticeWithFullDataByPublicId(publicId) {
@@ -634,6 +634,11 @@ async function getNoticeWithFullDataByPublicId(publicId) {
                         id: true,
                         name: true,
                         code: true,
+                        businessUnit: {
+                            select: {
+                                name: true
+                            }
+                        },
                         grantDescription: true,
                         revokeDescription: true,
                         reconsentDescription: true,
@@ -891,7 +896,7 @@ async function getBusinessProcessesByCode(code, version) {
         return transformedBusinessProcesses;
     } catch (error) {
         console.error("Error fetching business processes by code:", error);
-        throw new Error("Failed to fetch business processes by code");
+        throw new Error("Failed to fetch processes by code");
     }
 }
 async function deleteNotice(id) {

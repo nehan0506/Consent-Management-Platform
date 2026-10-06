@@ -2804,6 +2804,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tooltip$
 function NoticeConsentDuration({ consentDuration, className }) {
     const { isHighContrast } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$high$2d$contrast$2d$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useHighContrast"])();
     const { t } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$notice$2d$translation$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useNoticeTranslation"])();
+    const formattedDuration = consentDuration ? consentDuration < 24 ? `${consentDuration} ${t(consentDuration === 1 ? "Hour" : "Hours")}` : `${Math.floor(consentDuration / 24)} ${t("Days")}` : t("Until Purpose Met");
     // Helper function to get tooltip message based on consent duration
     const getConsentDurationTooltip = ()=>{
         if (consentDuration && consentDuration > 0) {
@@ -2817,7 +2818,7 @@ function NoticeConsentDuration({ consentDuration, className }) {
             t("Consent Duration"),
             ":",
             " ",
-            consentDuration ? `${Math.floor(consentDuration / 24)} ${t("Days")}` : t("Until Purpose Met"),
+            formattedDuration,
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tooltip$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tooltip$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TooltipTrigger"], {
@@ -2826,12 +2827,12 @@ function NoticeConsentDuration({ consentDuration, className }) {
                             className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("w-3 h-3 text-warning-500 flex-shrink-0 cursor-help", isHighContrast && "info-icon")
                         }, void 0, false, {
                             fileName: "[project]/components/notice/notice-consent-duration.tsx",
-                            lineNumber: 61,
+                            lineNumber: 64,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/notice/notice-consent-duration.tsx",
-                        lineNumber: 60,
+                        lineNumber: 63,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tooltip$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TooltipContent"], {
@@ -2841,24 +2842,24 @@ function NoticeConsentDuration({ consentDuration, className }) {
                             children: getConsentDurationTooltip()
                         }, void 0, false, {
                             fileName: "[project]/components/notice/notice-consent-duration.tsx",
-                            lineNumber: 69,
+                            lineNumber: 72,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/notice/notice-consent-duration.tsx",
-                        lineNumber: 68,
+                        lineNumber: 71,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/notice/notice-consent-duration.tsx",
-                lineNumber: 59,
+                lineNumber: 62,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/notice/notice-consent-duration.tsx",
-        lineNumber: 48,
+        lineNumber: 53,
         columnNumber: 5
     }, this);
 }
@@ -3539,7 +3540,7 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                             children: [
                                                 "Consent Duration:",
                                                 " ",
-                                                consentPurpose.consentDuration ? `${Math.floor(consentPurpose.consentDuration / 24)} Days` : "Until Purpose Met"
+                                                consentPurpose.consentDuration ? consentPurpose.consentDuration < 24 ? `${consentPurpose.consentDuration} ${consentPurpose.consentDuration === 1 ? "Hour" : "Hours"}` : `${Math.floor(consentPurpose.consentDuration / 24)} Days` : "Until Purpose Met"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/notice/notice-consent-purpose.tsx",
@@ -3609,7 +3610,7 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                             children: [
                                                 "Consent Duration:",
                                                 " ",
-                                                consentPurpose.consentDuration ? `${Math.floor(consentPurpose.consentDuration / 24)} Days` : "Until Purpose Met"
+                                                consentPurpose.consentDuration ? consentPurpose.consentDuration < 24 ? `${consentPurpose.consentDuration} ${consentPurpose.consentDuration === 1 ? "Hour" : "Hours"}` : `${Math.floor(consentPurpose.consentDuration / 24)} Days` : "Until Purpose Met"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/notice/notice-consent-purpose.tsx",

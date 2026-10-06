@@ -594,8 +594,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$constants$2f$notice$2
 const alphanumericWithSpecialChars = /^[a-zA-Z0-9()._\-\/\s]+$/;
 const createNoticeSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
     referenceId: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "Reference ID must be at least 3 characters long").max(255, "Reference ID must not exceed 255 characters").regex(alphanumericWithSpecialChars, "Reference ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"),
-    dataPrincipalId: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "Data Principal ID must be at least 3 characters long").max(255, "Data Principal ID must not exceed 255 characters").regex(alphanumericWithSpecialChars, "Data Principal ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"),
-    businessProcessId: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().int().positive("Please select a business process"),
+    dataPrincipalId: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "User ID must be at least 3 characters long").max(255, "User ID must not exceed 255 characters").regex(alphanumericWithSpecialChars, "User ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"),
+    businessProcessId: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().int().positive("Please select a process"),
     noticeDuration: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().int().min(1, "Notice duration must be at least 1"),
     noticeDurationType: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].enum([
         "hours",
@@ -666,8 +666,8 @@ const createNoticeSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_
 });
 const createNoticeApiSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
     reference_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "Reference ID must be at least 3 characters long").max(255, "Reference ID must not exceed 255 characters").regex(alphanumericWithSpecialChars, "Reference ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"),
-    data_principal_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "Data Principal ID must be at least 3 characters long").max(255, "Data Principal ID must not exceed 255 characters").regex(alphanumericWithSpecialChars, "Data Principal ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"),
-    business_process_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().int().positive("Please select a business process"),
+    data_principal_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "User ID must be at least 3 characters long").max(255, "User ID must not exceed 255 characters").regex(alphanumericWithSpecialChars, "User ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"),
+    business_process_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().int().positive("Please select a process"),
     notice_duration: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().int().min(1, "Notice duration must be at least 1"),
     notice_duration_type: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].enum([
         "hours",
@@ -733,7 +733,7 @@ const createNoticeApiSchema = __TURBOPACK__imported__module__$5b$project$5d2f$no
 });
 const createGrantNoticeApiSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
     reference_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "Reference ID must be at least 3 characters long").max(255, "Reference ID must not exceed 255 characters").regex(alphanumericWithSpecialChars, "Reference ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"),
-    data_principal_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "Data Principal ID must be at least 3 characters long").max(255, "Data Principal ID must not exceed 255 characters").regex(alphanumericWithSpecialChars, "Data Principal ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"),
+    data_principal_id: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "User ID must be at least 3 characters long").max(255, "User ID must not exceed 255 characters").regex(alphanumericWithSpecialChars, "User ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"),
     notice_settings: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
         expires_in_hours: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().min(0.5, "Notice expiration must be at least 0.5 hours"),
         redirection_type: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].enum([
@@ -751,8 +751,8 @@ const createGrantNoticeApiSchema = __TURBOPACK__imported__module__$5b$project$5d
         expires_in_hours: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().int().min(1, "Consent expiration must be at least 1 hour").optional()
     }),
     business_process: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
-        code: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, "Business process code is required"),
-        version: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().int().positive("Business process version must be positive")
+        code: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, "Process code is required"),
+        version: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().int().positive("Process version must be positive")
     }),
     metadata: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].array(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
         key: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, "Metadata key is required"),
@@ -791,7 +791,7 @@ const createGrantNoticeApiSchema = __TURBOPACK__imported__module__$5b$project$5d
     }
     return true;
 }, {
-    message: "Major Data Principal ID must be at least 3 characters and in valid UUID format",
+    message: "Major User ID must be at least 3 characters and in valid UUID format",
     path: [
         "metadata"
     ]
@@ -1793,20 +1793,13 @@ async function createConsents(noticePublicId, selections, language = "en") {
         const consentData = selectedRules.map((selection)=>{
             const rule = businessProcess.businessProcessRules.find((r)=>r.id === selection.ruleId);
             if (!rule) {
-                throw new Error(`Business process rule not found for ID: ${selection.ruleId}`);
+                throw new Error(`Process rule not found for ID: ${selection.ruleId}`);
             }
-            // Calculate expiration date with proper priority
+            // Each selected consent purpose has its own duration (stored in hours).
             let expiresAt = undefined;
-            // Priority 1: Notice-level consent duration (if provided and not 0)
-            // consentDuration in Notice is stored in HOURS
-            if (notice.consentDuration && notice.consentDuration > 0) {
-                expiresAt = new Date(Date.now() + notice.consentDuration * 60 * 60 * 1000);
-            } else {
-                const configuredDuration = durationsMap.get(rule.consentPurpose.id);
-                if (configuredDuration && configuredDuration > 0) {
-                    expiresAt = new Date(Date.now() + configuredDuration * 60 * 60 * 1000);
-                }
-            // If both are null/0, expiresAt remains undefined (until purpose met)
+            const configuredDuration = durationsMap.get(rule.consentPurpose.id);
+            if (configuredDuration && configuredDuration > 0) {
+                expiresAt = new Date(Date.now() + configuredDuration * 60 * 60 * 1000);
             }
             return {
                 requestId,
@@ -1822,6 +1815,7 @@ async function createConsents(noticePublicId, selections, language = "en") {
                 majorDataPrincipalId,
                 language,
                 status: "accepted",
+                consentDuration: configuredDuration ?? undefined,
                 expiresAt
             };
         });
@@ -2246,8 +2240,9 @@ function groupConsentsByLatestRule(consents) {
     return latestConsentsByRule;
 }
 function formatConsentsForValidation(consents) {
+    const now = Date.now();
     return consents.map((consent)=>({
-            is_active: consent.status === "accepted" && !consent.isExpired,
+            is_active: consent.status === "accepted" && !consent.isExpired && (!consent.expiresAt || consent.expiresAt.getTime() > now),
             data_principal_id: consent.dataPrincipalId,
             processing_purpose_code: consent.processingPurpose.purposeOfProcessing.code,
             consent_id: consent.publicId,
@@ -2256,7 +2251,8 @@ function formatConsentsForValidation(consents) {
             business_process_version: consent.businessProcess.version,
             consent_purpose_code: consent.consentPurpose.code,
             consent_purpose_version: consent.consentPurpose.version,
-            recorded_at: consent.insertedAt.toISOString()
+            recorded_at: consent.insertedAt.toISOString(),
+            expires_at: consent.expiresAt ? consent.expiresAt.toISOString() : null
         }));
 }
 async function expireConsents() {
@@ -4069,7 +4065,7 @@ async function getBusinessProcessWithFullDataById(businessProcessId) {
         return transformedBusinessProcess;
     } catch (error) {
         console.error("Error fetching business process with full data by ID:", error);
-        throw new Error("Failed to fetch business process with full data");
+        throw new Error("Failed to fetch process with full data");
     }
 }
 async function getNoticeWithFullDataByPublicId(publicId) {
@@ -4099,6 +4095,11 @@ async function getNoticeWithFullDataByPublicId(publicId) {
                         id: true,
                         name: true,
                         code: true,
+                        businessUnit: {
+                            select: {
+                                name: true
+                            }
+                        },
                         grantDescription: true,
                         revokeDescription: true,
                         reconsentDescription: true,
@@ -4356,7 +4357,7 @@ async function getBusinessProcessesByCode(code, version) {
         return transformedBusinessProcesses;
     } catch (error) {
         console.error("Error fetching business processes by code:", error);
-        throw new Error("Failed to fetch business processes by code");
+        throw new Error("Failed to fetch processes by code");
     }
 }
 async function deleteNotice(id) {

@@ -1,64 +1,918 @@
 {
   "node": {
-    "40b7859f1e87f7206f724f14ce47ee5928d4ed0e31": {
+    "0060c229d5c44aa39a52b0da063b4e763444cd1280": {
       "workers": {
-        "app/cms/principal/notice/[notice_id]/view/[access_token]/page": {
-          "moduleId": "[project]/.next-internal/server/app/cms/principal/notice/[notice_id]/view/[access_token]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/dprm.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/notice-consent.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/fiduciary-config.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
-          "exportedName": "generateDprmLinkForNotice",
-          "filename": "actions/dprm.ts"
+          "exportedName": "logout",
+          "filename": "actions/auth.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "actions/auth.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "actions/auth.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "actions/auth.ts"
+        },
+        "app/cms/data-fiduciary/business-units/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-units/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "actions/auth.ts"
+        },
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/consent-purposes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/consent-purpose-form.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/consent-purposes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE4 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "actions/auth.ts"
+        },
+        "app/cms/data-fiduciary/consent-purposes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/consent-purposes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/consent-purposes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "actions/auth.ts"
+        },
+        "app/cms/data-fiduciary/dashboard/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "actions/auth.ts"
+        },
+        "app/cms/data-fiduciary/user-attributes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/translations.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "actions/auth.ts"
+        },
+        "app/cms/data-fiduciary/user-attributes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "actions/auth.ts"
         }
       },
       "layer": {
-        "app/cms/principal/notice/[notice_id]/view/[access_token]/page": "action-browser"
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/page": "action-browser",
+        "app/cms/data-fiduciary/business-units/page": "action-browser",
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/consent-purposes/page": "action-browser",
+        "app/cms/data-fiduciary/dashboard/page": "action-browser",
+        "app/cms/data-fiduciary/user-attributes/new/page": "action-browser",
+        "app/cms/data-fiduciary/user-attributes/page": "action-browser"
       },
-      "filename": "actions/dprm.ts",
-      "exportedName": "generateDprmLinkForNotice"
+      "filename": "actions/auth.ts",
+      "exportedName": "logout"
     },
-    "782d10778ca8c2f9d993997b0012ae5b54844b787f": {
+    "0089c06116eba5f35732ad2fa20a54a2f54a2933b7": {
       "workers": {
-        "app/cms/principal/notice/[notice_id]/view/[access_token]/page": {
-          "moduleId": "[project]/.next-internal/server/app/cms/principal/notice/[notice_id]/view/[access_token]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/dprm.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/notice-consent.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/fiduciary-config.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+        "app/cms/data-fiduciary/user-attributes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
-          "exportedName": "handleConsentAcceptance",
-          "filename": "actions/notice-consent.ts"
+          "exportedName": "getUserAttributes",
+          "filename": "actions/user-attributes.ts"
         }
       },
       "layer": {
-        "app/cms/principal/notice/[notice_id]/view/[access_token]/page": "action-browser"
+        "app/cms/data-fiduciary/user-attributes/page": "rsc"
       },
-      "filename": "actions/notice-consent.ts",
-      "exportedName": "handleConsentAcceptance"
+      "filename": "actions/user-attributes.ts",
+      "exportedName": "getUserAttributes"
     },
-    "603aadb3a3b4198b7553439891b1f6966c8ecf5735": {
+    "40712857139aa383924988a98c23e63d28f306ede9": {
       "workers": {
-        "app/cms/principal/notice/[notice_id]/view/[access_token]/page": {
-          "moduleId": "[project]/.next-internal/server/app/cms/principal/notice/[notice_id]/view/[access_token]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/dprm.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/notice-consent.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/fiduciary-config.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+        "app/cms/data-fiduciary/user-attributes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
-          "exportedName": "handleConsentRejection",
-          "filename": "actions/notice-consent.ts"
+          "exportedName": "getUserAttributeById",
+          "filename": "actions/user-attributes.ts"
         }
       },
       "layer": {
-        "app/cms/principal/notice/[notice_id]/view/[access_token]/page": "action-browser"
+        "app/cms/data-fiduciary/user-attributes/page": "rsc"
       },
-      "filename": "actions/notice-consent.ts",
-      "exportedName": "handleConsentRejection"
+      "filename": "actions/user-attributes.ts",
+      "exportedName": "getUserAttributeById"
     },
-    "007ed7046051a367ea295f22958c88a5a2ad656873": {
+    "6096209706167150df0150ee7b81be2e67e03b7ecd": {
       "workers": {
-        "app/cms/principal/notice/[notice_id]/view/[access_token]/page": {
-          "moduleId": "[project]/.next-internal/server/app/cms/principal/notice/[notice_id]/view/[access_token]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/dprm.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/notice-consent.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/fiduciary-config.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+        "app/cms/data-fiduciary/user-attributes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
-          "exportedName": "getFiduciaryConfig",
-          "filename": "actions/fiduciary-config.ts"
+          "exportedName": "checkUserAttributeNameExists",
+          "filename": "actions/user-attributes.ts"
         }
       },
       "layer": {
-        "app/cms/principal/notice/[notice_id]/view/[access_token]/page": "action-browser"
+        "app/cms/data-fiduciary/user-attributes/page": "rsc"
       },
-      "filename": "actions/fiduciary-config.ts",
-      "exportedName": "getFiduciaryConfig"
+      "filename": "actions/user-attributes.ts",
+      "exportedName": "checkUserAttributeNameExists"
+    },
+    "7f3625d89c07b001408d22741afefba6284189ad67": {
+      "workers": {
+        "app/cms/data-fiduciary/user-attributes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/translations.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createUserAttribute",
+          "filename": "actions/user-attributes.ts"
+        },
+        "app/cms/data-fiduciary/user-attributes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createUserAttribute",
+          "filename": "actions/user-attributes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/user-attributes/new/page": "action-browser",
+        "app/cms/data-fiduciary/user-attributes/page": "rsc"
+      },
+      "filename": "actions/user-attributes.ts",
+      "exportedName": "createUserAttribute"
+    },
+    "7fb0323df0acbdbfef96678fea5a8e4c2d63e99681": {
+      "workers": {
+        "app/cms/data-fiduciary/user-attributes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/translations.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateUserAttribute",
+          "filename": "actions/user-attributes.ts"
+        },
+        "app/cms/data-fiduciary/user-attributes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateUserAttribute",
+          "filename": "actions/user-attributes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/user-attributes/new/page": "action-browser",
+        "app/cms/data-fiduciary/user-attributes/page": "rsc"
+      },
+      "filename": "actions/user-attributes.ts",
+      "exportedName": "updateUserAttribute"
+    },
+    "7fd8ceb1918e176c73f26b58bbc4a6953ee5650e0a": {
+      "workers": {
+        "app/cms/data-fiduciary/user-attributes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteUserAttribute",
+          "filename": "actions/user-attributes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/user-attributes/page": "action-browser"
+      },
+      "filename": "actions/user-attributes.ts",
+      "exportedName": "deleteUserAttribute"
+    },
+    "702efd457dbb3f47693eb2907684303998765df5b7": {
+      "workers": {
+        "app/cms/data-fiduciary/user-attributes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/translations.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateUserAttributeTranslation",
+          "filename": "actions/translations.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/user-attributes/new/page": "action-browser"
+      },
+      "filename": "actions/translations.ts",
+      "exportedName": "updateUserAttributeTranslation"
+    },
+    "706a268d80ff66c982e5e3f3b6e8f46051ad64ac85": {
+      "workers": {
+        "app/cms/data-fiduciary/user-attributes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/translations.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "autoTranslateUserAttribute",
+          "filename": "actions/auto-translate.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/user-attributes/new/page": "action-browser"
+      },
+      "filename": "actions/auto-translate.ts",
+      "exportedName": "autoTranslateUserAttribute"
+    },
+    "704ce32ef850c2bb4b6f4d46e757bc9db118d35e04": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "translateTextToLanguages",
+          "filename": "actions/auto-translate.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "translateTextToLanguages",
+          "filename": "actions/auto-translate.ts"
+        },
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/consent-purposes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/consent-purpose-form.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/consent-purposes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE4 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "translateTextToLanguages",
+          "filename": "actions/auto-translate.ts"
+        },
+        "app/cms/data-fiduciary/user-attributes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/user-attributes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/translations.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/user-attributes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "translateTextToLanguages",
+          "filename": "actions/auto-translate.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser",
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/user-attributes/new/page": "action-browser"
+      },
+      "filename": "actions/auto-translate.ts",
+      "exportedName": "translateTextToLanguages"
+    },
+    "004cc68e0992e3703fd8281888792623275653144c": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcesses",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcesses",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcesses",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcesses",
+          "filename": "actions/business-processes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/page": "rsc"
+      },
+      "filename": "actions/business-processes.ts",
+      "exportedName": "getBusinessProcesses"
+    },
+    "007f61f27ac40434952348ee6fcb9461d97e028d9a": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getPublishedConsentPurposes",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getPublishedConsentPurposes",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getPublishedConsentPurposes",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getPublishedConsentPurposes",
+          "filename": "actions/business-processes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/page": "rsc"
+      },
+      "filename": "actions/business-processes.ts",
+      "exportedName": "getPublishedConsentPurposes"
+    },
+    "00abbb200346583c692e48cbcc5379d863e1e9bc43": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessData",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessData",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessData",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessData",
+          "filename": "actions/business-processes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/page": "rsc"
+      },
+      "filename": "actions/business-processes.ts",
+      "exportedName": "getBusinessProcessData"
+    },
+    "4069a7fa3896cc2660a242629adc6a14e1d992203d": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessById",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessById",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessById",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessById",
+          "filename": "actions/business-processes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/page": "rsc"
+      },
+      "filename": "actions/business-processes.ts",
+      "exportedName": "getBusinessProcessById"
+    },
+    "40b1b85e0c514b2f8ee7f2130f5243b52de51d3efa": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getNextVersionsForBPCodes",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getNextVersionsForBPCodes",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getNextVersionsForBPCodes",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getNextVersionsForBPCodes",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/consent-purposes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/consent-purpose-form.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/consent-purposes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE4 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getNextVersionsForBPCodes",
+          "filename": "actions/business-processes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/page": "rsc",
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": "action-browser"
+      },
+      "filename": "actions/business-processes.ts",
+      "exportedName": "getNextVersionsForBPCodes"
+    },
+    "40c1ee9d7309051fa093aee9bb065fa5426c7388ad": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getHighestVersionForCode",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getHighestVersionForCode",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getHighestVersionForCode",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getHighestVersionForCode",
+          "filename": "actions/business-processes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/page": "rsc"
+      },
+      "filename": "actions/business-processes.ts",
+      "exportedName": "getHighestVersionForCode"
+    },
+    "40f0ee935767046fb8670d43bb75d76a3b01e933be": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "saveOrPublishBusinessProcessWithVersioning",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "saveOrPublishBusinessProcessWithVersioning",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "saveOrPublishBusinessProcessWithVersioning",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "saveOrPublishBusinessProcessWithVersioning",
+          "filename": "actions/business-processes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/page": "rsc"
+      },
+      "filename": "actions/business-processes.ts",
+      "exportedName": "saveOrPublishBusinessProcessWithVersioning"
+    },
+    "40f172b44681dcf2f6e26caa7f3c3767cfc3d2950d": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessWithFullData",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessWithFullData",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessWithFullData",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessProcessWithFullData",
+          "filename": "actions/business-processes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/page": "rsc"
+      },
+      "filename": "actions/business-processes.ts",
+      "exportedName": "getBusinessProcessWithFullData"
+    },
+    "7fe3369815b927904be81a9b69e05d585971c9ab8b": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteBusinessProcess",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteBusinessProcess",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteBusinessProcess",
+          "filename": "actions/business-processes.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteBusinessProcess",
+          "filename": "actions/business-processes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/page": "action-browser"
+      },
+      "filename": "actions/business-processes.ts",
+      "exportedName": "deleteBusinessProcess"
+    },
+    "005d2c95fdb56466ca5505611cf672b3dd1bb5a03e": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessUnits",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessUnits",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessUnits",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-units/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-units/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessUnits",
+          "filename": "actions/business-units.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "rsc",
+        "app/cms/data-fiduciary/business-units/page": "rsc"
+      },
+      "filename": "actions/business-units.ts",
+      "exportedName": "getBusinessUnits"
+    },
+    "407fb42ef5cd2c0329031b4fe4557520a2be064409": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessUnitById",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessUnitById",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessUnitById",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-units/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-units/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getBusinessUnitById",
+          "filename": "actions/business-units.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "rsc",
+        "app/cms/data-fiduciary/business-units/page": "rsc"
+      },
+      "filename": "actions/business-units.ts",
+      "exportedName": "getBusinessUnitById"
+    },
+    "608bf381e2cfea0baba3faaf0e1eaa120ac12ffcab": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "checkBusinessUnitCodeExists",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "checkBusinessUnitCodeExists",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "checkBusinessUnitCodeExists",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-units/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-units/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "checkBusinessUnitCodeExists",
+          "filename": "actions/business-units.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "rsc",
+        "app/cms/data-fiduciary/business-units/page": "rsc"
+      },
+      "filename": "actions/business-units.ts",
+      "exportedName": "checkBusinessUnitCodeExists"
+    },
+    "7f2bb533b594647bdbcad1fd7903248e815caf0c93": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteBusinessUnit",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteBusinessUnit",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteBusinessUnit",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-units/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-units/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteBusinessUnit",
+          "filename": "actions/business-units.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "rsc",
+        "app/cms/data-fiduciary/business-units/page": "action-browser"
+      },
+      "filename": "actions/business-units.ts",
+      "exportedName": "deleteBusinessUnit"
+    },
+    "7f44ed65dcc21dfffc1845247fd786088910149c3c": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateBusinessUnit",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateBusinessUnit",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateBusinessUnit",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-units/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-units/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateBusinessUnit",
+          "filename": "actions/business-units.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "rsc",
+        "app/cms/data-fiduciary/business-units/page": "rsc"
+      },
+      "filename": "actions/business-units.ts",
+      "exportedName": "updateBusinessUnit"
+    },
+    "7f7bb6a614de30e742aa9ceb488250395b24259c7b": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createBusinessUnit",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createBusinessUnit",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createBusinessUnit",
+          "filename": "actions/business-units.ts"
+        },
+        "app/cms/data-fiduciary/business-units/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-units/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createBusinessUnit",
+          "filename": "actions/business-units.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/[id]/page": "rsc",
+        "app/cms/data-fiduciary/business-processes/new/page": "rsc",
+        "app/cms/data-fiduciary/business-units/page": "rsc"
+      },
+      "filename": "actions/business-units.ts",
+      "exportedName": "createBusinessUnit"
+    },
+    "78fbfbd66a197b4f61ba4aa740092cd88ebe12c695": {
+      "workers": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "autoTranslateBusinessProcess",
+          "filename": "actions/auto-translate.ts"
+        },
+        "app/cms/data-fiduciary/business-processes/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/business-processes/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/business-units.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "autoTranslateBusinessProcess",
+          "filename": "actions/auto-translate.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/business-processes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/business-processes/new/page": "action-browser"
+      },
+      "filename": "actions/auto-translate.ts",
+      "exportedName": "autoTranslateBusinessProcess"
+    },
+    "00179b190fc8ea83b7432ce347c38b818692bf5daa": {
+      "workers": {
+        "app/cms/data-fiduciary/consent-purposes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/consent-purposes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/consent-purposes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getConsentPurposes",
+          "filename": "actions/consent-purposes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/consent-purposes/page": "rsc"
+      },
+      "filename": "actions/consent-purposes.ts",
+      "exportedName": "getConsentPurposes"
+    },
+    "40c1285b7faea57d407352b9d1568677f640797c7e": {
+      "workers": {
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/consent-purposes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/consent-purpose-form.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/consent-purposes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE4 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getHighestVersionForConsentPurposeCode",
+          "filename": "actions/consent-purposes.ts"
+        },
+        "app/cms/data-fiduciary/consent-purposes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/consent-purposes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/consent-purposes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getHighestVersionForConsentPurposeCode",
+          "filename": "actions/consent-purposes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": "action-browser",
+        "app/cms/data-fiduciary/consent-purposes/page": "rsc"
+      },
+      "filename": "actions/consent-purposes.ts",
+      "exportedName": "getHighestVersionForConsentPurposeCode"
+    },
+    "7fd6514c48dc567376567b5bface59bd4edc37062a": {
+      "workers": {
+        "app/cms/data-fiduciary/consent-purposes/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/consent-purposes/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/consent-purposes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteConsentPurpose",
+          "filename": "actions/consent-purposes.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/consent-purposes/page": "action-browser"
+      },
+      "filename": "actions/consent-purposes.ts",
+      "exportedName": "deleteConsentPurpose"
+    },
+    "7817f412d199e81c81597545fc9f54d9c77bdb0d92": {
+      "workers": {
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/consent-purposes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/consent-purpose-form.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/consent-purposes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE4 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "autoTranslateConsentPurpose",
+          "filename": "actions/auto-translate.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": "action-browser"
+      },
+      "filename": "actions/auto-translate.ts",
+      "exportedName": "autoTranslateConsentPurpose"
+    },
+    "786fd342078d6b7afd66dc76df99e14c9e35cb1365": {
+      "workers": {
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/consent-purposes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/consent-purpose-form.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/consent-purposes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE4 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "autoTranslateProcessingPurpose",
+          "filename": "actions/auto-translate.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": "action-browser"
+      },
+      "filename": "actions/auto-translate.ts",
+      "exportedName": "autoTranslateProcessingPurpose"
+    },
+    "400d36f9d10e31e8aa1234186c73eca060aab5f5e5": {
+      "workers": {
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": {
+          "moduleId": "[project]/.next-internal/server/app/cms/data-fiduciary/consent-purposes/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/actions/auto-translate.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/actions/consent-purpose-form.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/actions/consent-purposes.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE4 => \"[project]/actions/business-processes.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "saveConsentPurposeFromClientState",
+          "filename": "actions/consent-purpose-form.ts"
+        }
+      },
+      "layer": {
+        "app/cms/data-fiduciary/consent-purposes/[id]/edit/page": "action-browser"
+      },
+      "filename": "actions/consent-purpose-form.ts",
+      "exportedName": "saveConsentPurposeFromClientState"
     }
   },
   "edge": {},
