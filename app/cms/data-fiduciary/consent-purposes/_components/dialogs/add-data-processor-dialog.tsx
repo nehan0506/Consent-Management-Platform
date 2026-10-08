@@ -175,6 +175,29 @@ export function AddDataProcessorDialog({
     return attr?.name || "Unknown";
   };
 
+  const getUserAttribute = (name: string) =>
+    userAttributes.find((attr) => attr.name === name);
+
+  const renderUserAttribute = (name: string) => {
+    const attr = getUserAttribute(name);
+
+    return (
+      <div className="flex flex-wrap items-center gap-1 text-sm">
+        <span>{name}</span>
+        {attr?.pii && (
+          <Badge variant="secondary" className="text-xs">
+            PII
+          </Badge>
+        )}
+        {attr?.piiAction && (
+          <Badge variant="outline" className="text-xs">
+            {attr.piiAction}
+          </Badge>
+        )}
+      </div>
+    );
+  };
+
   const getProcessingPurposeName = (id: number) => {
     const processingPurpose = processingPurposes.find((pp) => pp.id === id);
     return processingPurpose?.name || "Unknown";
@@ -322,7 +345,7 @@ export function AddDataProcessorDialog({
                                       key={userAttributeName}
                                       className="text-sm"
                                     >
-                                      {userAttributeName}
+                                      {renderUserAttribute(userAttributeName)}
                                     </div>
                                   )
                                 )}
@@ -342,7 +365,7 @@ export function AddDataProcessorDialog({
                                     return (
                                       <div
                                         key={userAttributeName}
-                                        className="flex items-center"
+                                        className="flex items-center gap-2"
                                       >
                                         <Checkbox
                                           id={`attr-${processingPurposeRef}-${userAttributeName}`}
@@ -355,6 +378,14 @@ export function AddDataProcessorDialog({
                                             )
                                           }
                                         />
+                                        <label
+                                          htmlFor={`attr-${processingPurposeRef}-${userAttributeName}`}
+                                          className="cursor-pointer"
+                                        >
+                                          {renderUserAttribute(
+                                            userAttributeName
+                                          )}
+                                        </label>
                                       </div>
                                     );
                                   }

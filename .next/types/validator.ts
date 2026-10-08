@@ -596,6 +596,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../app/cms/api/v1/consents/attribute-actions/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/cms/api/v1/consents/attribute-actions">> = Specific
+  const handler = {} as typeof import("../../app/cms/api/v1/consents/attribute-actions/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../app/cms/api/v1/consents/history/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/cms/api/v1/consents/history">> = Specific

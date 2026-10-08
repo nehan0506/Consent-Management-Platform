@@ -585,10 +585,22 @@ async function findProcessingPurposesByPoPCodes(codes) {
     return processingPurposes.map((pp)=>pp.publicId);
 }
 async function findConsentsForValidation(options) {
-    const { dataPrincipalId, referenceId, consentId, processingPurposeIds, statuses = [
+    const { dataPrincipalId, referenceId, consentId, resourceId, processingPurposeIds, statuses = [
         "accepted",
         "revoked"
     ] } = options;
+    let resourceConsentPublicIds;
+    if (resourceId) {
+        const matchingConsents = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].$queryRaw`
+      SELECT public_id
+      FROM consents
+      WHERE resource_id = ${resourceId}::uuid
+    `;
+        resourceConsentPublicIds = matchingConsents.map((consent)=>consent.public_id);
+        if (resourceConsentPublicIds.length === 0) {
+            return [];
+        }
+    }
     // Build where conditions
     const whereConditions = {
         status: {
@@ -603,7 +615,14 @@ async function findConsentsForValidation(options) {
         whereConditions.referenceId = referenceId;
     }
     if (consentId) {
+        if (resourceConsentPublicIds && !resourceConsentPublicIds.includes(consentId)) {
+            return [];
+        }
         whereConditions.publicId = consentId;
+    } else if (resourceConsentPublicIds) {
+        whereConditions.publicId = {
+            in: resourceConsentPublicIds
+        };
     }
     // Add processing purpose filtering if provided
     if (processingPurposeIds && processingPurposeIds.length > 0) {
@@ -709,7 +728,7 @@ async function POST(request) {
         // Normalize here so consents.expires_at and policy.expiry_at are identical.
         const approvalTime = new Date(Math.floor(Date.now() / 1000) * 1000);
         const updatedExpiries = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].$transaction(consents.map((consent)=>{
-            const configuredDurationMs = consent.consentDuration ? consent.consentDuration * 60 * 60 * 1000 : null;
+            const configuredDurationMs = consent.consentDuration ? consent.consentDuration * 60 * 1000 : null;
             const expiresAt = configuredDurationMs && configuredDurationMs > 0 ? new Date(approvalTime.getTime() + configuredDurationMs) : null;
             return __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].consent.update({
                 where: {

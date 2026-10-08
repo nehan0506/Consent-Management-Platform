@@ -2,37 +2,43 @@
 /**
  * Open Bharat Digital Consent by IDfy
  * Copyright (c) 2025 Baldor Technologies Private Limited (IDfy)
- * 
+ *
  * This software is licensed under the Privy Public License.
  * See LICENSE.md for the full terms of use.
- * 
+ *
  * Unauthorized copying, modification, distribution, or commercial use
  * is strictly prohibited without prior written permission from IDfy.
  */
 
 import prisma from "../prisma";
 
-// --- 1. HELPER: Format duration (in hours) to a string ---
+// --- 1. HELPER: Format duration (in minutes) to a string ---
 
-function formatDuration(hours: number | null | undefined): string {
-  if (hours === null || hours === undefined) return "Not specified";
+function formatDuration(minutes: number | null | undefined): string {
+  if (minutes === null || minutes === undefined) return "Not specified";
 
-  const hoursInYear = 8760;
-  const hoursInDay = 24;
+  const minutesInYear = 365 * 24 * 60;
+  const minutesInDay = 24 * 60;
+  const minutesInHour = 60;
 
-  const years = hours / hoursInYear;
+  const years = minutes / minutesInYear;
   if (years >= 1) {
     const roundedYears = Math.round(years);
     return `${roundedYears} year${roundedYears > 1 ? "s" : ""}`;
   }
 
-  const days = hours / hoursInDay;
+  const days = minutes / minutesInDay;
   if (days >= 1) {
     const roundedDays = Math.round(days);
     return `${roundedDays} day${roundedDays > 1 ? "s" : ""}`;
   }
 
-  return `${hours} hour${hours > 1 ? "s" : ""}`;
+  const hours = minutes / minutesInHour;
+  if (hours >= 1) {
+    return `${Number(hours.toFixed(2))} hour${hours > 1 ? "s" : ""}`;
+  }
+
+  return `${minutes} minute${minutes > 1 ? "s" : ""}`;
 }
 
 // --- 2. ACTION: Get Opted Services for the Dropdown ---
@@ -67,7 +73,7 @@ export type RevokePurpose = {
  */
 export async function getRevokeDataForService(
   dataPrincipalId: string,
-  selectedBusinessProcessId: string // This is the publicId
+  selectedBusinessProcessId: string, // This is the publicId
 ): Promise<RevokePurpose[]> {
   try {
     // 1. Get the internal ID of the selected Business Process

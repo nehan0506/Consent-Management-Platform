@@ -21,6 +21,7 @@ export interface BusinessProcessState {
     name: string;
     code: string;
     businessUnitId: number;
+    resourceId?: string;
     grantDescription: string;
     revokeDescription?: string;
     reconsentDescription?: string;

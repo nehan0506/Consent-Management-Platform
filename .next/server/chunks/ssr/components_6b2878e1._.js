@@ -2777,7 +2777,9 @@ function TooltipContent({ className, sideOffset = 0, children, ...props }) {
 
 __turbopack_context__.s([
     "NoticeConsentDuration",
-    ()=>NoticeConsentDuration
+    ()=>NoticeConsentDuration,
+    "formatConsentDuration",
+    ()=>formatConsentDuration
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 /**
@@ -2801,10 +2803,27 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tooltip$
 ;
 ;
 ;
+function formatConsentDuration(consentDuration, t) {
+    if (!consentDuration || consentDuration <= 0) {
+        return t("Until Purpose Met");
+    }
+    if (consentDuration < 60) {
+        return `${consentDuration} ${t(consentDuration === 1 ? "Minute" : "Minutes")}`;
+    }
+    const hours = consentDuration / 60;
+    if (consentDuration < 24 * 60) {
+        return `${Number(hours.toFixed(2))} ${t(hours === 1 ? "Hour" : "Hours")}`;
+    }
+    const days = consentDuration / (24 * 60);
+    if (Number.isInteger(days)) {
+        return `${days} ${t(days === 1 ? "Day" : "Days")}`;
+    }
+    return `${Number(days.toFixed(2))} ${t("Days")}`;
+}
 function NoticeConsentDuration({ consentDuration, className }) {
     const { isHighContrast } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$high$2d$contrast$2d$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useHighContrast"])();
     const { t } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$notice$2d$translation$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useNoticeTranslation"])();
-    const formattedDuration = consentDuration ? consentDuration < 24 ? `${consentDuration} ${t(consentDuration === 1 ? "Hour" : "Hours")}` : `${Math.floor(consentDuration / 24)} ${t("Days")}` : t("Until Purpose Met");
+    const formattedDuration = formatConsentDuration(consentDuration, t);
     // Helper function to get tooltip message based on consent duration
     const getConsentDurationTooltip = ()=>{
         if (consentDuration && consentDuration > 0) {
@@ -2816,8 +2835,7 @@ function NoticeConsentDuration({ consentDuration, className }) {
         className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("inline-flex items-center gap-1 px-2 py-1 bg-warning-100 text-warning-700 rounded text-xs font-normal border border-warning-200", isHighContrast && "hc-consent-duration-badge", className),
         children: [
             t("Consent Duration"),
-            ":",
-            " ",
+            ": ",
             formattedDuration,
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tooltip$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {
                 children: [
@@ -2827,12 +2845,12 @@ function NoticeConsentDuration({ consentDuration, className }) {
                             className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("w-3 h-3 text-warning-500 flex-shrink-0 cursor-help", isHighContrast && "info-icon")
                         }, void 0, false, {
                             fileName: "[project]/components/notice/notice-consent-duration.tsx",
-                            lineNumber: 64,
+                            lineNumber: 84,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/notice/notice-consent-duration.tsx",
-                        lineNumber: 63,
+                        lineNumber: 83,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tooltip$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TooltipContent"], {
@@ -2842,24 +2860,24 @@ function NoticeConsentDuration({ consentDuration, className }) {
                             children: getConsentDurationTooltip()
                         }, void 0, false, {
                             fileName: "[project]/components/notice/notice-consent-duration.tsx",
-                            lineNumber: 72,
+                            lineNumber: 92,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/notice/notice-consent-duration.tsx",
-                        lineNumber: 71,
+                        lineNumber: 91,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/notice/notice-consent-duration.tsx",
-                lineNumber: 62,
+                lineNumber: 82,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/notice/notice-consent-duration.tsx",
-        lineNumber: 53,
+        lineNumber: 74,
         columnNumber: 5
     }, this);
 }
@@ -2879,21 +2897,44 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$
 ;
 ;
 function NoticeUserAttribute({ userAttribute, selected = false, onToggle, className, disabled = false, variant = "badge", showPiiIndicator = true }) {
+    const renderIndicators = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+            children: [
+                showPiiIndicator && userAttribute.pii && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                    className: "rounded-full bg-yellow-100 px-1.5 py-0.5 text-[10px] font-medium text-yellow-800",
+                    children: "PII"
+                }, void 0, false, {
+                    fileName: "[project]/components/notice/notice-user-attribute.tsx",
+                    lineNumber: 39,
+                    columnNumber: 9
+                }, this),
+                userAttribute.piiAction && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                    className: "rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700",
+                    children: userAttribute.piiAction
+                }, void 0, false, {
+                    fileName: "[project]/components/notice/notice-user-attribute.tsx",
+                    lineNumber: 44,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true);
     const renderBadgeVariant = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$notice$2f$notice$2d$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["NoticeBadge"], {
             variant: "secondary",
             onClick: onToggle,
             className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])(disabled && "opacity-50 cursor-not-allowed", className),
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                className: "flex items-center gap-1",
-                children: userAttribute.name
-            }, void 0, false, {
+                className: "flex flex-wrap items-center gap-1",
+                children: [
+                    userAttribute.name,
+                    renderIndicators()
+                ]
+            }, void 0, true, {
                 fileName: "[project]/components/notice/notice-user-attribute.tsx",
-                lineNumber: 42,
+                lineNumber: 57,
                 columnNumber: 7
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/notice/notice-user-attribute.tsx",
-            lineNumber: 37,
+            lineNumber: 52,
             columnNumber: 5
         }, this);
     const renderListVariant = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2910,21 +2951,14 @@ function NoticeUserAttribute({ userAttribute, selected = false, onToggle, classN
                             children: userAttribute.name
                         }, void 0, false, {
                             fileName: "[project]/components/notice/notice-user-attribute.tsx",
-                            lineNumber: 60,
+                            lineNumber: 78,
                             columnNumber: 9
                         }, this),
-                        showPiiIndicator && userAttribute.pii && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            className: "text-xs px-1.5 py-0.5 bg-yellow-100 text-yellow-800 rounded",
-                            children: "PII"
-                        }, void 0, false, {
-                            fileName: "[project]/components/notice/notice-user-attribute.tsx",
-                            lineNumber: 62,
-                            columnNumber: 11
-                        }, this)
+                        renderIndicators()
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/notice/notice-user-attribute.tsx",
-                    lineNumber: 59,
+                    lineNumber: 77,
                     columnNumber: 7
                 }, this),
                 onToggle && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2941,34 +2975,34 @@ function NoticeUserAttribute({ userAttribute, selected = false, onToggle, classN
                                 clipRule: "evenodd"
                             }, void 0, false, {
                                 fileName: "[project]/components/notice/notice-user-attribute.tsx",
-                                lineNumber: 76,
+                                lineNumber: 90,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/notice/notice-user-attribute.tsx",
-                            lineNumber: 71,
+                            lineNumber: 85,
                             columnNumber: 15
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/notice/notice-user-attribute.tsx",
-                        lineNumber: 70,
+                        lineNumber: 84,
                         columnNumber: 13
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "w-4 h-4 border-2 border-gray-300 rounded bg-white"
                     }, void 0, false, {
                         fileName: "[project]/components/notice/notice-user-attribute.tsx",
-                        lineNumber: 84,
+                        lineNumber: 98,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/notice/notice-user-attribute.tsx",
-                    lineNumber: 68,
+                    lineNumber: 82,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/notice/notice-user-attribute.tsx",
-            lineNumber: 47,
+            lineNumber: 65,
             columnNumber: 5
         }, this);
     const renderCompactVariant = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2979,7 +3013,7 @@ function NoticeUserAttribute({ userAttribute, selected = false, onToggle, classN
             ]
         }, void 0, true, {
             fileName: "[project]/components/notice/notice-user-attribute.tsx",
-            lineNumber: 92,
+            lineNumber: 106,
             columnNumber: 5
         }, this);
     switch(variant){
@@ -3487,7 +3521,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$notice$2f$noti
 var __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$high$2d$contrast$2d$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/contexts/high-contrast-context.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$mobile$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/hooks/use-mobile.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$notice$2f$notice$2d$consent$2d$duration$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/notice/notice-consent-duration.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$notice$2d$translation$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/hooks/use-notice-translation.ts [app-ssr] (ecmascript)");
 "use client";
+;
 ;
 ;
 ;
@@ -3499,6 +3535,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$notice$2f$noti
 function NoticeConsentPurpose({ consentPurpose, children, className, selectionState = "none", onSelectionChange, showSelection = true, disabled = false, defaultOpen = false, variant = "accordion", preventDeselection = false }) {
     const { isHighContrast } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$high$2d$contrast$2d$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useHighContrast"])();
     const isMobile = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$mobile$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useIsMobile"])();
+    const { t } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$notice$2d$translation$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useNoticeTranslation"])();
     const renderContent = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "space-y-4 pt-4",
             children: children && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3506,12 +3543,12 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                 children: children
             }, void 0, false, {
                 fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                lineNumber: 58,
+                lineNumber: 63,
                 columnNumber: 20
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-            lineNumber: 57,
+            lineNumber: 62,
             columnNumber: 5
         }, this);
     switch(variant){
@@ -3530,7 +3567,7 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                         children: consentPurpose.name
                                     }, void 0, false, {
                                         fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                        lineNumber: 76,
+                                        lineNumber: 81,
                                         columnNumber: 15
                                     }, this),
                                     isMobile && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3540,22 +3577,22 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                             children: [
                                                 "Consent Duration:",
                                                 " ",
-                                                consentPurpose.consentDuration ? consentPurpose.consentDuration < 24 ? `${consentPurpose.consentDuration} ${consentPurpose.consentDuration === 1 ? "Hour" : "Hours"}` : `${Math.floor(consentPurpose.consentDuration / 24)} Days` : "Until Purpose Met"
+                                                (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$notice$2f$notice$2d$consent$2d$duration$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["formatConsentDuration"])(consentPurpose.consentDuration, t)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                            lineNumber: 86,
+                                            lineNumber: 91,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                        lineNumber: 85,
+                                        lineNumber: 90,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                lineNumber: 75,
+                                lineNumber: 80,
                                 columnNumber: 13
                             }, this),
                             showSelection && onSelectionChange && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$notice$2f$notice$2d$select$2d$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["NoticeSelectButton"], {
@@ -3569,20 +3606,20 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                 className: "ml-3"
                             }, void 0, false, {
                                 fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                lineNumber: 98,
+                                lineNumber: 99,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                        lineNumber: 74,
+                        lineNumber: 79,
                         columnNumber: 11
                     }, this),
                     renderContent()
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                lineNumber: 65,
+                lineNumber: 70,
                 columnNumber: 9
             }, this);
         case "simple":
@@ -3600,7 +3637,7 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                         children: consentPurpose.name
                                     }, void 0, false, {
                                         fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                        lineNumber: 119,
+                                        lineNumber: 120,
                                         columnNumber: 15
                                     }, this),
                                     isMobile && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3610,22 +3647,22 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                             children: [
                                                 "Consent Duration:",
                                                 " ",
-                                                consentPurpose.consentDuration ? consentPurpose.consentDuration < 24 ? `${consentPurpose.consentDuration} ${consentPurpose.consentDuration === 1 ? "Hour" : "Hours"}` : `${Math.floor(consentPurpose.consentDuration / 24)} Days` : "Until Purpose Met"
+                                                (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$notice$2f$notice$2d$consent$2d$duration$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["formatConsentDuration"])(consentPurpose.consentDuration, t)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                            lineNumber: 129,
+                                            lineNumber: 130,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                        lineNumber: 128,
+                                        lineNumber: 129,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                lineNumber: 118,
+                                lineNumber: 119,
                                 columnNumber: 13
                             }, this),
                             showSelection && onSelectionChange && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$notice$2f$notice$2d$select$2d$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["NoticeSelectButton"], {
@@ -3640,20 +3677,20 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                 className: "ml-3"
                             }, void 0, false, {
                                 fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                lineNumber: 141,
+                                lineNumber: 138,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                        lineNumber: 117,
+                        lineNumber: 118,
                         columnNumber: 11
                     }, this),
                     renderContent()
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                lineNumber: 116,
+                lineNumber: 117,
                 columnNumber: 9
             }, this);
         case "accordion":
@@ -3677,7 +3714,7 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                         className: "text-muted-foreground pointer-events-none size-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180"
                                     }, void 0, false, {
                                         fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                        lineNumber: 189,
+                                        lineNumber: 186,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3689,7 +3726,7 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                                     children: consentPurpose.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                                    lineNumber: 192,
+                                                    lineNumber: 189,
                                                     columnNumber: 21
                                                 }, this),
                                                 isMobile && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3698,23 +3735,23 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                                         consentDuration: consentPurpose.consentDuration
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                                        lineNumber: 202,
+                                                        lineNumber: 199,
                                                         columnNumber: 25
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                                    lineNumber: 201,
+                                                    lineNumber: 198,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                            lineNumber: 191,
+                                            lineNumber: 188,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                        lineNumber: 190,
+                                        lineNumber: 187,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3725,7 +3762,7 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                                 className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])(isMobile && "hidden")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                                lineNumber: 210,
+                                                lineNumber: 207,
                                                 columnNumber: 19
                                             }, this),
                                             showSelection && onSelectionChange && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$notice$2f$notice$2d$select$2d$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["NoticeSelectButton"], {
@@ -3738,24 +3775,24 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                                                 preventDeselection: preventDeselection
                                             }, void 0, false, {
                                                 fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                                lineNumber: 215,
+                                                lineNumber: 212,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                        lineNumber: 209,
+                                        lineNumber: 206,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                                lineNumber: 188,
+                                lineNumber: 185,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                            lineNumber: 176,
+                            lineNumber: 173,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$accordion$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AccordionContent"], {
@@ -3763,18 +3800,18 @@ function NoticeConsentPurpose({ consentPurpose, children, className, selectionSt
                             children: renderContent()
                         }, void 0, false, {
                             fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                            lineNumber: 228,
+                            lineNumber: 225,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                    lineNumber: 169,
+                    lineNumber: 166,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/notice/notice-consent-purpose.tsx",
-                lineNumber: 161,
+                lineNumber: 158,
                 columnNumber: 9
             }, this);
     }

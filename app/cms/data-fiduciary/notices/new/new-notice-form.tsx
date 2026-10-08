@@ -2,10 +2,10 @@
 /**
  * Open Bharat Digital Consent by IDfy
  * Copyright (c) 2025 Baldor Technologies Private Limited (IDfy)
- * 
+ *
  * This software is licensed under the Privy Public License.
  * See LICENSE.md for the full terms of use.
- * 
+ *
  * Unauthorized copying, modification, distribution, or commercial use
  * is strictly prohibited without prior written permission from IDfy.
  */
@@ -93,6 +93,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
     resolver: zodResolver(createNoticeSchema) as any,
     defaultValues: {
       referenceId: "",
+      resourceId: "",
       dataPrincipalId: uuidv4(),
       businessProcessId: latestBusinessProcess?.id,
       noticeDuration: 1,
@@ -101,7 +102,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
       attributesDefaultSelection: "mandatory",
       redirectionEndpoint: "",
       consentDuration: undefined,
-      consentDurationType: "days",
+      consentDurationType: "minutes",
       forMinor: false,
       metadata: [],
     },
@@ -115,10 +116,10 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
     if (forMinor) {
       // Add major_data_principal_id and relationship_with_minor metadata if not already present
       const hasMajorMetadata = metadataRows.some(
-        (row) => row.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID
+        (row) => row.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID,
       );
       const hasRelationshipMetadata = metadataRows.some(
-        (row) => row.key === NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR
+        (row) => row.key === NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR,
       );
 
       const newRows = [];
@@ -151,8 +152,8 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
         metadataRows.filter(
           (row) =>
             row.key !== NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID &&
-            row.key !== NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR
-        )
+            row.key !== NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR,
+        ),
       );
     }
   }, [forMinor]);
@@ -180,12 +181,12 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
   const updateMetadataRow = (
     id: string,
     field: "key" | "value",
-    value: string
+    value: string,
   ) => {
     setMetadataRows(
       metadataRows.map((row) =>
-        row.id === id ? { ...row, [field]: value } : row
-      )
+        row.id === id ? { ...row, [field]: value } : row,
+      ),
     );
   };
 
@@ -196,15 +197,15 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
       // Validate major data principal ID and relationship if forMinor is checked
       if (data.forMinor) {
         const majorMetadata = metadataRows.find(
-          (row) => row.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID
+          (row) => row.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID,
         );
         const relationshipMetadata = metadataRows.find(
-          (row) => row.key === NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR
+          (row) => row.key === NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR,
         );
 
         if (!majorMetadata || !majorMetadata.value.trim()) {
           toast.error(
-            "Major User ID is required when creating a notice for a minor"
+            "Major User ID is required when creating a notice for a minor",
           );
           setIsSubmitting(false);
           return;
@@ -213,9 +214,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
         // Validate major data principal ID format (UUID with min 3 characters)
         const majorIdValue = majorMetadata.value.trim();
         if (majorIdValue.length < 3) {
-          toast.error(
-            "Major User ID must be at least 3 characters long"
-          );
+          toast.error("Major User ID must be at least 3 characters long");
           setIsSubmitting(false);
           return;
         }
@@ -223,7 +222,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
         const uuidRegex = /^[0-9a-z-]{3,}$/i;
         if (!uuidRegex.test(majorIdValue)) {
           toast.error(
-            "Major User ID must be a valid UUID format (e.g., 123e4567-e89b-12d3-a456-426614174000)"
+            "Major User ID must be a valid UUID format (e.g., 123e4567-e89b-12d3-a456-426614174000)",
           );
           setIsSubmitting(false);
           return;
@@ -231,7 +230,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
 
         if (!relationshipMetadata || !relationshipMetadata.value.trim()) {
           toast.error(
-            "Relationship with minor is required when creating a notice for a minor"
+            "Relationship with minor is required when creating a notice for a minor",
           );
           setIsSubmitting(false);
           return;
@@ -240,7 +239,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
 
       // Filter out empty metadata rows and add to form data
       const validMetadata = metadataRows.filter(
-        (row) => row.key.trim() !== "" && row.value.trim() !== ""
+        (row) => row.key.trim() !== "" && row.value.trim() !== "",
       );
 
       const submitData = {
@@ -254,7 +253,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
         toast.success("Notice created successfully");
         // Redirect to the show notice page with the public ID and query param to show dialog
         router.push(
-          `/cms/data-fiduciary/notices/${result.data.publicId}?copy_notice_link=true`
+          `/cms/data-fiduciary/notices/${result.data.publicId}?copy_notice_link=true`,
         );
       } else {
         toast.error(result.error || "Failed to create notice");
@@ -293,6 +292,21 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
                     className="max-w-xl"
                     {...field}
                   />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Resource ID */}
+          <FormField
+            control={form.control}
+            name="resourceId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Resource ID</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter resource ID" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -339,13 +353,13 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
                       >
                         {field.value
                           ? (() => {
-                            const selectedProcess = businessProcesses.find(
-                              (process) => process.id === field.value
-                            );
-                            return selectedProcess
-                              ? `${selectedProcess.name} (${selectedProcess.code}) (v${selectedProcess.version})`
-                              : "Select process";
-                          })()
+                              const selectedProcess = businessProcesses.find(
+                                (process) => process.id === field.value,
+                              );
+                              return selectedProcess
+                                ? `${selectedProcess.name} (${selectedProcess.code}) (v${selectedProcess.version})`
+                                : "Select process";
+                            })()
                           : "Select process"}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -371,7 +385,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
                                   "mr-2 h-4 w-4",
                                   field.value === process.id
                                     ? "opacity-100"
-                                    : "opacity-0"
+                                    : "opacity-0",
                                 )}
                               />
                               <div>
@@ -438,6 +452,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
+                      <SelectItem value="minutes">Minutes</SelectItem>
                       <SelectItem value="hours">Hours</SelectItem>
                       <SelectItem value="days">Days</SelectItem>
                       <SelectItem value="weeks">Weeks</SelectItem>
@@ -575,6 +590,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
+                      <SelectItem value="minutes">Minutes</SelectItem>
                       <SelectItem value="hours">Hours</SelectItem>
                       <SelectItem value="days">Days</SelectItem>
                       <SelectItem value="weeks">Weeks</SelectItem>
@@ -617,7 +633,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
                       disabled={row.isLocked}
                       className={cn(
                         "text-destructive hover:text-destructive hover:bg-transparent -scale-x-100 -mx-2 p-0 self-center",
-                        row.isLocked && "opacity-0 cursor-not-allowed"
+                        row.isLocked && "opacity-0 cursor-not-allowed",
                       )}
                     >
                       <Delete className="h-5! w-5!" />
@@ -625,21 +641,21 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
                     <Input
                       placeholder={
                         row.isLocked &&
-                          row.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID
+                        row.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID
                           ? "Major User ID"
                           : row.isLocked &&
-                            row.key ===
-                            NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR
+                              row.key ===
+                                NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR
                             ? "Relationship with Minor"
                             : "-- Enter Metadata Key --"
                       }
                       value={
                         row.isLocked &&
-                          row.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID
+                        row.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID
                           ? "Major User ID"
                           : row.isLocked &&
-                            row.key ===
-                            NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR
+                              row.key ===
+                                NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR
                             ? "Relationship with Minor"
                             : row.key
                       }
@@ -649,7 +665,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
                       }
                       disabled={row.isLocked}
                       className={cn(
-                        row.isLocked && "bg-muted cursor-not-allowed"
+                        row.isLocked && "bg-muted cursor-not-allowed",
                       )}
                     />
                     {row.isSelect ? (
@@ -662,7 +678,7 @@ export function NewNoticeForm({ businessProcesses }: NewNoticeFormProps) {
                         <SelectTrigger
                           className={cn(
                             "border-blue",
-                            !row.value && "text-muted-foreground"
+                            !row.value && "text-muted-foreground",
                           )}
                         >
                           <SelectValue placeholder="Select relationship *" />

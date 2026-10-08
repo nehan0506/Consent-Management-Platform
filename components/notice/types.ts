@@ -107,6 +107,7 @@ export interface UserAttributeData {
   id: number;
   name: string;
   pii: boolean;
+  piiAction?: string | null;
   translations?: any;
   supportedLanguages?: string[];
 }

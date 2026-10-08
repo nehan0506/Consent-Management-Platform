@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     const updatedExpiries = await prisma.$transaction(
       consents.map((consent) => {
         const configuredDurationMs = consent.consentDuration
-          ? consent.consentDuration * 60 * 60 * 1000
+          ? consent.consentDuration * 60 * 1000
           : null;
         const expiresAt =
           configuredDurationMs && configuredDurationMs > 0

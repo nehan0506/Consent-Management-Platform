@@ -2,15 +2,16 @@
 /**
  * Open Bharat Digital Consent by IDfy
  * Copyright (c) 2025 Baldor Technologies Private Limited (IDfy)
- * 
+ *
  * This software is licensed under the Privy Public License.
  * See LICENSE.md for the full terms of use.
- * 
+ *
  * Unauthorized copying, modification, distribution, or commercial use
  * is strictly prohibited without prior written permission from IDfy.
  */
 
 import { Actions, Resources } from "@/lib/constants/rbac";
+import { NOTICE_METADATA_KEYS } from "@/lib/constants/notice-metadata";
 import prisma from "@/lib/prisma";
 import { createSafeAction } from "@/lib/safe-action";
 import { createNoticeSchema } from "@/lib/schemas/notice-schemas";
@@ -26,33 +27,31 @@ import { WebhookEventType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-// Helper function to convert duration to hours
-function convertToHours(
-  duration: number,
-  type: "hours" | "days" | "weeks" | "months"
-): number {
+type DurationUnit = "minutes" | "hours" | "days" | "weeks" | "months";
+
+// Helper function to convert duration to minutes
+function convertToMinutes(duration: number, type: DurationUnit): number {
   switch (type) {
-    case "hours":
+    case "minutes":
       return duration;
+    case "hours":
+      return duration * 60;
     case "days":
-      return duration * 24;
+      return duration * 24 * 60;
     case "weeks":
-      return duration * 24 * 7;
+      return duration * 24 * 7 * 60;
     case "months":
-      return duration * 24 * 30; // Approximate 30 days per month
+      return duration * 24 * 30 * 60; // Approximate 30 days per month
     default:
       return duration;
   }
 }
 
 // Helper function to calculate expiry date
-function calculateExpiryDate(
-  duration: number,
-  type: "hours" | "days" | "weeks" | "months"
-): Date {
+function calculateExpiryDate(duration: number, type: DurationUnit): Date {
   const now = new Date();
-  const hoursToAdd = convertToHours(duration, type);
-  return new Date(now.getTime() + hoursToAdd * 60 * 60 * 1000);
+  const minutesToAdd = convertToMinutes(duration, type);
+  return new Date(now.getTime() + minutesToAdd * 60 * 1000);
 }
 
 // Read operations - No RBAC wrapper needed (handled at page level)
@@ -94,7 +93,7 @@ export const deleteNotice = createSafeAction(
     await deleteNoticeService(input.id);
     revalidatePath("/cms/data-fiduciary/notices");
     return true;
-  }
+  },
 );
 
 export async function generateNoticeLink(noticeId: number) {
@@ -115,13 +114,13 @@ export const createNotice = createSafeAction(
     // Calculate link expiry date
     const linkExpiresAt = calculateExpiryDate(
       data.noticeDuration,
-      data.noticeDurationType
+      data.noticeDurationType,
     );
 
-    // Calculate consent duration in hours if provided
-    const consentDurationInHours =
+    // Calculate consent duration in minutes if provided
+    const consentDurationInMinutes =
       data.consentDuration && data.consentDurationType
-        ? convertToHours(data.consentDuration, data.consentDurationType)
+        ? convertToMinutes(data.consentDuration, data.consentDurationType)
         : null;
 
     // Prepare notice config
@@ -129,6 +128,16 @@ export const createNotice = createSafeAction(
       viewMode: data.noticeViewMode,
       attributesDefaultSelection: data.attributesDefaultSelection,
     };
+    const metadata = [...(data.metadata || [])];
+    if (
+      data.resourceId &&
+      !metadata.some((item) => item.key === NOTICE_METADATA_KEYS.RESOURCE_ID)
+    ) {
+      metadata.push({
+        key: NOTICE_METADATA_KEYS.RESOURCE_ID,
+        value: data.resourceId,
+      });
+    }
 
     // Create the notice with metadata
     const notice = await prisma.notice.create({
@@ -137,7 +146,7 @@ export const createNotice = createSafeAction(
         dataPrincipalId: data.dataPrincipalId,
         businessProcessId: data.businessProcessId,
         linkExpiresAt,
-        consentDuration: consentDurationInHours,
+        consentDuration: consentDurationInMinutes,
         noticeConfig,
         redirectionUrl: data.redirectionEndpoint || null,
         defaultLanguage: "en",
@@ -145,13 +154,13 @@ export const createNotice = createSafeAction(
         createdByUserId: user.id,
         markCompletedTimestamp: null,
         forMinor: data.forMinor || false,
-        metadata: data.metadata?.length
+        metadata: metadata.length
           ? {
-            create: data.metadata.map((item) => ({
-              key: item.key,
-              value: item.value,
-            })),
-          }
+              create: metadata.map((item) => ({
+                key: item.key,
+                value: item.value,
+              })),
+            }
           : undefined,
       },
       include: {
@@ -171,6 +180,7 @@ export const createNotice = createSafeAction(
         notice_id: notice.publicId,
         data_principal_id: notice.dataPrincipalId,
         reference_id: notice.referenceId,
+        resource_id: data.resourceId || null,
         business_process_code: notice.businessProcess.code,
         business_process_name: notice.businessProcess.name,
         business_process_version: notice.businessProcess.version,
@@ -187,5 +197,5 @@ export const createNotice = createSafeAction(
 
     revalidatePath("/cms/data-fiduciary/notices");
     return notice;
-  }
+  },
 );

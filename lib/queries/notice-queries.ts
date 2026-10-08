@@ -39,6 +39,34 @@ export async function findBusinessProcessByCodeAndVersion(
 }
 
 /**
+ * Find the latest published business process linked to a resource.
+ * @param resourceId - Dataset/resource UUID
+ * @returns latest published business process with basic info or null
+ */
+export async function findPublishedBusinessProcessByResourceId(
+  resourceId: string
+) {
+  const rows = await prisma.$queryRaw<
+    Array<{
+      id: number;
+      name: string;
+      code: string;
+      version: number;
+      status: string;
+    }>
+  >`
+    SELECT id, name, code, version, status
+    FROM business_processes
+    WHERE resource_id = ${resourceId}::uuid
+      AND status = 'published'
+    ORDER BY version DESC
+    LIMIT 1
+  `;
+
+  return rows[0] || null;
+}
+
+/**
  * Notice creation data interface
  */
 export interface NoticeCreationData {

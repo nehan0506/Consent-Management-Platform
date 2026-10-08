@@ -1,10 +1,10 @@
 /**
  * Open Bharat Digital Consent by IDfy
  * Copyright (c) 2025 Baldor Technologies Private Limited (IDfy)
- * 
+ *
  * This software is licensed under the Privy Public License.
  * See LICENSE.md for the full terms of use.
- * 
+ *
  * Unauthorized copying, modification, distribution, or commercial use
  * is strictly prohibited without prior written permission from IDfy.
  */
@@ -14,6 +14,31 @@ import { NOTICE_METADATA_KEYS } from "@/lib/constants/notice-metadata";
 
 // Validation regex for alphanumeric with allowed special characters
 const alphanumericWithSpecialChars = /^[a-zA-Z0-9()._\-\/\s]+$/;
+const durationUnitSchema = z.enum([
+  "minutes",
+  "hours",
+  "days",
+  "weeks",
+  "months",
+]);
+
+function durationToMinutes(
+  duration: number,
+  durationType: z.infer<typeof durationUnitSchema>,
+) {
+  switch (durationType) {
+    case "minutes":
+      return duration;
+    case "hours":
+      return duration * 60;
+    case "days":
+      return duration * 24 * 60;
+    case "weeks":
+      return duration * 24 * 7 * 60;
+    case "months":
+      return duration * 24 * 30 * 60;
+  }
+}
 
 export const createNoticeSchema = z
   .object({
@@ -23,7 +48,7 @@ export const createNoticeSchema = z
       .max(255, "Reference ID must not exceed 255 characters")
       .regex(
         alphanumericWithSpecialChars,
-        "Reference ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"
+        "Reference ID can only contain alphanumeric characters and these special characters: ( ) . _ - /",
       ),
     dataPrincipalId: z
       .string()
@@ -31,17 +56,18 @@ export const createNoticeSchema = z
       .max(255, "User ID must not exceed 255 characters")
       .regex(
         alphanumericWithSpecialChars,
-        "User ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"
+        "User ID can only contain alphanumeric characters and these special characters: ( ) . _ - /",
       ),
-    businessProcessId: z
-      .number()
-      .int()
-      .positive("Please select a process"),
+    resourceId: z
+      .uuid("Resource ID must be a valid UUID")
+      .optional()
+      .or(z.literal("")),
+    businessProcessId: z.number().int().positive("Please select a process"),
     noticeDuration: z
       .number()
       .int()
       .min(1, "Notice duration must be at least 1"),
-    noticeDurationType: z.enum(["hours", "days", "weeks", "months"]),
+    noticeDurationType: durationUnitSchema,
     noticeViewMode: z.enum(["purpose_of_processing", "purpose_of_consent"]),
     attributesDefaultSelection: z.enum(["mandatory", "all"]),
     redirectionEndpoint: z
@@ -49,16 +75,14 @@ export const createNoticeSchema = z
       .optional()
       .or(z.literal("")),
     consentDuration: z.number().int().min(1).optional(),
-    consentDurationType: z
-      .enum(["hours", "days", "weeks", "months"])
-      .optional(),
+    consentDurationType: durationUnitSchema.optional(),
     forMinor: z.boolean().optional().default(false),
     metadata: z
       .array(
         z.object({
           key: z.string().min(1, "Key is required"),
           value: z.string().min(1, "Value is required"),
-        })
+        }),
       )
       .max(20, "Maximum 20 metadata entries allowed")
       .optional(),
@@ -75,38 +99,26 @@ export const createNoticeSchema = z
     {
       message: "Duration type is required when consent duration is provided",
       path: ["consentDurationType"],
-    }
+    },
   )
   .refine(
     (data) => {
       // Validate maximum 6 months for notice duration across all duration types
       const { noticeDuration, noticeDurationType } = data;
 
-      // Convert to hours for comparison
-      let durationInHours = 0;
-      switch (noticeDurationType) {
-        case "hours":
-          durationInHours = noticeDuration;
-          break;
-        case "days":
-          durationInHours = noticeDuration * 24;
-          break;
-        case "weeks":
-          durationInHours = noticeDuration * 24 * 7;
-          break;
-        case "months":
-          durationInHours = noticeDuration * 24 * 30;
-          break;
-      }
+      const durationInMinutes = durationToMinutes(
+        noticeDuration,
+        noticeDurationType,
+      );
 
-      // 6 months = approximately 4320 hours (6 * 30 * 24)
-      const maxHours = 6 * 30 * 24;
-      return durationInHours <= maxHours;
+      // 6 months = approximately 259200 minutes (6 * 30 * 24 * 60)
+      const maxMinutes = 6 * 30 * 24 * 60;
+      return durationInMinutes <= maxMinutes;
     },
     {
       message: "Notice duration cannot exceed 6 months",
       path: ["noticeDuration"],
-    }
+    },
   );
 
 export type CreateNoticeData = z.infer<typeof createNoticeSchema>;
@@ -120,7 +132,7 @@ export const createNoticeApiSchema = z
       .max(255, "Reference ID must not exceed 255 characters")
       .regex(
         alphanumericWithSpecialChars,
-        "Reference ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"
+        "Reference ID can only contain alphanumeric characters and these special characters: ( ) . _ - /",
       ),
     data_principal_id: z
       .string()
@@ -128,17 +140,15 @@ export const createNoticeApiSchema = z
       .max(255, "User ID must not exceed 255 characters")
       .regex(
         alphanumericWithSpecialChars,
-        "User ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"
+        "User ID can only contain alphanumeric characters and these special characters: ( ) . _ - /",
       ),
-    business_process_id: z
-      .number()
-      .int()
-      .positive("Please select a process"),
+    resource_id: z.uuid().optional(),
+    business_process_id: z.number().int().positive("Please select a process"),
     notice_duration: z
       .number()
       .int()
       .min(1, "Notice duration must be at least 1"),
-    notice_duration_type: z.enum(["hours", "days", "weeks", "months"]),
+    notice_duration_type: durationUnitSchema,
     notice_view_mode: z.enum(["purpose_of_processing", "purpose_of_consent"]),
     attributes_default_selection: z.enum(["mandatory", "all"]),
     redirection_endpoint: z
@@ -146,9 +156,7 @@ export const createNoticeApiSchema = z
       .optional()
       .or(z.literal("")),
     consent_duration: z.number().int().min(1).optional(),
-    consent_duration_type: z
-      .enum(["hours", "days", "weeks", "months"])
-      .optional(),
+    consent_duration_type: durationUnitSchema.optional(),
   })
   .refine(
     (data) => {
@@ -162,38 +170,26 @@ export const createNoticeApiSchema = z
     {
       message: "Duration type is required when consent duration is provided",
       path: ["consent_duration_type"],
-    }
+    },
   )
   .refine(
     (data) => {
       // Validate maximum 6 months for notice duration across all duration types
       const { notice_duration, notice_duration_type } = data;
 
-      // Convert to hours for comparison
-      let durationInHours = 0;
-      switch (notice_duration_type) {
-        case "hours":
-          durationInHours = notice_duration;
-          break;
-        case "days":
-          durationInHours = notice_duration * 24;
-          break;
-        case "weeks":
-          durationInHours = notice_duration * 24 * 7;
-          break;
-        case "months":
-          durationInHours = notice_duration * 24 * 30;
-          break;
-      }
+      const durationInMinutes = durationToMinutes(
+        notice_duration,
+        notice_duration_type,
+      );
 
-      // 6 months = approximately 4320 hours (6 * 30 * 24)
-      const maxHours = 6 * 30 * 24;
-      return durationInHours <= maxHours;
+      // 6 months = approximately 259200 minutes (6 * 30 * 24 * 60)
+      const maxMinutes = 6 * 30 * 24 * 60;
+      return durationInMinutes <= maxMinutes;
     },
     {
       message: "Notice duration cannot exceed 6 months",
       path: ["notice_duration"],
-    }
+    },
   );
 
 export type CreateNoticeApiData = z.infer<typeof createNoticeApiSchema>;
@@ -207,7 +203,7 @@ export const createGrantNoticeApiSchema = z
       .max(255, "Reference ID must not exceed 255 characters")
       .regex(
         alphanumericWithSpecialChars,
-        "Reference ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"
+        "Reference ID can only contain alphanumeric characters and these special characters: ( ) . _ - /",
       ),
     data_principal_id: z
       .string()
@@ -215,8 +211,9 @@ export const createGrantNoticeApiSchema = z
       .max(255, "User ID must not exceed 255 characters")
       .regex(
         alphanumericWithSpecialChars,
-        "User ID can only contain alphanumeric characters and these special characters: ( ) . _ - /"
+        "User ID can only contain alphanumeric characters and these special characters: ( ) . _ - /",
       ),
+    resource_id: z.uuid().optional(),
     notice_settings: z.object({
       expires_in_hours: z
         .number()
@@ -237,19 +234,18 @@ export const createGrantNoticeApiSchema = z
         .min(1, "Consent expiration must be at least 1 hour")
         .optional(),
     }),
-    business_process: z.object({
-      code: z.string().min(1, "Process code is required"),
-      version: z
-        .number()
-        .int()
-        .positive("Process version must be positive"),
-    }),
+    business_process: z
+      .object({
+        code: z.string().min(1, "Process code is required"),
+        version: z.number().int().positive("Process version must be positive"),
+      })
+      .optional(),
     metadata: z
       .array(
         z.object({
           key: z.string().min(1, "Metadata key is required"),
           value: z.string().min(1, "Metadata value is required"),
-        })
+        }),
       )
       .optional(),
     for_minor: z.boolean().optional().default(false),
@@ -263,10 +259,10 @@ export const createGrantNoticeApiSchema = z
         }
 
         const hasMajorId = data.metadata.some(
-          (m) => m.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID
+          (m) => m.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID,
         );
         const hasRelationship = data.metadata.some(
-          (m) => m.key === NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR
+          (m) => m.key === NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR,
         );
 
         return hasMajorId && hasRelationship;
@@ -277,14 +273,14 @@ export const createGrantNoticeApiSchema = z
       message:
         "When for_minor is true, metadata must include major_dataprincipal_id and relationship_with_minor fields",
       path: ["metadata"],
-    }
+    },
   )
   .refine(
     (data) => {
       // If for_minor is true, validate major_dataprincipal_id format
       if (data.for_minor && data.metadata) {
         const majorMetadata = data.metadata.find(
-          (m) => m.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID
+          (m) => m.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID,
         );
         if (majorMetadata) {
           const majorIdValue = majorMetadata.value.trim();
@@ -302,14 +298,14 @@ export const createGrantNoticeApiSchema = z
       message:
         "Major User ID must be at least 3 characters and in valid UUID format",
       path: ["metadata"],
-    }
+    },
   )
   .refine(
     (data) => {
       // If for_minor is true, validate relationship_with_minor is not empty
       if (data.for_minor && data.metadata) {
         const relationshipMetadata = data.metadata.find(
-          (m) => m.key === NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR
+          (m) => m.key === NOTICE_METADATA_KEYS.RELATIONSHIP_WITH_MINOR,
         );
         if (relationshipMetadata) {
           return relationshipMetadata.value.trim().length > 0;
@@ -321,7 +317,7 @@ export const createGrantNoticeApiSchema = z
       message:
         "Relationship with minor must not be empty when for_minor is true",
       path: ["metadata"],
-    }
+    },
   );
 
 export type CreateGrantNoticeApiData = z.infer<

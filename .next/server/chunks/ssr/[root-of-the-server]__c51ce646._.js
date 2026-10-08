@@ -515,6 +515,8 @@ function createSafeAction(permission, schema, handler) {
  * Unauthorized copying, modification, distribution, or commercial use
  * is strictly prohibited without prior written permission from IDfy.
  */ __turbopack_context__.s([
+    "piiActionValues",
+    ()=>piiActionValues,
     "userAttributeSchema",
     ()=>userAttributeSchema,
     "userAttributeUpdateSchema",
@@ -522,13 +524,21 @@ function createSafeAction(permission, schema, handler) {
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__ = __turbopack_context__.i("[project]/node_modules/zod/v4/classic/external.js [app-rsc] (ecmascript) <export * as z>");
 ;
+const piiActionValues = [
+    "ALLOW",
+    "DENY",
+    "MASK",
+    "REDACT"
+];
 const userAttributeSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
     name: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "Name should be atleast 3 characters long"),
-    pii: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].boolean()
+    pii: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].boolean(),
+    piiAction: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].enum(piiActionValues)
 });
 const userAttributeUpdateSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
     name: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "Name should be atleast 3 characters long"),
-    pii: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].boolean()
+    pii: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].boolean(),
+    piiAction: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].enum(piiActionValues)
 });
 }),
 "[project]/lib/services/user-attributes-service.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
@@ -561,62 +571,119 @@ const userAttributeUpdateSchema = __TURBOPACK__imported__module__$5b$project$5d2
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/prisma.ts [app-rsc] (ecmascript)");
 ;
+function normalizeUserAttribute(row) {
+    return {
+        ...row,
+        piiAction: row.piiAction || "ALLOW",
+        supportedLanguages: row.supportedLanguages || [
+            "en"
+        ]
+    };
+}
 async function getAllUserAttributes() {
     try {
-        const userAttributes = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].userAttribute.findMany({
-            orderBy: {
-                updatedAt: "desc"
-            }
-        });
-        return userAttributes;
+        const userAttributes = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].$queryRaw`
+      SELECT
+        id,
+        name,
+        pii,
+        pii_action AS "piiAction",
+        supported_languages AS "supportedLanguages",
+        translations,
+        created_at AS "createdAt",
+        updated_at AS "updatedAt"
+      FROM user_attributes
+      ORDER BY updated_at DESC
+    `;
+        return userAttributes.map(normalizeUserAttribute);
     } catch (error) {
         console.error("Error fetching user attributes:", error);
-        throw new Error("Failed to fetch user attributes");
+        throw new Error("Failed to fetch purpose attributes");
     }
 }
 async function getUserAttributeById(id) {
     try {
-        const userAttribute = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].userAttribute.findUnique({
-            where: {
-                id
-            }
-        });
-        return userAttribute;
+        const [userAttribute] = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].$queryRaw`
+      SELECT
+        id,
+        name,
+        pii,
+        pii_action AS "piiAction",
+        supported_languages AS "supportedLanguages",
+        translations,
+        created_at AS "createdAt",
+        updated_at AS "updatedAt"
+      FROM user_attributes
+      WHERE id = ${id}
+      LIMIT 1
+    `;
+        return userAttribute ? normalizeUserAttribute(userAttribute) : null;
     } catch (error) {
         console.error("Error fetching user attribute:", error);
-        throw new Error("Failed to fetch user attribute");
+        throw new Error("Failed to fetch purpose attribute");
     }
 }
 async function createUserAttribute(data) {
     try {
-        const userAttribute = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].userAttribute.create({
-            data: {
-                name: data.name,
-                pii: data.pii,
-                supportedLanguages: data.supportedLanguages || [
-                    "en"
-                ],
-                translations: {}
-            }
-        });
-        return userAttribute;
+        const [userAttribute] = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].$queryRaw`
+      INSERT INTO user_attributes (
+        name,
+        pii,
+        pii_action,
+        supported_languages,
+        translations,
+        created_at,
+        updated_at
+      )
+      VALUES (
+        ${data.name},
+        ${data.pii},
+        ${data.piiAction},
+        ARRAY['en']::TEXT[],
+        '{}'::jsonb,
+        NOW(),
+        NOW()
+      )
+      RETURNING
+        id,
+        name,
+        pii,
+        pii_action AS "piiAction",
+        supported_languages AS "supportedLanguages",
+        translations,
+        created_at AS "createdAt",
+        updated_at AS "updatedAt"
+    `;
+        return normalizeUserAttribute(userAttribute);
     } catch (error) {
         console.error("Error creating user attribute:", error);
-        throw new Error("Failed to create user attribute");
+        throw new Error("Failed to create purpose attribute");
     }
 }
 async function updateUserAttribute(id, data) {
     try {
-        const userAttribute = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].userAttribute.update({
-            where: {
-                id
-            },
-            data
-        });
-        return userAttribute;
+        const [userAttribute] = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].$queryRaw`
+      UPDATE user_attributes
+      SET
+        name = ${data.name},
+        pii = ${data.pii},
+        pii_action = ${data.piiAction},
+        updated_at = NOW()
+      WHERE id = ${id}
+      RETURNING
+        id,
+        name,
+        pii,
+        pii_action AS "piiAction",
+        supported_languages AS "supportedLanguages",
+        translations,
+        created_at AS "createdAt",
+        updated_at AS "updatedAt"
+    `;
+        return userAttribute ? normalizeUserAttribute(userAttribute) : null;
     } catch (error) {
         console.error("Error updating user attribute:", error);
-        throw new Error("Failed to update user attribute");
+        throw new Error("Failed to update purpose attribute");
     }
 }
 async function deleteUserAttribute(id) {
@@ -631,7 +698,7 @@ async function deleteUserAttribute(id) {
         };
     } catch (error) {
         console.error("Error deleting user attribute:", error);
-        throw new Error("Failed to delete user attribute");
+        throw new Error("Failed to delete purpose attribute");
     }
 }
 async function getUserAttributeByName(name) {
@@ -647,7 +714,7 @@ async function getUserAttributeByName(name) {
         return userAttribute;
     } catch (error) {
         console.error("Error fetching user attribute by name:", error);
-        throw new Error("Failed to fetch user attribute");
+        throw new Error("Failed to fetch purpose attribute");
     }
 }
 async function checkUserAttributeNameExists(name, excludeId) {
@@ -670,7 +737,7 @@ async function checkUserAttributeNameExists(name, excludeId) {
         return true;
     } catch (error) {
         console.error("Error checking user attribute name:", error);
-        throw new Error("Failed to check user attribute name");
+        throw new Error("Failed to check purpose attribute name");
     }
 }
 }),
@@ -749,7 +816,7 @@ const createUserAttribute = (0, __TURBOPACK__imported__module__$5b$project$5d2f$
     // Check if name already exists (case-insensitive)
     const nameExists = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$user$2d$attributes$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["checkUserAttributeNameExists"])(data.name);
     if (nameExists) {
-        throw new Error("User attribute name already exists");
+        throw new Error("Purpose attribute name already exists");
     }
     const userAttribute = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$user$2d$attributes$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createUserAttribute"])(data);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])("/cms/data-fiduciary/user-attributes");
@@ -766,7 +833,7 @@ const updateUserAttribute = (0, __TURBOPACK__imported__module__$5b$project$5d2f$
     // Check if name already exists (excluding current user attribute)
     const nameExists = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$user$2d$attributes$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["checkUserAttributeNameExists"])(input.data.name, input.id);
     if (nameExists) {
-        throw new Error("User attribute name already exists");
+        throw new Error("Purpose attribute name already exists");
     }
     const userAttribute = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$user$2d$attributes$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updateUserAttribute"])(input.id, input.data);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])("/cms/data-fiduciary/user-attributes");

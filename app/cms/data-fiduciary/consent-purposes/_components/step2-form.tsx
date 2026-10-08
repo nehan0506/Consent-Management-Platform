@@ -308,6 +308,33 @@ export function Step2Form({ data, isEdit, consentPurposeId }: Step2FormProps) {
     return attr?.name || "Unknown";
   };
 
+  const getUserAttribute = (name: string) =>
+    userAttributes.find((attr: any) => attr.name === name);
+
+  const renderAttributeBadge = (attrName: string) => {
+    const attr = getUserAttribute(attrName);
+
+    return (
+      <Badge
+        key={attrName}
+        variant="outline"
+        className="text-xs flex items-center gap-1"
+      >
+        {attrName}
+        {attr?.pii && (
+          <span className="rounded-full bg-muted px-1.5 py-0.5 text-[10px] font-medium">
+            PII
+          </span>
+        )}
+        {attr?.piiAction && (
+          <span className="rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700">
+            {attr.piiAction}
+          </span>
+        )}
+      </Badge>
+    );
+  };
+
   return (
     <div className="h-full flex flex-col">
       {/* Header - Fixed */}
@@ -370,15 +397,7 @@ export function Step2Form({ data, isEdit, consentPurposeId }: Step2FormProps) {
                       </TableCell>
                       <TableCell className="border-r">
                         <div className="flex flex-wrap gap-1">
-                          {purpose.userAttributeNames.map((attrName) => (
-                            <Badge
-                              key={attrName}
-                              variant="outline"
-                              className="text-xs"
-                            >
-                              {attrName}
-                            </Badge>
-                          ))}
+                          {purpose.userAttributeNames.map(renderAttributeBadge)}
                         </div>
                       </TableCell>
                       <TableCell className="text-center">
@@ -421,15 +440,7 @@ export function Step2Form({ data, isEdit, consentPurposeId }: Step2FormProps) {
                       </TableCell>
                       <TableCell>
                         <div className="flex flex-wrap gap-1">
-                          {purpose.userAttributeNames.map((attrName) => (
-                            <Badge
-                              key={attrName}
-                              variant="outline"
-                              className="text-xs"
-                            >
-                              {attrName}
-                            </Badge>
-                          ))}
+                          {purpose.userAttributeNames.map(renderAttributeBadge)}
                         </div>
                       </TableCell>
                       <TableCell className="text-center">

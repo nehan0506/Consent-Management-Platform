@@ -1,34 +1,44 @@
 /**
  * Open Bharat Digital Consent by IDfy
  * Copyright (c) 2025 Baldor Technologies Private Limited (IDfy)
- * 
+ *
  * This software is licensed under the Privy Public License.
  * See LICENSE.md for the full terms of use.
- * 
+ *
  * Unauthorized copying, modification, distribution, or commercial use
  * is strictly prohibited without prior written permission from IDfy.
  */
-
 
 // ============================================
 // FILE: app/api/consents/revoke/route.ts
 // ============================================
 // API route to fetch consents for the Revoke Consents tab
 
-import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+
+function formatDuration(minutes: number | null | undefined) {
+  if (!minutes) return "Not specified";
+  if (minutes < 60) return `${minutes} Minute${minutes === 1 ? "" : "s"}`;
+  if (minutes < 24 * 60) {
+    const hours = minutes / 60;
+    return `${Number(hours.toFixed(2))} Hour${hours === 1 ? "" : "s"}`;
+  }
+  const days = minutes / (24 * 60);
+  return `${Number(days.toFixed(2))} Day${days === 1 ? "" : "s"}`;
+}
 
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
-    const dataPrincipalId = searchParams.get('dataPrincipalId');
+    const dataPrincipalId = searchParams.get("dataPrincipalId");
 
     if (!dataPrincipalId) {
       return NextResponse.json(
-        { error: 'dataPrincipalId is required' },
-        { status: 400 }
+        { error: "dataPrincipalId is required" },
+        { status: 400 },
       );
     }
 
@@ -36,7 +46,7 @@ export async function GET(request: NextRequest) {
     const consents = await prisma.consent.findMany({
       where: {
         dataPrincipalId,
-        status: 'accepted',
+        status: "accepted",
       },
       include: {
         businessProcess: {
@@ -78,19 +88,18 @@ export async function GET(request: NextRequest) {
       const purposeId = consent.consentPurposeId;
 
       if (!serviceMap[bpId].purposes.has(purposeId)) {
-        const bpToPurpose = await prisma.businessProcessToConsentPurpose.findFirst({
-          where: {
-            businessProcessId: consent.businessProcess.id,
-            consentPurposeId: consent.consentPurpose.id,
-          },
-        });
+        const bpToPurpose =
+          await prisma.businessProcessToConsentPurpose.findFirst({
+            where: {
+              businessProcessId: consent.businessProcess.id,
+              consentPurposeId: consent.consentPurpose.id,
+            },
+          });
 
         serviceMap[bpId].purposes.set(purposeId, {
           id: purposeId,
           title: consent.consentPurpose.name,
-          duration: bpToPurpose?.consentDuration
-            ? `${bpToPurpose.consentDuration} Days`
-            : 'Not specified',
+          duration: formatDuration(bpToPurpose?.consentDuration),
           processingList: [],
         });
       }
@@ -98,14 +107,14 @@ export async function GET(request: NextRequest) {
       const purpose = serviceMap[bpId].purposes.get(purposeId);
 
       const existingProcessing = purpose.processingList.find(
-        (p: any) => p.id === consent.processingPurposeId
+        (p: any) => p.id === consent.processingPurposeId,
       );
 
       if (!existingProcessing) {
         purpose.processingList.push({
           id: consent.processingPurposeId,
           title: consent.processingPurpose.purposeOfProcessing.name,
-          description: consent.processingPurpose.description || '',
+          description: consent.processingPurpose.description || "",
           attributes: consent.userAttributeNames,
         });
       }
@@ -123,10 +132,10 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ services });
   } catch (error) {
-    console.error('Error fetching revoke consents:', error);
+    console.error("Error fetching revoke consents:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch consents' },
-      { status: 500 }
+      { error: "Failed to fetch consents" },
+      { status: 500 },
     );
   }
 }
@@ -145,20 +154,20 @@ export async function POST(request: NextRequest) {
         processingPurposeId: {
           in: revokeItems,
         },
-        status: 'accepted',
+        status: "accepted",
       },
       data: {
-        status: 'revoked',
+        status: "revoked",
         updatedAt: new Date(),
       },
     });
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error revoking consents:', error);
+    console.error("Error revoking consents:", error);
     return NextResponse.json(
-      { error: 'Failed to revoke consents' },
-      { status: 500 }
+      { error: "Failed to revoke consents" },
+      { status: 500 },
     );
   }
 }

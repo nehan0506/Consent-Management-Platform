@@ -40,6 +40,7 @@ export interface ConsentValidationOptions {
   dataPrincipalId?: string;
   referenceId?: string;
   consentId?: string;
+  resourceId?: string;
   processingPurposeIds?: string[];
   statuses?: string[];
 }
@@ -58,9 +59,26 @@ export async function findConsentsForValidation(
     dataPrincipalId,
     referenceId,
     consentId,
+    resourceId,
     processingPurposeIds,
     statuses = ["accepted", "revoked"],
   } = options;
+
+  let resourceConsentPublicIds: string[] | undefined;
+  if (resourceId) {
+    const matchingConsents = await prisma.$queryRaw<Array<{ public_id: string }>>`
+      SELECT public_id
+      FROM consents
+      WHERE resource_id = ${resourceId}::uuid
+    `;
+    resourceConsentPublicIds = matchingConsents.map(
+      (consent) => consent.public_id
+    );
+
+    if (resourceConsentPublicIds.length === 0) {
+      return [];
+    }
+  }
 
   // Build where conditions
   const whereConditions: any = {
@@ -79,7 +97,17 @@ export async function findConsentsForValidation(
   }
 
   if (consentId) {
+    if (
+      resourceConsentPublicIds &&
+      !resourceConsentPublicIds.includes(consentId)
+    ) {
+      return [];
+    }
     whereConditions.publicId = consentId;
+  } else if (resourceConsentPublicIds) {
+    whereConditions.publicId = {
+      in: resourceConsentPublicIds,
+    };
   }
 
   // Add processing purpose filtering if provided

@@ -10,19 +10,47 @@
  */
 
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import {
   UserAttributeFormSchema,
   UserAttributeUpdateData,
 } from "@/lib/schemas/user-attribute-schemas";
 
+type UserAttributeRow = {
+  id: number;
+  name: string;
+  pii: boolean;
+  piiAction: string | null;
+  supportedLanguages: string[] | null;
+  translations: Prisma.JsonValue | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+function normalizeUserAttribute(row: UserAttributeRow) {
+  return {
+    ...row,
+    piiAction: row.piiAction || "ALLOW",
+    supportedLanguages: row.supportedLanguages || ["en"],
+  };
+}
+
 export async function getAllUserAttributes() {
   try {
-    const userAttributes = await prisma.userAttribute.findMany({
-      orderBy: {
-        updatedAt: "desc",
-      },
-    });
-    return userAttributes;
+    const userAttributes = await prisma.$queryRaw<UserAttributeRow[]>`
+      SELECT
+        id,
+        name,
+        pii,
+        pii_action AS "piiAction",
+        supported_languages AS "supportedLanguages",
+        translations,
+        created_at AS "createdAt",
+        updated_at AS "updatedAt"
+      FROM user_attributes
+      ORDER BY updated_at DESC
+    `;
+    return userAttributes.map(normalizeUserAttribute);
   } catch (error) {
     console.error("Error fetching user attributes:", error);
     throw new Error("Failed to fetch purpose attributes");
@@ -31,10 +59,21 @@ export async function getAllUserAttributes() {
 
 export async function getUserAttributeById(id: number) {
   try {
-    const userAttribute = await prisma.userAttribute.findUnique({
-      where: { id },
-    });
-    return userAttribute;
+    const [userAttribute] = await prisma.$queryRaw<UserAttributeRow[]>`
+      SELECT
+        id,
+        name,
+        pii,
+        pii_action AS "piiAction",
+        supported_languages AS "supportedLanguages",
+        translations,
+        created_at AS "createdAt",
+        updated_at AS "updatedAt"
+      FROM user_attributes
+      WHERE id = ${id}
+      LIMIT 1
+    `;
+    return userAttribute ? normalizeUserAttribute(userAttribute) : null;
   } catch (error) {
     console.error("Error fetching user attribute:", error);
     throw new Error("Failed to fetch purpose attribute");
@@ -45,15 +84,36 @@ export async function createUserAttribute(
   data: UserAttributeFormSchema & { supportedLanguages?: string[] }
 ) {
   try {
-    const userAttribute = await prisma.userAttribute.create({
-      data: {
-        name: data.name,
-        pii: data.pii,
-        supportedLanguages: data.supportedLanguages || ["en"], // Default for now
-        translations: {}, // Explicitly initialize as empty object
-      },
-    });
-    return userAttribute;
+    const [userAttribute] = await prisma.$queryRaw<UserAttributeRow[]>`
+      INSERT INTO user_attributes (
+        name,
+        pii,
+        pii_action,
+        supported_languages,
+        translations,
+        created_at,
+        updated_at
+      )
+      VALUES (
+        ${data.name},
+        ${data.pii},
+        ${data.piiAction},
+        ARRAY['en']::TEXT[],
+        '{}'::jsonb,
+        NOW(),
+        NOW()
+      )
+      RETURNING
+        id,
+        name,
+        pii,
+        pii_action AS "piiAction",
+        supported_languages AS "supportedLanguages",
+        translations,
+        created_at AS "createdAt",
+        updated_at AS "updatedAt"
+    `;
+    return normalizeUserAttribute(userAttribute);
   } catch (error) {
     console.error("Error creating user attribute:", error);
     throw new Error("Failed to create purpose attribute");
@@ -65,11 +125,25 @@ export async function updateUserAttribute(
   data: UserAttributeUpdateData & { supportedLanguages?: string[] }
 ) {
   try {
-    const userAttribute = await prisma.userAttribute.update({
-      where: { id },
-      data,
-    });
-    return userAttribute;
+    const [userAttribute] = await prisma.$queryRaw<UserAttributeRow[]>`
+      UPDATE user_attributes
+      SET
+        name = ${data.name},
+        pii = ${data.pii},
+        pii_action = ${data.piiAction},
+        updated_at = NOW()
+      WHERE id = ${id}
+      RETURNING
+        id,
+        name,
+        pii,
+        pii_action AS "piiAction",
+        supported_languages AS "supportedLanguages",
+        translations,
+        created_at AS "createdAt",
+        updated_at AS "updatedAt"
+    `;
+    return userAttribute ? normalizeUserAttribute(userAttribute) : null;
   } catch (error) {
     console.error("Error updating user attribute:", error);
     throw new Error("Failed to update purpose attribute");

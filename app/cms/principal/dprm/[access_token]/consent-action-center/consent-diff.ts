@@ -1,23 +1,25 @@
 /**
  * Open Bharat Digital Consent by IDfy
  * Copyright (c) 2025 Baldor Technologies Private Limited (IDfy)
- * 
+ *
  * This software is licensed under the Privy Public License.
  * See LICENSE.md for the full terms of use.
- * 
+ *
  * Unauthorized copying, modification, distribution, or commercial use
  * is strictly prohibited without prior written permission from IDfy.
  */
 
 // lib/consent-diff.ts
 
-import { getBusinessProcessesByCode, getConsentNotice } from "@/lib/services/notices-service";
+import {
+  getBusinessProcessesByCode,
+  getConsentNotice,
+} from "@/lib/services/notices-service";
 import { PrismaClient } from "@prisma/client";
 
 // --- Assumed Import ---
 // We import your existing function just to get its return type.
 // Please adjust this path to where your `getBusinessProcessesByCode` function is located.
-
 
 // --- 1. Define the Types for the Change Notice ---
 
@@ -89,22 +91,24 @@ export type ConsentChanges = Record<string, ServiceData>;
 // --- 2. Helper Functions ---
 
 /**
- * Converts a duration in hours (from the DB) into a human-readable string.
+ * Converts a duration in minutes (from the DB) into a human-readable string.
  */
-function formatDuration(hours: number | null | undefined): string {
-  if (hours === null || typeof hours === "undefined") {
+function formatDuration(minutes: number | null | undefined): string {
+  if (minutes === null || typeof minutes === "undefined") {
     return "Not specified";
   }
-  if (hours > 720) {
+  if (minutes >= 60 * 24 * 30) {
     // Approx > 1 month
-    const years = Math.floor(hours / 8760);
+    const years = Math.floor(minutes / (60 * 24 * 365));
     if (years > 0) return `${years} year(s)`;
-    const months = Math.floor(hours / 720);
+    const months = Math.floor(minutes / (60 * 24 * 30));
     if (months > 0) return `${months} month(s)`;
   }
-  const days = Math.floor(hours / 24);
+  const days = Math.floor(minutes / (60 * 24));
   if (days > 0) return `${days} day(s)`;
-  return `${hours} hour(s)`;
+  const hours = Math.floor(minutes / 60);
+  if (hours > 0) return `${hours} hour(s)`;
+  return `${minutes} minute(s)`;
 }
 
 /**
@@ -178,7 +182,7 @@ export function regroupBpData(bp: TransformedBusinessProcess): ServiceData {
  */
 export function generateConsentDiff(
   oldData: ServiceData,
-  newData: ServiceData
+  newData: ServiceData,
 ): ServiceData | null {
   const changedService: ServiceData = {
     name: newData.name,
@@ -230,16 +234,16 @@ export function generateConsentDiff(
     if (purposeUpdates.length > 0) {
       purposeHasChanges = true;
       changedPurpose.updateNotice = `This purpose has been updated. Changes: ${purposeUpdates.join(
-        ", "
+        ", ",
       )}.`;
     }
 
     // --- Diff the Processing List ---
     const oldProcessing = new Map(
-      oldPurpose.processingList.map((p) => [p.id, p])
+      oldPurpose.processingList.map((p) => [p.id, p]),
     );
     const newProcessing = new Map(
-      newPurpose.processingList.map((p) => [p.id, p])
+      newPurpose.processingList.map((p) => [p.id, p]),
     );
 
     // --- Check for New and Modified Processing ---
@@ -277,10 +281,10 @@ export function generateConsentDiff(
       const newAttrs = new Set(newProcessingItem.attributes.list);
 
       const addedAttrs = newProcessingItem.attributes.list.filter(
-        (attr) => !oldAttrs.has(attr)
+        (attr) => !oldAttrs.has(attr),
       );
       const removedAttrs = oldProcessingItem.attributes.list.filter(
-        (attr) => !newAttrs.has(attr)
+        (attr) => !newAttrs.has(attr),
       );
 
       if (oldProcessingItem.title !== newProcessingItem.title)

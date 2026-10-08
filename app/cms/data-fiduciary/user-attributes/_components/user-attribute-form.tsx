@@ -28,9 +28,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  piiActionValues,
   UserAttributeFormSchema,
   userAttributeSchema,
-  UserAttributeUpdateData,
   userAttributeUpdateSchema,
 } from "@/lib/schemas/user-attribute-schemas";
 import { LanguageCode, SUPPORTED_LANGUAGES, LANGUAGE_CODES } from "@/lib/types/languages";
@@ -43,12 +50,15 @@ import { toast } from "sonner";
 import { Prisma } from "@prisma/client";
 import { AutoTranslateButton } from "@/components/translations/auto-translate-button";
 
+type PiiAction = (typeof piiActionValues)[number];
+
 interface UserAttributeFormProps {
   mode: "new" | "edit";
   userAttribute?: {
     id: number;
     name: string;
     pii: boolean;
+    piiAction: string | null;
     supportedLanguages: string[];
     translations: Prisma.JsonValue | null;
     createdAt: Date;
@@ -56,6 +66,9 @@ interface UserAttributeFormProps {
   };
   userAttributeId?: string;
 }
+
+const isPiiAction = (value: string | null | undefined): value is PiiAction =>
+  piiActionValues.includes(value as PiiAction);
 
 export function UserAttributeForm({
   mode,
@@ -77,7 +90,7 @@ export function UserAttributeForm({
 
   const schema = mode === "new" ? userAttributeSchema : userAttributeUpdateSchema;
 
-  const form = useForm<UserAttributeFormSchema | UserAttributeUpdateData>({
+  const form = useForm<UserAttributeFormSchema>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues:
@@ -85,10 +98,14 @@ export function UserAttributeForm({
         ? {
           name: "",
           pii: false,
+          piiAction: "ALLOW",
         }
         : {
           name: userAttribute?.name || "",
           pii: userAttribute?.pii || false,
+          piiAction: isPiiAction(userAttribute?.piiAction)
+            ? userAttribute.piiAction
+            : "ALLOW",
         },
   });
 
@@ -164,7 +181,7 @@ export function UserAttributeForm({
   };
 
   const onSubmit = async (
-    formData: UserAttributeFormSchema | UserAttributeUpdateData
+    formData: UserAttributeFormSchema
   ) => {
     setIsLoading(true);
     try {
@@ -194,7 +211,7 @@ export function UserAttributeForm({
         }
       } else {
         const id = parseInt(userAttributeId!);
-        result = await updateUserAttribute({ id, data: formData as UserAttributeUpdateData });
+        result = await updateUserAttribute({ id, data: formData });
 
         if (result.success) {
           // Always save English translation (from main name field)
@@ -309,6 +326,36 @@ export function UserAttributeForm({
                             Personally Identifiable Information (PII)
                           </FormLabel>
                         </div>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="piiAction"
+                    render={({ field }) => (
+                      <FormItem className="max-w-lg">
+                        <FormLabel>
+                          PII Action <span className="text-red-500">*</span>
+                        </FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select PII action" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {piiActionValues.map((action) => (
+                              <SelectItem key={action} value={action}>
+                                {action}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />

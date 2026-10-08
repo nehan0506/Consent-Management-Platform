@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { id, type, processing_purpose_codes } = validatedData;
+    const { id, type, processing_purpose_codes, resource_id } = validatedData;
 
     // Resolve processing purpose IDs if codes are provided
     let processingPurposeIds: string[] | undefined;
@@ -118,6 +118,7 @@ export async function POST(request: NextRequest) {
     const queryOptions: any = {
       processingPurposeIds,
       statuses: ["accepted", "revoked"],
+      resourceId: resource_id,
     };
 
     // Add identifier-based filtering

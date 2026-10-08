@@ -36,6 +36,7 @@ model BusinessProcess {
   updatedAt                        DateTime                          @updatedAt @map("updated_at")
   publishedAt                      DateTime?                         @map("published_at")
   businessUnitId                   Int                               @map("business_unit_id")
+  resourceId                       String?                           @db.Uuid @map("resource_id")
   template                         String                            @default("default") // Template to use for notice rendering: "default", "processing-purpose-only", "mandatory-non-mandatory-split"
   publicId                         String                            @unique @default(uuid()) @map("public_id")
   businessProcessRules             BusinessProcessRule[]
@@ -120,6 +121,7 @@ model UserAttribute {
   id                 Int      @id @default(autoincrement())
   name               String   @unique
   pii                Boolean  @default(false)
+  piiAction          String?  @map("pii_action")
   supportedLanguages String[] @default(["en"]) @map("supported_languages")
   translations       Json     @default("{}") // Language translations: { "en": { "name": "...", "description": "...", "placeholder": "..." }, "hi": { ... } }
   createdAt          DateTime @default(now()) @map("created_at")
@@ -184,7 +186,7 @@ model BusinessProcessRule {
 
 model BusinessProcessToConsentPurpose {
   id                Int             @id @default(autoincrement())
-  consentDuration   Float?          @map("consent_duration") // Canonical hours; supports fractional hours for minutes
+  consentDuration   Float?          @map("consent_duration") // Canonical minutes
   createdAt         DateTime        @default(now()) @map("created_at")
   updatedAt         DateTime        @updatedAt @map("updated_at")
   businessProcessId Int             @map("business_process_id")

@@ -21,6 +21,7 @@ import { WebhookEventType } from "@prisma/client";
 import { createConsents } from "./consents-service";
 import { triggerWebhookEvent } from "./webhook-service";
 import { sendForArtifactCreation } from "./artifact-creation-service";
+import { getAllUserAttributes } from "./user-attributes-service";
 
 // Notice submission validation interfaces
 export interface NoticeSubmissionValidationError {
@@ -38,6 +39,12 @@ export interface NoticeConsentAcceptanceResult {
   success: boolean;
   message?: string;
   errors?: NoticeSubmissionValidationError[];
+}
+
+async function getUserAttributesByNames(names: Iterable<string>) {
+  const namesSet = new Set(names);
+  const userAttributes = await getAllUserAttributes();
+  return userAttributes.filter((attribute) => namesSet.has(attribute.name));
 }
 
 // Notice submission validation functions
@@ -316,20 +323,7 @@ export async function getBusinessProcessWithFullDataById(
     });
 
     // Fetch user attributes
-    const userAttributes = await prisma.userAttribute.findMany({
-      where: {
-        name: {
-          in: Array.from(userAttributeNames),
-        },
-      },
-      select: {
-        id: true,
-        name: true,
-        pii: true,
-        translations: true,
-        supportedLanguages: true,
-      },
-    });
+    const userAttributes = await getUserAttributesByNames(userAttributeNames);
 
     // Create a map for quick lookup by name
     const userAttributesMap = new Map(
@@ -482,20 +476,7 @@ export async function getNoticeWithFullDataByPublicId(publicId: string) {
     });
 
     // Fetch user attributes
-    const userAttributes = await prisma.userAttribute.findMany({
-      where: {
-        name: {
-          in: Array.from(userAttributeNames),
-        },
-      },
-      select: {
-        id: true,
-        name: true,
-        pii: true,
-        translations: true,
-        supportedLanguages: true,
-      },
-    });
+    const userAttributes = await getUserAttributesByNames(userAttributeNames);
 
     // Create a map for quick lookup by name
     const userAttributesMap = new Map(
@@ -530,7 +511,9 @@ export async function getNoticeWithFullDataByPublicId(publicId: string) {
               code: rule.consentPurpose.code,
               description: rule.consentPurpose.description,
               consentDuration:
-                consentDurationMap.get(rule.consentPurpose.id) || null,
+                consentDurationMap.get(rule.consentPurpose.id) ??
+                notice.consentDuration ??
+                null,
               mandatory: false, // Will be computed in view mode processing
               translations: rule.consentPurpose.translations,
               supportedLanguages: rule.consentPurpose.supportedLanguages,
@@ -642,20 +625,9 @@ export async function getBusinessProcessesByCode(
       });
     });
 
-    const userAttributes = await prisma.userAttribute.findMany({
-      where: {
-        name: {
-          in: Array.from(allUserAttributeNames),
-        },
-      },
-      select: {
-        id: true,
-        name: true,
-        pii: true,
-        translations: true,
-        supportedLanguages: true,
-      },
-    });
+    const userAttributes = await getUserAttributesByNames(
+      allUserAttributeNames,
+    );
 
     const userAttributesMap = new Map(
       userAttributes.map((ua) => [ua.name, ua]),

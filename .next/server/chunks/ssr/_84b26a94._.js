@@ -1121,13 +1121,13 @@ function UserAttributesTable({ data, onEdit, onView, onDelete, filterValue = "",
                             className: "ml-2 h-4 w-4"
                         }, void 0, false, {
                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
-                            lineNumber: 60,
+                            lineNumber: 61,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
-                    lineNumber: 55,
+                    lineNumber: 56,
                     columnNumber: 11
                 }, this);
             },
@@ -1136,7 +1136,7 @@ function UserAttributesTable({ data, onEdit, onView, onDelete, filterValue = "",
                     children: row.getValue("name")
                 }, void 0, false, {
                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
-                    lineNumber: 65,
+                    lineNumber: 66,
                     columnNumber: 9
                 }, this)
         },
@@ -1150,10 +1150,22 @@ function UserAttributesTable({ data, onEdit, onView, onDelete, filterValue = "",
                     children: isPii ? "PII" : "Non-PII"
                 }, void 0, false, {
                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
-                    lineNumber: 74,
+                    lineNumber: 75,
                     columnNumber: 11
                 }, this);
             }
+        },
+        {
+            accessorKey: "piiAction",
+            header: "PII Action",
+            cell: ({ row })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
+                    variant: "outline",
+                    children: row.getValue("piiAction") || "ALLOW"
+                }, void 0, false, {
+                    fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
+                    lineNumber: 85,
+                    columnNumber: 9
+                }, this)
         },
         {
             accessorKey: "supportedLanguages",
@@ -1172,12 +1184,12 @@ function UserAttributesTable({ data, onEdit, onView, onDelete, filterValue = "",
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
-                        lineNumber: 88,
+                        lineNumber: 98,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
-                    lineNumber: 87,
+                    lineNumber: 97,
                     columnNumber: 11
                 }, this);
             }
@@ -1194,13 +1206,13 @@ function UserAttributesTable({ data, onEdit, onView, onDelete, filterValue = "",
                             className: "ml-2 h-4 w-4"
                         }, void 0, false, {
                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
-                            lineNumber: 102,
+                            lineNumber: 112,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
-                    lineNumber: 97,
+                    lineNumber: 107,
                     columnNumber: 11
                 }, this);
             },
@@ -1224,7 +1236,7 @@ function UserAttributesTable({ data, onEdit, onView, onDelete, filterValue = "",
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
-                    lineNumber: 109,
+                    lineNumber: 119,
                     columnNumber: 11
                 }, this);
             }
@@ -1247,7 +1259,7 @@ function UserAttributesTable({ data, onEdit, onView, onDelete, filterValue = "",
                     }
                 }, void 0, false, {
                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
-                    lineNumber: 137,
+                    lineNumber: 147,
                     columnNumber: 11
                 }, this);
             }
@@ -1268,7 +1280,7 @@ function UserAttributesTable({ data, onEdit, onView, onDelete, filterValue = "",
         getItemName: (userAttribute)=>userAttribute.name
     }, void 0, false, {
         fileName: "[project]/app/cms/data-fiduciary/user-attributes/user-attributes-table.tsx",
-        lineNumber: 157,
+        lineNumber: 167,
         columnNumber: 5
     }, this);
 }

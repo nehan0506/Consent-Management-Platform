@@ -1,10 +1,10 @@
 /**
  * Open Bharat Digital Consent by IDfy
  * Copyright (c) 2025 Baldor Technologies Private Limited (IDfy)
- * 
+ *
  * This software is licensed under the Privy Public License.
  * See LICENSE.md for the full terms of use.
- * 
+ *
  * Unauthorized copying, modification, distribution, or commercial use
  * is strictly prohibited without prior written permission from IDfy.
  */
@@ -16,6 +16,7 @@ import {
   createNoticeMetadata,
   createNoticeRecord,
   findBusinessProcessByCodeAndVersion,
+  findPublishedBusinessProcessByResourceId,
 } from "@/lib/queries/notice-queries";
 import {
   createGrantNoticeApiSchema,
@@ -28,6 +29,7 @@ import {
 import { triggerWebhookEvent } from "@/lib/services/webhook-service";
 import { WebhookEventType } from "@prisma/client";
 import { NextRequest } from "next/server";
+import { NOTICE_METADATA_KEYS } from "@/lib/constants/notice-metadata";
 
 /**
  * Create Grant Notice API
@@ -50,7 +52,8 @@ import { NextRequest } from "next/server";
  *     "consent_settings": {
  *       "expires_in_hours"?: number
  *     },
- *     "business_process": {
+ *     "resource_id": string,
+ *     "business_process"?: {
  *       "code": string,
  *       "version": number
  *     },
@@ -100,19 +103,32 @@ export async function POST(request: NextRequest) {
     } catch (error: any) {
       return ApiErrors.validationError(
         "Invalid request body",
-        error.errors || error.message
+        error.errors || error.message,
       );
     }
 
-    // Find business process by code and version
-    const businessProcess = await findBusinessProcessByCodeAndVersion(
-      validatedData.business_process.code,
-      validatedData.business_process.version
-    );
+    let businessProcess = validatedData.resource_id
+      ? await findPublishedBusinessProcessByResourceId(
+          validatedData.resource_id,
+        )
+      : null;
+
+    if (!businessProcess && validatedData.business_process) {
+      businessProcess = await findBusinessProcessByCodeAndVersion(
+        validatedData.business_process.code,
+        validatedData.business_process.version,
+      );
+    }
+
+    if (!businessProcess && validatedData.resource_id) {
+      return ApiErrors.notFound(
+        `No published process found for resource '${validatedData.resource_id}'`,
+      );
+    }
 
     if (!businessProcess) {
-      return ApiErrors.notFound(
-        `Process with code '${validatedData.business_process.code}' and version '${validatedData.business_process.version}' not found`
+      return ApiErrors.validationError(
+        "Either resource_id or business_process is required",
       );
     }
 
@@ -126,12 +142,14 @@ export async function POST(request: NextRequest) {
     // Calculate link expiry date from hours
     const linkExpiresAt = new Date(
       Date.now() +
-      validatedData.notice_settings.expires_in_hours * 60 * 60 * 1000
+        validatedData.notice_settings.expires_in_hours * 60 * 60 * 1000,
     );
 
-    // Calculate consent duration in hours if provided
-    const consentDurationInHours =
-      validatedData.consent_settings.expires_in_hours || null;
+    // Store consent duration canonically in minutes.
+    const consentDurationInMinutes =
+      validatedData.consent_settings.expires_in_hours !== undefined
+        ? validatedData.consent_settings.expires_in_hours * 60
+        : null;
 
     // Prepare notice config
     const noticeConfig = {
@@ -145,7 +163,7 @@ export async function POST(request: NextRequest) {
       dataPrincipalId: validatedData.data_principal_id,
       businessProcessId: businessProcess.id,
       linkExpiresAt,
-      consentDuration: consentDurationInHours,
+      consentDuration: consentDurationInMinutes,
       noticeConfig,
       redirectionUrl: validatedData.notice_settings.redirection_url || null,
       defaultLanguage: validatedData.notice_settings.default_language,
@@ -154,9 +172,20 @@ export async function POST(request: NextRequest) {
       forMinor: validatedData.for_minor || false,
     });
 
+    const metadata = [...(validatedData.metadata || [])];
+    if (
+      validatedData.resource_id &&
+      !metadata.some((item) => item.key === NOTICE_METADATA_KEYS.RESOURCE_ID)
+    ) {
+      metadata.push({
+        key: NOTICE_METADATA_KEYS.RESOURCE_ID,
+        value: validatedData.resource_id,
+      });
+    }
+
     // Create metadata if provided
-    if (validatedData.metadata && validatedData.metadata.length > 0) {
-      await createNoticeMetadata(notice.id, validatedData.metadata);
+    if (metadata.length > 0) {
+      await createNoticeMetadata(notice.id, metadata);
     }
 
     // Generate notice links
@@ -168,6 +197,7 @@ export async function POST(request: NextRequest) {
       notice_id: notice.publicId,
       data_principal_id: notice.dataPrincipalId,
       reference_id: notice.referenceId,
+      resource_id: validatedData.resource_id || null,
       business_process_code: notice.businessProcess.code,
       business_process_name: notice.businessProcess.name,
       business_process_version: businessProcess.version,
@@ -185,6 +215,7 @@ export async function POST(request: NextRequest) {
       notice_id: notice.publicId,
       data_principal_id: notice.dataPrincipalId,
       reference_id: notice.referenceId,
+      resource_id: validatedData.resource_id || null,
       business_process_name: notice.businessProcess.name,
       business_process_code: notice.businessProcess.code,
       status: notice.status,

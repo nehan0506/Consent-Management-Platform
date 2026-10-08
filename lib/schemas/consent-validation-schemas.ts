@@ -55,6 +55,7 @@ export const consentValidationSchema = z
   .object({
     id: z.string().min(1, "ID is required"),
     type: z.enum(["data_principal_id", "reference_id", "consent_id"]),
+    resource_id: z.uuid().optional(),
     processing_purpose_codes: z
       .array(z.string().min(1, "Processing purpose code cannot be empty"))
       .optional()

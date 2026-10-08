@@ -19,6 +19,51 @@ interface BaselineInitializerProps {
   businessProcessId?: string;
 }
 
+function convertMinutesToDuration(minutes: number): {
+  consentDuration: number;
+  durationUnit: "minutes" | "hours" | "days" | "weeks" | "months" | "years";
+} {
+  if (minutes < 60) {
+    return {
+      consentDuration: minutes,
+      durationUnit: "minutes",
+    };
+  }
+
+  if (Number.isInteger(minutes / (60 * 24 * 365))) {
+    return {
+      consentDuration: minutes / (60 * 24 * 365),
+      durationUnit: "years",
+    };
+  }
+
+  if (Number.isInteger(minutes / (60 * 24 * 30))) {
+    return {
+      consentDuration: minutes / (60 * 24 * 30),
+      durationUnit: "months",
+    };
+  }
+
+  if (Number.isInteger(minutes / (60 * 24 * 7))) {
+    return {
+      consentDuration: minutes / (60 * 24 * 7),
+      durationUnit: "weeks",
+    };
+  }
+
+  if (Number.isInteger(minutes / (60 * 24))) {
+    return {
+      consentDuration: minutes / (60 * 24),
+      durationUnit: "days",
+    };
+  }
+
+  return {
+    consentDuration: minutes / 60,
+    durationUnit: "hours",
+  };
+}
+
 /**
  * Baseline Initializer Component
  *
@@ -48,6 +93,7 @@ export function BaselineInitializer({
         name: businessProcess.name || "",
         code: businessProcess.code || "",
         businessUnitId: businessProcess.businessUnitId || 0,
+        resourceId: businessProcess.resourceId || "",
         grantDescription: businessProcess.grantDescription || "",
         revokeDescription: businessProcess.revokeDescription || "",
         reconsentDescription: businessProcess.reconsentDescription || "",
@@ -70,7 +116,7 @@ export function BaselineInitializer({
               retentionDurationUnit: rule.retentionDurationUnit,
             }));
 
-            // Convert hours back to duration
+            // Convert stored minutes back to duration
             let durationType: "until_purpose_met" | "custom_duration" =
               "until_purpose_met";
             let consentDuration: number | undefined;
@@ -89,16 +135,11 @@ export function BaselineInitializer({
               relation.consentDuration > 0
             ) {
               durationType = "custom_duration";
-              if (relation.consentDuration < 1) {
-                consentDuration = Math.round(relation.consentDuration * 60);
-                durationUnit = "minutes";
-              } else if (relation.consentDuration < 24) {
-                consentDuration = relation.consentDuration;
-                durationUnit = "hours";
-              } else {
-                consentDuration = Math.round(relation.consentDuration / 24);
-                durationUnit = "days";
-              }
+              const convertedDuration = convertMinutesToDuration(
+                relation.consentDuration,
+              );
+              consentDuration = convertedDuration.consentDuration;
+              durationUnit = convertedDuration.durationUnit;
             }
 
             return {

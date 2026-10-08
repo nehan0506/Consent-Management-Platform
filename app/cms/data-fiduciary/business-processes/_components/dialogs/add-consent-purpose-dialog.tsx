@@ -255,6 +255,33 @@ export function AddConsentPurposeDialog({
     return attribute?.name || `Attribute ${id}`;
   };
 
+  const getUserAttribute = (name: string) =>
+    userAttributes.find((attribute) => attribute.name === name);
+
+  const renderAttributeBadge = (attrName: string) => {
+    const attr = getUserAttribute(attrName);
+
+    return (
+      <Badge
+        key={attrName}
+        variant="secondary"
+        className="text-xs flex items-center gap-1"
+      >
+        {attrName}
+        {attr?.pii && (
+          <span className="rounded-full bg-muted px-1.5 py-0.5 text-[10px] font-medium">
+            PII
+          </span>
+        )}
+        {attr?.piiAction && (
+          <span className="rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700">
+            {attr.piiAction}
+          </span>
+        )}
+      </Badge>
+    );
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-6xl h-[700px] flex flex-col">
@@ -499,15 +526,9 @@ export function AddConsentPurposeDialog({
                             </TableCell>
                             <TableCell className="border-r">
                               <div className="flex flex-wrap gap-1">
-                                {rule.userAttributeNames.map((attrName) => (
-                                  <Badge
-                                    key={attrName}
-                                    variant="secondary"
-                                    className="text-xs"
-                                  >
-                                    {attrName}
-                                  </Badge>
-                                ))}
+                                {rule.userAttributeNames.map(
+                                  renderAttributeBadge,
+                                )}
                               </div>
                             </TableCell>
                             <TableCell className="text-center">

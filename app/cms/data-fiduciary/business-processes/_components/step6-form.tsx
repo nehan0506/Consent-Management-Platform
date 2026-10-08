@@ -385,6 +385,16 @@ export function Step6Form({ data, isEdit, businessProcessId }: Step6FormProps) {
                       "Not specified"}
                   </p>
                 </div>
+                <div>
+                  <span className="font-medium text-muted-foreground">
+                    Resource ID:
+                  </span>
+                  <p className="mt-1 break-all">
+                    {step1Data?.resourceId ||
+                      businessProcess?.resourceId ||
+                      "Not specified"}
+                  </p>
+                </div>
               </div>
 
               {/* Right Column */}

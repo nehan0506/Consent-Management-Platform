@@ -1,13 +1,11 @@
 {
   "/cms/api/auth/[...nextauth]/route": "app/cms/api/auth/[...nextauth]/route.js",
+  "/cms/api/v1/consents/attribute-actions/route": "app/cms/api/v1/consents/attribute-actions/route.js",
+  "/cms/api/v1/consents/validate/route": "app/cms/api/v1/consents/validate/route.js",
+  "/cms/api/v1/notices/grant/route": "app/cms/api/v1/notices/grant/route.js",
+  "/cms/data-fiduciary/api-keys/page": "app/cms/data-fiduciary/api-keys/page.js",
   "/cms/data-fiduciary/business-processes/[id]/edit/page": "app/cms/data-fiduciary/business-processes/[id]/edit/page.js",
   "/cms/data-fiduciary/business-processes/[id]/page": "app/cms/data-fiduciary/business-processes/[id]/page.js",
-  "/cms/data-fiduciary/business-processes/new/page": "app/cms/data-fiduciary/business-processes/new/page.js",
   "/cms/data-fiduciary/business-processes/page": "app/cms/data-fiduciary/business-processes/page.js",
-  "/cms/data-fiduciary/business-units/page": "app/cms/data-fiduciary/business-units/page.js",
-  "/cms/data-fiduciary/consent-purposes/[id]/edit/page": "app/cms/data-fiduciary/consent-purposes/[id]/edit/page.js",
-  "/cms/data-fiduciary/consent-purposes/page": "app/cms/data-fiduciary/consent-purposes/page.js",
-  "/cms/data-fiduciary/dashboard/page": "app/cms/data-fiduciary/dashboard/page.js",
-  "/cms/data-fiduciary/user-attributes/new/page": "app/cms/data-fiduciary/user-attributes/new/page.js",
-  "/cms/data-fiduciary/user-attributes/page": "app/cms/data-fiduciary/user-attributes/page.js"
+  "/cms/principal/notice/[notice_id]/view/[access_token]/page": "app/cms/principal/notice/[notice_id]/view/[access_token]/page.js"
 }

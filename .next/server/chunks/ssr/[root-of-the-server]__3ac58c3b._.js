@@ -1638,8 +1638,8 @@ function detectBreakingChanges(baseline, current) {
             if (baselinePP.purposeOfProcessingId !== modifiedPP.purposeOfProcessingId) {
                 breakingChanges.push({
                     type: "pp_modified",
-                    description: `Processing purpose "${baselinePP.name}": Purpose of processing changed`,
-                    details: "Changing the purpose of processing category requires a new version"
+                    description: `Processing purpose "${baselinePP.name}": Purpose sub master changed`,
+                    details: "Changing the purpose sub master category requires a new version"
                 });
             }
             // Check if user attributes were removed
@@ -1647,7 +1647,7 @@ function detectBreakingChanges(baseline, current) {
             if (removedAttributes.length > 0) {
                 breakingChanges.push({
                     type: "ua_removed",
-                    description: `Processing purpose "${baselinePP.name}": User attributes removed`,
+                    description: `Processing purpose "${baselinePP.name}": Purpose attributes removed`,
                     oldValue: baselinePP.userAttributeNames,
                     newValue: modifiedPP.userAttributeNames
                 });
@@ -1657,7 +1657,7 @@ function detectBreakingChanges(baseline, current) {
             if (addedAttributes.length > 0) {
                 breakingChanges.push({
                     type: "pp_modified",
-                    description: `Processing purpose "${baselinePP.name}": User attributes added`,
+                    description: `Processing purpose "${baselinePP.name}": Purpose attributes added`,
                     oldValue: baselinePP.userAttributeNames,
                     newValue: modifiedPP.userAttributeNames
                 });
@@ -1844,7 +1844,7 @@ function detectBreakingChanges(baseline, current) {
                             field: "userAttributes",
                             oldValue: baselineAttrs,
                             newValue: currentAttrs,
-                            description: `Processing purpose ${currentRule.processingPurposeId}: User attributes changed`
+                            description: `Processing purpose ${currentRule.processingPurposeId}: Purpose attributes changed`
                         });
                     }
                     // Retention duration change (compare calculated hours)
@@ -1946,6 +1946,54 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2f$business$2d$process$2d$breaking$2d$changes$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils/business-process-breaking-changes.ts [app-rsc] (ecmascript)");
 ;
 ;
+function getConsentDurationInHours(consentConfig) {
+    if (consentConfig.durationType !== "custom_duration") {
+        return null;
+    }
+    const duration = Number(consentConfig.consentDuration);
+    if (!Number.isFinite(duration) || duration <= 0) {
+        throw new Error(`Consent purpose ${consentConfig.consentPurposeId}: Custom consent duration must be greater than 0`);
+    }
+    switch(consentConfig.durationUnit || "days"){
+        case "minutes":
+            return duration / 60;
+        case "hours":
+            return duration;
+        case "days":
+            return duration * 24;
+        case "weeks":
+            return duration * 24 * 7;
+        case "months":
+            return duration * 24 * 30;
+        case "years":
+            return duration * 24 * 365;
+        default:
+            return duration * 24;
+    }
+}
+async function syncConsentPurposeDurations(tx, businessProcessId, consentPurposes) {
+    for (const consentConfig of consentPurposes){
+        const consentDuration = getConsentDurationInHours(consentConfig);
+        const updateResult = await tx.businessProcessToConsentPurpose.updateMany({
+            where: {
+                businessProcessId,
+                consentPurposeId: consentConfig.consentPurposeId
+            },
+            data: {
+                consentDuration
+            }
+        });
+        if (updateResult.count === 0) {
+            await tx.businessProcessToConsentPurpose.create({
+                data: {
+                    businessProcessId,
+                    consentPurposeId: consentConfig.consentPurposeId,
+                    consentDuration
+                }
+            });
+        }
+    }
+}
 async function getAllBusinessProcesses() {
     try {
         const businessProcesses = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].businessProcess.findMany({
@@ -1964,7 +2012,7 @@ async function getAllBusinessProcesses() {
         return businessProcesses;
     } catch (error) {
         console.error("Error fetching business processes:", error);
-        throw new Error("Failed to fetch business processes");
+        throw new Error("Failed to fetch processes");
     }
 }
 async function getBusinessProcessById(id) {
@@ -2058,7 +2106,10 @@ async function getBusinessProcessById(id) {
                 // If we have retentionDuration (hours) but no value/unit (which is expected now), convert it
                 if (rule.retentionDuration !== null && rule.retentionDuration !== undefined) {
                     const hours = rule.retentionDuration;
-                    if (hours % (24 * 365) === 0) {
+                    if (hours < 24) {
+                        value = hours;
+                        unit = "hours";
+                    } else if (hours % (24 * 365) === 0) {
                         value = hours / (24 * 365);
                         unit = "years";
                     } else if (hours % (24 * 30) === 0) {
@@ -2099,7 +2150,7 @@ async function getBusinessProcessById(id) {
         };
     } catch (error) {
         console.error("Error fetching business process:", error);
-        throw new Error("Failed to fetch business process");
+        throw new Error("Failed to fetch process");
     }
 }
 async function createBusinessProcess(data) {
@@ -2125,7 +2176,7 @@ async function createBusinessProcess(data) {
         return businessProcess;
     } catch (error) {
         console.error("Error creating business process:", error);
-        throw new Error("Failed to create business process");
+        throw new Error("Failed to create process");
     }
 }
 async function updateBusinessProcess(id, data) {
@@ -2139,7 +2190,7 @@ async function updateBusinessProcess(id, data) {
         return businessProcess;
     } catch (error) {
         console.error("Error updating business process:", error);
-        throw new Error("Failed to update business process");
+        throw new Error("Failed to update process");
     }
 }
 async function deleteBusinessProcess(id) {
@@ -2170,7 +2221,7 @@ async function deleteBusinessProcess(id) {
         };
     } catch (error) {
         console.error("Error deleting business process:", error);
-        throw new Error("Failed to delete business process");
+        throw new Error("Failed to delete process");
     }
 }
 async function saveOrUpdateBusinessProcess(formData, createdBy, businessProcessId, status) {
@@ -2241,28 +2292,7 @@ async function saveOrUpdateBusinessProcess(formData, createdBy, businessProcessI
             // Only do this if consent purposes are provided and not empty
             if (formData.consentPurposes && formData.consentPurposes.length > 0) {
                 for (const consentConfig of formData.consentPurposes){
-                    // Calculate duration in hours
-                    let durationInHours = null;
-                    if (consentConfig.durationType === "custom_duration" && consentConfig.consentDuration) {
-                        const duration = consentConfig.consentDuration;
-                        const unit = consentConfig.durationUnit || "days";
-                        switch(unit){
-                            case "days":
-                                durationInHours = duration * 24;
-                                break;
-                            case "weeks":
-                                durationInHours = duration * 24 * 7;
-                                break;
-                            case "months":
-                                durationInHours = duration * 24 * 30; // approximate
-                                break;
-                            case "years":
-                                durationInHours = duration * 24 * 365; // approximate
-                                break;
-                            default:
-                                durationInHours = duration * 24; // default to days
-                        }
-                    }
+                    const durationInHours = getConsentDurationInHours(consentConfig);
                     // Create BusinessProcessToConsentPurpose record
                     await tx.businessProcessToConsentPurpose.create({
                         data: {
@@ -2306,7 +2336,7 @@ async function saveOrUpdateBusinessProcess(formData, createdBy, businessProcessI
         return result;
     } catch (error) {
         console.error("Error saving business process:", error);
-        throw new Error("Failed to save business process");
+        throw new Error("Failed to save process");
     }
 }
 async function saveBusinessProcess(formData, createdBy) {
@@ -2334,28 +2364,7 @@ async function saveBusinessProcess(formData, createdBy) {
             });
             // 2. Create BusinessProcessToConsentPurpose records and BusinessProcessRules
             for (const consentConfig of formData.consentPurposes){
-                // Calculate duration in hours
-                let durationInHours = null;
-                if (consentConfig.durationType === "custom_duration" && consentConfig.consentDuration) {
-                    const duration = consentConfig.consentDuration;
-                    const unit = consentConfig.durationUnit || "days";
-                    switch(unit){
-                        case "days":
-                            durationInHours = duration * 24;
-                            break;
-                        case "weeks":
-                            durationInHours = duration * 24 * 7;
-                            break;
-                        case "months":
-                            durationInHours = duration * 24 * 30; // approximate
-                            break;
-                        case "years":
-                            durationInHours = duration * 24 * 365; // approximate
-                            break;
-                        default:
-                            durationInHours = duration * 24; // default to days
-                    }
-                }
+                const durationInHours = getConsentDurationInHours(consentConfig);
                 // Create BusinessProcessToConsentPurpose record
                 await tx.businessProcessToConsentPurpose.create({
                     data: {
@@ -2398,7 +2407,7 @@ async function saveBusinessProcess(formData, createdBy) {
         return result;
     } catch (error) {
         console.error("Error saving business process:", error);
-        throw new Error("Failed to save business process");
+        throw new Error("Failed to save process");
     }
 }
 async function getPublishedConsentPurposes() {
@@ -2452,7 +2461,7 @@ async function getBusinessProcessFormData() {
         };
     } catch (error) {
         console.error("Error fetching business process form data:", error);
-        throw new Error("Failed to fetch business process form data");
+        throw new Error("Failed to fetch process form data");
     }
 }
 async function checkBusinessProcessCodeExists(code, excludeId) {
@@ -2474,7 +2483,7 @@ async function checkBusinessProcessCodeExists(code, excludeId) {
         return !!businessProcess;
     } catch (error) {
         console.error("Error checking business process code:", error);
-        throw new Error("Failed to check business process code");
+        throw new Error("Failed to check process code");
     }
 }
 async function saveOrUpdateBusinessProcessWithVersioning(clientState, createdBy, businessProcessId, status) {
@@ -2507,7 +2516,7 @@ async function saveOrUpdateBusinessProcessWithVersioning(clientState, createdBy,
                     }
                 });
                 if (!currentBP) {
-                    throw new Error("Business process not found");
+                    throw new Error("Process not found");
                 }
                 // Only create new version if current BP is published
                 if (currentBP.status === "published") {
@@ -2646,7 +2655,7 @@ async function saveOrUpdateBusinessProcessWithVersioning(clientState, createdBy,
                             }
                         });
                         if (existingConsents) {
-                            throw new Error("Cannot modify business process rules as there are existing consents. Please create a new version instead.");
+                            throw new Error("Cannot modify process rules as there are existing consents. Please create a new version instead.");
                         }
                     }
                     // Safe to delete as no consents exist
@@ -2664,28 +2673,7 @@ async function saveOrUpdateBusinessProcessWithVersioning(clientState, createdBy,
                 // Create new rules (for new versions, new BPs, or when Step 2 has changes)
                 const consentPurposes = clientState.consentPurposes || [];
                 for (const consentConfig of consentPurposes){
-                    // Calculate duration in hours
-                    let durationInHours = null;
-                    if (consentConfig.durationType === "custom_duration" && consentConfig.consentDuration) {
-                        const duration = consentConfig.consentDuration;
-                        const unit = consentConfig.durationUnit || "days";
-                        switch(unit){
-                            case "days":
-                                durationInHours = duration * 24;
-                                break;
-                            case "weeks":
-                                durationInHours = duration * 24 * 7;
-                                break;
-                            case "months":
-                                durationInHours = duration * 24 * 30;
-                                break;
-                            case "years":
-                                durationInHours = duration * 24 * 365;
-                                break;
-                            default:
-                                durationInHours = duration * 24;
-                        }
-                    }
+                    const durationInHours = getConsentDurationInHours(consentConfig);
                     // Create BusinessProcessToConsentPurpose record
                     await tx.businessProcessToConsentPurpose.create({
                         data: {
@@ -2724,6 +2712,9 @@ async function saveOrUpdateBusinessProcessWithVersioning(clientState, createdBy,
                     }
                 }
             }
+            if (bpId && !hasStep2Changes && clientState.consentPurposes?.length) {
+                await syncConsentPurposeDurations(tx, bpId, clientState.consentPurposes);
+            }
             return {
                 businessProcessId: bpId,
                 isNewVersion,
@@ -2734,7 +2725,7 @@ async function saveOrUpdateBusinessProcessWithVersioning(clientState, createdBy,
         return result;
     } catch (error) {
         console.error("Error saving business process with versioning:", error);
-        throw new Error("Failed to save business process");
+        throw new Error("Failed to save process");
     }
 }
 async function getBusinessProcessesUsingConsentPurpose(code, version) {
@@ -5051,20 +5042,13 @@ async function createConsents(noticePublicId, selections, language = "en") {
         const consentData = selectedRules.map((selection)=>{
             const rule = businessProcess.businessProcessRules.find((r)=>r.id === selection.ruleId);
             if (!rule) {
-                throw new Error(`Business process rule not found for ID: ${selection.ruleId}`);
+                throw new Error(`Process rule not found for ID: ${selection.ruleId}`);
             }
-            // Calculate expiration date with proper priority
+            // Each selected consent purpose has its own duration (stored in hours).
             let expiresAt = undefined;
-            // Priority 1: Notice-level consent duration (if provided and not 0)
-            // consentDuration in Notice is stored in HOURS
-            if (notice.consentDuration && notice.consentDuration > 0) {
-                expiresAt = new Date(Date.now() + notice.consentDuration * 60 * 60 * 1000);
-            } else {
-                const configuredDuration = durationsMap.get(rule.consentPurpose.id);
-                if (configuredDuration && configuredDuration > 0) {
-                    expiresAt = new Date(Date.now() + configuredDuration * 60 * 60 * 1000);
-                }
-            // If both are null/0, expiresAt remains undefined (until purpose met)
+            const configuredDuration = durationsMap.get(rule.consentPurpose.id);
+            if (configuredDuration && configuredDuration > 0) {
+                expiresAt = new Date(Date.now() + configuredDuration * 60 * 60 * 1000);
             }
             return {
                 requestId,
@@ -5080,6 +5064,7 @@ async function createConsents(noticePublicId, selections, language = "en") {
                 majorDataPrincipalId,
                 language,
                 status: "accepted",
+                consentDuration: configuredDuration ?? undefined,
                 expiresAt
             };
         });
@@ -5504,8 +5489,9 @@ function groupConsentsByLatestRule(consents) {
     return latestConsentsByRule;
 }
 function formatConsentsForValidation(consents) {
+    const now = Date.now();
     return consents.map((consent)=>({
-            is_active: consent.status === "accepted" && !consent.isExpired,
+            is_active: consent.status === "accepted" && !consent.isExpired && (!consent.expiresAt || consent.expiresAt.getTime() > now),
             data_principal_id: consent.dataPrincipalId,
             processing_purpose_code: consent.processingPurpose.purposeOfProcessing.code,
             consent_id: consent.publicId,
@@ -5514,7 +5500,8 @@ function formatConsentsForValidation(consents) {
             business_process_version: consent.businessProcess.version,
             consent_purpose_code: consent.consentPurpose.code,
             consent_purpose_version: consent.consentPurpose.version,
-            recorded_at: consent.insertedAt.toISOString()
+            recorded_at: consent.insertedAt.toISOString(),
+            expires_at: consent.expiresAt ? consent.expiresAt.toISOString() : null
         }));
 }
 async function expireConsents() {
@@ -7321,7 +7308,7 @@ async function getBusinessProcessWithFullDataById(businessProcessId) {
         return transformedBusinessProcess;
     } catch (error) {
         console.error("Error fetching business process with full data by ID:", error);
-        throw new Error("Failed to fetch business process with full data");
+        throw new Error("Failed to fetch process with full data");
     }
 }
 async function getNoticeWithFullDataByPublicId(publicId) {
@@ -7351,6 +7338,11 @@ async function getNoticeWithFullDataByPublicId(publicId) {
                         id: true,
                         name: true,
                         code: true,
+                        businessUnit: {
+                            select: {
+                                name: true
+                            }
+                        },
                         grantDescription: true,
                         revokeDescription: true,
                         reconsentDescription: true,
@@ -7608,7 +7600,7 @@ async function getBusinessProcessesByCode(code, version) {
         return transformedBusinessProcesses;
     } catch (error) {
         console.error("Error fetching business processes by code:", error);
-        throw new Error("Failed to fetch business processes by code");
+        throw new Error("Failed to fetch processes by code");
     }
 }
 async function deleteNotice(id) {
@@ -8990,7 +8982,7 @@ const steps = [
     },
     {
         number: 2,
-        title: "Add Purpose of Processing",
+        title: "Add Purpose Sub Master",
         description: "Processing purposes"
     },
     {

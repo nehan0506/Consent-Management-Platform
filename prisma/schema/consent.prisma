@@ -13,13 +13,15 @@ model Consent {
   businessProcessRuleId String              @map("business_process_rule_id")
   businessUnitId        String              @map("business_unit_id")
   userAttributeNames    String[]            @map("user_attribute_names")
+  userAttributeAction   String?             @map("user_attribute_action")
+  resourceId            String?             @db.Uuid @map("resource_id")
   majorDataPrincipalId  String?             @map("major_data_principal_id")
   parentConsentId       String?             @map("parent_consent_id")
   language              String
   insertedAt            DateTime            @default(now()) @map("inserted_at")
   updatedAt             DateTime            @updatedAt @map("updated_at")
   status                String              @default("accepted")
-  consentDuration       Float?              @map("consent_duration") // canonical hours, including fractional hours
+  consentDuration       Float?              @map("consent_duration") // canonical minutes
   expiresAt             DateTime?           @map("expires_at")
   isExpired             Boolean             @default(false) @map("is_expired")
   dataRetentionActionTriggeredAt DateTime?  @map("data_retention_action_triggered_at")

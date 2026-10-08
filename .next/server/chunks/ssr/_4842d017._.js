@@ -1896,6 +1896,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
             }));
     };
     const selectedPurpose = purposesOfProcessing.find((p)=>p.id === formData.purposeOfProcessingId);
+    const getUserAttribute = (attributeName)=>userAttributes.find((attribute)=>attribute.name === attributeName);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
         open: open,
         onOpenChange: onOpenChange,
@@ -1913,12 +1914,12 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                        lineNumber: 203,
+                        lineNumber: 206,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                    lineNumber: 202,
+                    lineNumber: 205,
                     columnNumber: 9
                 }, this),
                 currentStep === 1 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1932,7 +1933,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                     children: "Select Purpose Sub Master"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                    lineNumber: 212,
+                                    lineNumber: 215,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1940,7 +1941,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                     children: "Choose the legal basis and purpose for processing user data, and provide a notice body."
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                    lineNumber: 215,
+                                    lineNumber: 218,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1951,7 +1952,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                             children: "Purpose Sub Master"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                            lineNumber: 221,
+                                            lineNumber: 224,
                                             columnNumber: 17
                                         }, this),
                                         isEdit ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1962,7 +1963,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                     children: purposesOfProcessing.find((purpose)=>purpose.id === formData.purposeOfProcessingId)?.name || "Unknown Purpose"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                    lineNumber: 224,
+                                                    lineNumber: 227,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1970,13 +1971,13 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                     children: "Purpose cannot be changed when editing"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                    lineNumber: 230,
+                                                    lineNumber: 233,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                            lineNumber: 223,
+                                            lineNumber: 226,
                                             columnNumber: 19
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Popover"], {
                                             open: comboboxOpen,
@@ -1995,18 +1996,18 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                                 className: "ml-2 h-4 w-4 shrink-0 opacity-50"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                lineNumber: 249,
+                                                                lineNumber: 252,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                        lineNumber: 237,
+                                                        lineNumber: 240,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                    lineNumber: 236,
+                                                    lineNumber: 239,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["PopoverContent"], {
@@ -2017,7 +2018,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                                 placeholder: "Search purposes..."
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                lineNumber: 254,
+                                                                lineNumber: 257,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$command$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CommandList"], {
@@ -2026,7 +2027,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                                         children: availablePurposesOfProcessing.length === 0 ? "All purpose sub masters are already in use." : "No purpose found."
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                        lineNumber: 256,
+                                                                        lineNumber: 259,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$command$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CommandGroup"], {
@@ -2038,48 +2039,48 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                                                         className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("mr-2 h-4 w-4", formData.purposeOfProcessingId === purpose.id ? "opacity-100" : "opacity-0")
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                                        lineNumber: 268,
+                                                                                        lineNumber: 271,
                                                                                         columnNumber: 33
                                                                                     }, this),
                                                                                     purpose.name
                                                                                 ]
                                                                             }, purpose.id, true, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                                lineNumber: 263,
+                                                                                lineNumber: 266,
                                                                                 columnNumber: 31
                                                                             }, this))
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                        lineNumber: 261,
+                                                                        lineNumber: 264,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                lineNumber: 255,
+                                                                lineNumber: 258,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                        lineNumber: 253,
+                                                        lineNumber: 256,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                    lineNumber: 252,
+                                                    lineNumber: 255,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                            lineNumber: 235,
+                                            lineNumber: 238,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                    lineNumber: 220,
+                                    lineNumber: 223,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2090,7 +2091,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                             children: "Notice Body"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                            lineNumber: 289,
+                                            lineNumber: 292,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -2105,7 +2106,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                             className: "resize-none"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                            lineNumber: 290,
+                                            lineNumber: 293,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2113,19 +2114,19 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                             children: "This text will be shown to users as part of the consent notice for this processing purpose."
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                            lineNumber: 303,
+                                            lineNumber: 306,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                    lineNumber: 288,
+                                    lineNumber: 291,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                            lineNumber: 211,
+                            lineNumber: 214,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2137,7 +2138,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                    lineNumber: 311,
+                                    lineNumber: 314,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -2149,25 +2150,25 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                             className: "h-4 w-4 ml-2"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                            lineNumber: 323,
+                                            lineNumber: 326,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                    lineNumber: 314,
+                                    lineNumber: 317,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                            lineNumber: 310,
+                            lineNumber: 313,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                    lineNumber: 210,
+                    lineNumber: 213,
                     columnNumber: 11
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex-1 flex flex-col space-y-6 overflow-hidden",
@@ -2185,12 +2186,12 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                             className: "h-4 w-4"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                            lineNumber: 332,
+                                            lineNumber: 335,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                        lineNumber: 331,
+                                        lineNumber: 334,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2200,7 +2201,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                 children: "Select Purpose Attributes"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                lineNumber: 335,
+                                                lineNumber: 338,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2212,30 +2213,30 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                         children: formData.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                        lineNumber: 340,
+                                                        lineNumber: 343,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                lineNumber: 338,
+                                                lineNumber: 341,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                        lineNumber: 334,
+                                        lineNumber: 337,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                lineNumber: 330,
+                                lineNumber: 333,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                            lineNumber: 329,
+                            lineNumber: 332,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2249,7 +2250,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                    lineNumber: 347,
+                                    lineNumber: 350,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2257,12 +2258,28 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                     children: formData.userAttributeNames.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "flex flex-wrap gap-2 p-3 border rounded-lg bg-muted/50",
                                         children: formData.userAttributeNames.map((attrName)=>{
-                                            const attr = userAttributes.find((a)=>a.name === attrName);
+                                            const attr = getUserAttribute(attrName);
                                             return attr ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
                                                 variant: "outline",
                                                 className: "text-xs flex items-center gap-1 bg-white",
                                                 children: [
                                                     attrName,
+                                                    attr.pii && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "rounded-full bg-muted px-1.5 py-0.5 text-[10px] font-medium",
+                                                        children: "PII"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
+                                                        lineNumber: 368,
+                                                        columnNumber: 29
+                                                    }, this),
+                                                    attr.piiAction && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700",
+                                                        children: attr.piiAction
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
+                                                        lineNumber: 373,
+                                                        columnNumber: 29
+                                                    }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                         type: "button",
                                                         onClick: (e)=>{
@@ -2274,36 +2291,36 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                             className: "h-3 w-3"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                            lineNumber: 374,
+                                                            lineNumber: 385,
                                                             columnNumber: 29
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                        lineNumber: 366,
+                                                        lineNumber: 377,
                                                         columnNumber: 27
                                                     }, this)
                                                 ]
                                             }, attrName, true, {
                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                lineNumber: 360,
+                                                lineNumber: 361,
                                                 columnNumber: 25
                                             }, this) : null;
                                         })
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                        lineNumber: 354,
+                                        lineNumber: 357,
                                         columnNumber: 19
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "p-3 border rounded-lg bg-muted/20 text-center text-sm text-muted-foreground",
                                         children: "No attributes selected yet"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                        lineNumber: 381,
+                                        lineNumber: 392,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                    lineNumber: 352,
+                                    lineNumber: 355,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Popover"], {
@@ -2323,25 +2340,25 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                         children: formData.userAttributeNames.length === 0 ? "Select purpose attributes..." : `${formData.userAttributeNames.length} attribute${formData.userAttributeNames.length === 1 ? "" : "s"} selected`
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                        lineNumber: 399,
+                                                        lineNumber: 410,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevrons$2d$up$2d$down$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronsUpDown$3e$__["ChevronsUpDown"], {
                                                         className: "ml-2 h-4 w-4 shrink-0 opacity-50"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                        lineNumber: 405,
+                                                        lineNumber: 416,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                lineNumber: 393,
+                                                lineNumber: 404,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                            lineNumber: 392,
+                                            lineNumber: 403,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["PopoverContent"], {
@@ -2353,7 +2370,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                         placeholder: "Search attributes..."
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                        lineNumber: 410,
+                                                        lineNumber: 421,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$command$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CommandList"], {
@@ -2362,7 +2379,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                                 children: "No attributes found."
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                lineNumber: 412,
+                                                                lineNumber: 423,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$command$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CommandGroup"], {
@@ -2377,14 +2394,14 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                                                     className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("h-4 w-4", formData.userAttributeNames.includes(attribute.name) ? "opacity-100" : "opacity-0")
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                                    lineNumber: 424,
+                                                                                    lineNumber: 435,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                                     children: attribute.name
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                                    lineNumber: 434,
+                                                                                    lineNumber: 445,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 attribute.pii && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
@@ -2393,52 +2410,61 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                                                                     children: "PII"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                                    lineNumber: 436,
+                                                                                    lineNumber: 447,
+                                                                                    columnNumber: 33
+                                                                                }, this),
+                                                                                attribute.piiAction && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
+                                                                                    variant: "outline",
+                                                                                    className: "text-xs",
+                                                                                    children: attribute.piiAction
+                                                                                }, void 0, false, {
+                                                                                    fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
+                                                                                    lineNumber: 452,
                                                                                     columnNumber: 33
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                            lineNumber: 423,
+                                                                            lineNumber: 434,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     }, attribute.id, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                        lineNumber: 415,
+                                                                        lineNumber: 426,
                                                                         columnNumber: 27
                                                                     }, this))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                                lineNumber: 413,
+                                                                lineNumber: 424,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                        lineNumber: 411,
+                                                        lineNumber: 422,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                                lineNumber: 409,
+                                                lineNumber: 420,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                            lineNumber: 408,
+                                            lineNumber: 419,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                    lineNumber: 388,
+                                    lineNumber: 399,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                            lineNumber: 346,
+                            lineNumber: 349,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2450,7 +2476,7 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                    lineNumber: 451,
+                                    lineNumber: 467,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -2462,30 +2488,30 @@ function AddProcessingPurposeDialog({ open, onOpenChange, onSave, purposesOfProc
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                                    lineNumber: 454,
+                                    lineNumber: 470,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                            lineNumber: 450,
+                            lineNumber: 466,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-                    lineNumber: 328,
+                    lineNumber: 331,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-            lineNumber: 201,
+            lineNumber: 204,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-processing-purpose-dialog.tsx",
-        lineNumber: 200,
+        lineNumber: 203,
         columnNumber: 5
     }, this);
 }
@@ -2726,6 +2752,37 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
         const attr = userAttributes.find((a)=>a.id === id);
         return attr?.name || "Unknown";
     };
+    const getUserAttribute = (name)=>userAttributes.find((attr)=>attr.name === name);
+    const renderAttributeBadge = (attrName)=>{
+        const attr = getUserAttribute(attrName);
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
+            variant: "outline",
+            className: "text-xs flex items-center gap-1",
+            children: [
+                attrName,
+                attr?.pii && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                    className: "rounded-full bg-muted px-1.5 py-0.5 text-[10px] font-medium",
+                    children: "PII"
+                }, void 0, false, {
+                    fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
+                    lineNumber: 325,
+                    columnNumber: 11
+                }, this),
+                attr?.piiAction && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                    className: "rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700",
+                    children: attr.piiAction
+                }, void 0, false, {
+                    fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
+                    lineNumber: 330,
+                    columnNumber: 11
+                }, this)
+            ]
+        }, attrName, true, {
+            fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
+            lineNumber: 318,
+            columnNumber: 7
+        }, this);
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "h-full flex flex-col",
         children: [
@@ -2736,12 +2793,12 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                     children: "Step 2. Add Purpose Sub Master"
                 }, void 0, false, {
                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                    lineNumber: 315,
+                    lineNumber: 342,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                lineNumber: 314,
+                lineNumber: 341,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2759,7 +2816,7 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                             children: "Processing Purposes"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                            lineNumber: 326,
+                                            lineNumber: 353,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2767,13 +2824,13 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                             children: "Define how user data will be processed and which attributes are involved"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                            lineNumber: 327,
+                                            lineNumber: 354,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                    lineNumber: 325,
+                                    lineNumber: 352,
                                     columnNumber: 13
                                 }, this),
                                 allProcessingPurposes.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -2787,20 +2844,20 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                             className: "h-4 w-4 group-hover:scale-125 transition-transform"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                            lineNumber: 341,
+                                            lineNumber: 368,
                                             columnNumber: 17
                                         }, this),
                                         "Add Processing Purpose"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                    lineNumber: 334,
+                                    lineNumber: 361,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                            lineNumber: 324,
+                            lineNumber: 351,
                             columnNumber: 11
                         }, this),
                         allProcessingPurposes.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2815,7 +2872,7 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                                     children: "Purpose Sub Master"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                    lineNumber: 353,
+                                                    lineNumber: 380,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2823,14 +2880,14 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                                     children: "Description"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                    lineNumber: 354,
+                                                    lineNumber: 381,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableHead"], {
                                                     children: "Attributes Included"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                    lineNumber: 355,
+                                                    lineNumber: 382,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -2838,18 +2895,18 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                                     children: "Actions"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                    lineNumber: 356,
+                                                    lineNumber: 383,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                            lineNumber: 352,
+                                            lineNumber: 379,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                        lineNumber: 351,
+                                        lineNumber: 378,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -2861,7 +2918,7 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                                             children: purpose.name
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                            lineNumber: 363,
+                                                            lineNumber: 390,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -2871,35 +2928,27 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                                                 children: purpose.description || "No description"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                                lineNumber: 367,
+                                                                lineNumber: 394,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                            lineNumber: 366,
+                                                            lineNumber: 393,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
                                                             className: "border-r",
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "flex flex-wrap gap-1",
-                                                                children: purpose.userAttributeNames.map((attrName)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
-                                                                        variant: "outline",
-                                                                        className: "text-xs",
-                                                                        children: attrName
-                                                                    }, attrName, false, {
-                                                                        fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                                        lineNumber: 374,
-                                                                        columnNumber: 29
-                                                                    }, this))
+                                                                children: purpose.userAttributeNames.map(renderAttributeBadge)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                                lineNumber: 372,
+                                                                lineNumber: 399,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                            lineNumber: 371,
+                                                            lineNumber: 398,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -2910,18 +2959,18 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                                                 className: "justify-center gap-1"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                                lineNumber: 385,
+                                                                lineNumber: 404,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                            lineNumber: 384,
+                                                            lineNumber: 403,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, purpose.id, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                    lineNumber: 362,
+                                                    lineNumber: 389,
                                                     columnNumber: 21
                                                 }, this)),
                                             state.new.map((purpose, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableRow"], {
@@ -2940,13 +2989,13 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                                                             children: "New"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                                            lineNumber: 407,
+                                                                            lineNumber: 426,
                                                                             columnNumber: 27
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                                    lineNumber: 405,
+                                                                    lineNumber: 424,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2954,13 +3003,13 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                                                     children: getPurposeOfProcessingName(purpose.purposeOfProcessingId)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                                    lineNumber: 411,
+                                                                    lineNumber: 430,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                            lineNumber: 404,
+                                                            lineNumber: 423,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -2970,34 +3019,26 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                                                 children: purpose.description || "No description"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                                lineNumber: 418,
+                                                                lineNumber: 437,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                            lineNumber: 417,
+                                                            lineNumber: 436,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "flex flex-wrap gap-1",
-                                                                children: purpose.userAttributeNames.map((attrName)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
-                                                                        variant: "outline",
-                                                                        className: "text-xs",
-                                                                        children: attrName
-                                                                    }, attrName, false, {
-                                                                        fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                                        lineNumber: 425,
-                                                                        columnNumber: 29
-                                                                    }, this))
+                                                                children: purpose.userAttributeNames.map(renderAttributeBadge)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                                lineNumber: 423,
+                                                                lineNumber: 442,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                            lineNumber: 422,
+                                                            lineNumber: 441,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -3008,35 +3049,35 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                                                 className: "justify-center gap-1"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                                lineNumber: 436,
+                                                                lineNumber: 447,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                            lineNumber: 435,
+                                                            lineNumber: 446,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, `new-${index}`, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                                    lineNumber: 400,
+                                                    lineNumber: 419,
                                                     columnNumber: 21
                                                 }, this))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                        lineNumber: 359,
+                                        lineNumber: 386,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                lineNumber: 350,
+                                lineNumber: 377,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                            lineNumber: 349,
+                            lineNumber: 376,
                             columnNumber: 13
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "rounded-lg border border-dashed p-8 text-center",
@@ -3045,7 +3086,7 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                     className: "h-12 w-12 text-muted-foreground mx-auto mb-4"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                    lineNumber: 453,
+                                    lineNumber: 464,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -3053,7 +3094,7 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                     children: "No Processing Purposes Yet"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                    lineNumber: 454,
+                                    lineNumber: 465,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3061,7 +3102,7 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                     children: "Start by adding your first processing purpose to define how user data will be handled."
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                    lineNumber: 457,
+                                    lineNumber: 468,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3074,31 +3115,31 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                             className: "h-4 w-4 mr-2"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                            lineNumber: 467,
+                                            lineNumber: 478,
                                             columnNumber: 17
                                         }, this),
                                         "Add First Processing Purpose"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                    lineNumber: 461,
+                                    lineNumber: 472,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                            lineNumber: 452,
+                            lineNumber: 463,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                    lineNumber: 323,
+                    lineNumber: 350,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                lineNumber: 321,
+                lineNumber: 348,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3113,7 +3154,7 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                             children: "Previous"
                         }, void 0, false, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                            lineNumber: 478,
+                            lineNumber: 489,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3127,7 +3168,7 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                                         className: "h-4 w-4 mr-2 animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                                        lineNumber: 489,
+                                        lineNumber: 500,
                                         columnNumber: 17
                                     }, this),
                                     "Saving..."
@@ -3135,18 +3176,18 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                             }, void 0, true) : "Next"
                         }, void 0, false, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                            lineNumber: 481,
+                            lineNumber: 492,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                    lineNumber: 477,
+                    lineNumber: 488,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                lineNumber: 476,
+                lineNumber: 487,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$cms$2f$data$2d$fiduciary$2f$consent$2d$purposes$2f$_components$2f$dialogs$2f$add$2d$processing$2d$purpose$2d$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AddProcessingPurposeDialog"], {
@@ -3170,13 +3211,13 @@ function Step2Form({ data, isEdit, consentPurposeId }) {
                 } : null
             }, void 0, false, {
                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-                lineNumber: 500,
+                lineNumber: 511,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/step2-form.tsx",
-        lineNumber: 312,
+        lineNumber: 339,
         columnNumber: 5
     }, this);
 }
@@ -3244,6 +3285,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
  * is strictly prohibited without prior written permission from IDfy.
  */ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/badge.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/dialog.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$command$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/command.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/popover.tsx [app-ssr] (ecmascript)");
@@ -3254,6 +3296,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$checkbox$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/checkbox.tsx [app-ssr] (ecmascript)");
 "use client";
+;
 ;
 ;
 ;
@@ -3342,6 +3385,44 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
         const attr = userAttributes.find((a)=>a.id === id);
         return attr?.name || "Unknown";
     };
+    const getUserAttribute = (name)=>userAttributes.find((attr)=>attr.name === name);
+    const renderUserAttribute = (name)=>{
+        const attr = getUserAttribute(name);
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "flex flex-wrap items-center gap-1 text-sm",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                    children: name
+                }, void 0, false, {
+                    fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
+                    lineNumber: 186,
+                    columnNumber: 9
+                }, this),
+                attr?.pii && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
+                    variant: "secondary",
+                    className: "text-xs",
+                    children: "PII"
+                }, void 0, false, {
+                    fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
+                    lineNumber: 188,
+                    columnNumber: 11
+                }, this),
+                attr?.piiAction && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
+                    variant: "outline",
+                    className: "text-xs",
+                    children: attr.piiAction
+                }, void 0, false, {
+                    fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
+                    lineNumber: 193,
+                    columnNumber: 11
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
+            lineNumber: 185,
+            columnNumber: 7
+        }, this);
+    };
     const getProcessingPurposeName = (id)=>{
         const processingPurpose = processingPurposes.find((pp)=>pp.id === id);
         return processingPurpose?.name || "Unknown";
@@ -3365,12 +3446,12 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                        lineNumber: 194,
+                        lineNumber: 217,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                    lineNumber: 193,
+                    lineNumber: 216,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3383,7 +3464,7 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                     children: "Select Data Processor *"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                    lineNumber: 202,
+                                    lineNumber: 225,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Popover"], {
@@ -3404,18 +3485,18 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                         className: "ml-2 h-4 w-4 shrink-0 opacity-50"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                        lineNumber: 218,
+                                                        lineNumber: 241,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                lineNumber: 208,
+                                                lineNumber: 231,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                            lineNumber: 207,
+                                            lineNumber: 230,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["PopoverContent"], {
@@ -3426,7 +3507,7 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                         placeholder: "Search data processors..."
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                        lineNumber: 223,
+                                                        lineNumber: 246,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$command$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CommandList"], {
@@ -3435,7 +3516,7 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                                 children: "No data processors found."
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                lineNumber: 225,
+                                                                lineNumber: 248,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$command$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CommandGroup"], {
@@ -3450,7 +3531,7 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                                                 className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("mr-2 h-4 w-4", selectedDataProcessorId === dataProcessor.ouId ? "opacity-100" : "opacity-0")
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                                lineNumber: 243,
+                                                                                lineNumber: 266,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3460,7 +3541,7 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                                                         children: dataProcessor.brandName
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                                        lineNumber: 252,
+                                                                                        lineNumber: 275,
                                                                                         columnNumber: 31
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3468,53 +3549,53 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                                                         children: dataProcessor.legalName
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                                        lineNumber: 255,
+                                                                                        lineNumber: 278,
                                                                                         columnNumber: 31
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                                lineNumber: 251,
+                                                                                lineNumber: 274,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, dataProcessor.ouId, true, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                        lineNumber: 235,
+                                                                        lineNumber: 258,
                                                                         columnNumber: 27
                                                                     }, this))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                lineNumber: 226,
+                                                                lineNumber: 249,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                        lineNumber: 224,
+                                                        lineNumber: 247,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                lineNumber: 222,
+                                                lineNumber: 245,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                            lineNumber: 221,
+                                            lineNumber: 244,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                    lineNumber: 203,
+                                    lineNumber: 226,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                            lineNumber: 201,
+                            lineNumber: 224,
                             columnNumber: 11
                         }, this),
                         selectedDataProcessorId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3527,7 +3608,7 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                             children: "Map Processing Purposes & Purpose Attributes"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                            lineNumber: 272,
+                                            lineNumber: 295,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3535,13 +3616,13 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                             children: "Select which purpose attributes this data processor will handle for each processing purpose."
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                            lineNumber: 275,
+                                            lineNumber: 298,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                    lineNumber: 271,
+                                    lineNumber: 294,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3559,7 +3640,7 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                                 children: "Purpose Sub Master"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                lineNumber: 287,
+                                                                lineNumber: 310,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -3567,7 +3648,7 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                                 children: "Attributes"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                lineNumber: 290,
+                                                                lineNumber: 313,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -3575,18 +3656,18 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                                 children: "Choose Purpose Attributes"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                lineNumber: 293,
+                                                                lineNumber: 316,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                        lineNumber: 286,
+                                                        lineNumber: 309,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                    lineNumber: 285,
+                                                    lineNumber: 308,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -3603,12 +3684,12 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                                         children: processingPurpose.name
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                        lineNumber: 311,
+                                                                        lineNumber: 334,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                    lineNumber: 310,
+                                                                    lineNumber: 333,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -3617,20 +3698,20 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                                         className: "space-y-1",
                                                                         children: processingPurpose.userAttributeNames?.map((userAttributeName)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                                 className: "text-sm",
-                                                                                children: userAttributeName
+                                                                                children: renderUserAttribute(userAttributeName)
                                                                             }, userAttributeName, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                                lineNumber: 321,
+                                                                                lineNumber: 344,
                                                                                 columnNumber: 37
                                                                             }, this))
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                        lineNumber: 318,
+                                                                        lineNumber: 341,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                    lineNumber: 317,
+                                                                    lineNumber: 340,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -3639,64 +3720,75 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                                                         children: processingPurpose.userAttributeNames?.map((userAttributeName)=>{
                                                                             const isSelected = mappedUserAttributeNames.includes(userAttributeName);
                                                                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                className: "flex items-center",
-                                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$checkbox$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Checkbox"], {
-                                                                                    id: `attr-${processingPurposeRef}-${userAttributeName}`,
-                                                                                    checked: isSelected,
-                                                                                    onCheckedChange: (checked)=>handleUserAttributeToggle(processingPurposeRef, userAttributeName, checked)
-                                                                                }, void 0, false, {
-                                                                                    fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                                    lineNumber: 347,
-                                                                                    columnNumber: 41
-                                                                                }, this)
-                                                                            }, userAttributeName, false, {
+                                                                                className: "flex items-center gap-2",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$checkbox$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Checkbox"], {
+                                                                                        id: `attr-${processingPurposeRef}-${userAttributeName}`,
+                                                                                        checked: isSelected,
+                                                                                        onCheckedChange: (checked)=>handleUserAttributeToggle(processingPurposeRef, userAttributeName, checked)
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
+                                                                                        lineNumber: 370,
+                                                                                        columnNumber: 41
+                                                                                    }, this),
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                                                        htmlFor: `attr-${processingPurposeRef}-${userAttributeName}`,
+                                                                                        className: "cursor-pointer",
+                                                                                        children: renderUserAttribute(userAttributeName)
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
+                                                                                        lineNumber: 381,
+                                                                                        columnNumber: 41
+                                                                                    }, this)
+                                                                                ]
+                                                                            }, userAttributeName, true, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                                lineNumber: 343,
+                                                                                lineNumber: 366,
                                                                                 columnNumber: 39
                                                                             }, this);
                                                                         })
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                        lineNumber: 334,
+                                                                        lineNumber: 357,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                                    lineNumber: 333,
+                                                                    lineNumber: 356,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             ]
                                                         }, processingPurposeRef, true, {
                                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                            lineNumber: 305,
+                                                            lineNumber: 328,
                                                             columnNumber: 27
                                                         }, this);
                                                     })
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                                    lineNumber: 298,
+                                                    lineNumber: 321,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                            lineNumber: 284,
+                                            lineNumber: 307,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                        lineNumber: 283,
+                                        lineNumber: 306,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                    lineNumber: 282,
+                                    lineNumber: 305,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                            lineNumber: 270,
+                            lineNumber: 293,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3709,7 +3801,7 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                     children: "Previous"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                    lineNumber: 376,
+                                    lineNumber: 407,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3719,30 +3811,30 @@ function AddDataProcessorDialog({ open, onOpenChange, onSave, dataProcessors, pr
                                     children: isEdit ? "Update" : "Submit"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                                    lineNumber: 383,
+                                    lineNumber: 414,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                            lineNumber: 375,
+                            lineNumber: 406,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-                    lineNumber: 199,
+                    lineNumber: 222,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-            lineNumber: 192,
+            lineNumber: 215,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/cms/data-fiduciary/consent-purposes/_components/dialogs/add-data-processor-dialog.tsx",
-        lineNumber: 191,
+        lineNumber: 214,
         columnNumber: 5
     }, this);
 }

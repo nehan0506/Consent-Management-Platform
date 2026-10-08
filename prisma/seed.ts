@@ -1042,7 +1042,7 @@ async function main() {
     {
       businessProcessId: businessProcess!.id,
       consentPurposeId: kycConsentPurpose!.id,
-      consentDuration: 8760, // 1 year in hours
+      consentDuration: 525600, // 1 year in minutes
     },
     {
       businessProcessId: businessProcess!.id,
@@ -1449,8 +1449,8 @@ async function main() {
     });
     const relatedBU = relatedBP
       ? await prisma.businessUnit.findUnique({
-        where: { id: relatedBP.businessUnitId },
-      })
+          where: { id: relatedBP.businessUnitId },
+        })
       : null;
 
     if (!relatedBP || !relatedCP || !relatedPP || !relatedBU) {
@@ -1653,9 +1653,9 @@ async function main() {
             },
             result: isSuccess
               ? {
-                success: true,
-                data: `${auditAction.resource} processed`,
-              }
+                  success: true,
+                  data: `${auditAction.resource} processed`,
+                }
               : null,
             metadata: {
               ip: `192.168.1.${10 + (i % 245)}`,
@@ -1764,10 +1764,10 @@ async function main() {
           feedback:
             status === "CLOSED" && i % 2 === 0
               ? {
-                rating: 4 + (i % 2),
-                comment: "Very helpful and resolved quickly!",
-                submittedAt: closedAt,
-              }
+                  rating: 4 + (i % 2),
+                  comment: "Very helpful and resolved quickly!",
+                  submittedAt: closedAt,
+                }
               : null,
           createdAt,
           updatedAt: closedAt || resolvedAt || createdAt,
@@ -2030,7 +2030,7 @@ async function main() {
 
     const expectedResolutionAt = new Date(
       grievance.createdAt.getTime() +
-      config.resolutionTimeInDays * 24 * 60 * 60 * 1000,
+        config.resolutionTimeInDays * 24 * 60 * 60 * 1000,
     );
 
     const isBreached = grievance.resolvedAt

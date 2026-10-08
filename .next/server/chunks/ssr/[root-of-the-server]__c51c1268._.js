@@ -576,7 +576,7 @@ async function getAllPurposesOfProcessing() {
         return purposesOfProcessing;
     } catch (error) {
         console.error("Error fetching purposes of processing:", error);
-        throw new Error("Failed to fetch purposes of processing");
+        throw new Error("Failed to fetch purpose sub masters");
     }
 }
 async function getPurposeOfProcessingById(id) {
@@ -589,7 +589,7 @@ async function getPurposeOfProcessingById(id) {
         return purposeOfProcessing;
     } catch (error) {
         console.error("Error fetching purpose of processing:", error);
-        throw new Error("Failed to fetch purpose of processing");
+        throw new Error("Failed to fetch purpose sub master");
     }
 }
 async function createPurposeOfProcessing(data) {
@@ -604,7 +604,7 @@ async function createPurposeOfProcessing(data) {
         return purposeOfProcessing;
     } catch (error) {
         console.error("Error creating purpose of processing:", error);
-        throw new Error("Failed to create purpose of processing");
+        throw new Error("Failed to create purpose sub master");
     }
 }
 async function updatePurposeOfProcessing(id, data) {
@@ -618,7 +618,7 @@ async function updatePurposeOfProcessing(id, data) {
         return purposeOfProcessing;
     } catch (error) {
         console.error("Error updating purpose of processing:", error);
-        throw new Error("Failed to update purpose of processing");
+        throw new Error("Failed to update purpose sub master");
     }
 }
 async function deletePurposeOfProcessing(id) {
@@ -633,7 +633,7 @@ async function deletePurposeOfProcessing(id) {
         };
     } catch (error) {
         console.error("Error deleting purpose of processing:", error);
-        throw new Error("Failed to delete purpose of processing");
+        throw new Error("Failed to delete purpose sub master");
     }
 }
 async function getPurposeOfProcessingByCode(code) {
@@ -646,7 +646,7 @@ async function getPurposeOfProcessingByCode(code) {
         return purposeOfProcessing;
     } catch (error) {
         console.error("Error fetching purpose of processing by code:", error);
-        throw new Error("Failed to fetch purpose of processing");
+        throw new Error("Failed to fetch purpose sub master");
     }
 }
 async function checkPurposeOfProcessingCodeExists(code, excludeId) {
@@ -666,7 +666,7 @@ async function checkPurposeOfProcessingCodeExists(code, excludeId) {
         return true;
     } catch (error) {
         console.error("Error checking purpose of processing code:", error);
-        throw new Error("Failed to check purpose of processing code");
+        throw new Error("Failed to check purpose sub master code");
     }
 }
 }),

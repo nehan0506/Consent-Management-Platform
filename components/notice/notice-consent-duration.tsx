@@ -25,17 +25,38 @@ interface NoticeConsentDurationProps {
   className?: string;
 }
 
+export function formatConsentDuration(
+  consentDuration: number | null | undefined,
+  t: (key: string) => string,
+) {
+  if (!consentDuration || consentDuration <= 0) {
+    return t("Until Purpose Met");
+  }
+
+  if (consentDuration < 60) {
+    return `${consentDuration} ${t(consentDuration === 1 ? "Minute" : "Minutes")}`;
+  }
+
+  const hours = consentDuration / 60;
+  if (consentDuration < 24 * 60) {
+    return `${Number(hours.toFixed(2))} ${t(hours === 1 ? "Hour" : "Hours")}`;
+  }
+
+  const days = consentDuration / (24 * 60);
+  if (Number.isInteger(days)) {
+    return `${days} ${t(days === 1 ? "Day" : "Days")}`;
+  }
+
+  return `${Number(days.toFixed(2))} ${t("Days")}`;
+}
+
 export function NoticeConsentDuration({
   consentDuration,
   className,
 }: NoticeConsentDurationProps) {
   const { isHighContrast } = useHighContrast();
   const { t } = useNoticeTranslation();
-  const formattedDuration = consentDuration
-    ? consentDuration < 24
-      ? `${consentDuration} ${t(consentDuration === 1 ? "Hour" : "Hours")}`
-      : `${Math.floor(consentDuration / 24)} ${t("Days")}`
-    : t("Until Purpose Met");
+  const formattedDuration = formatConsentDuration(consentDuration, t);
 
   // Helper function to get tooltip message based on consent duration
   const getConsentDurationTooltip = () => {
@@ -57,8 +78,7 @@ export function NoticeConsentDuration({
         className,
       )}
     >
-      {t("Consent Duration")}:{" "}
-      {formattedDuration}
+      {t("Consent Duration")}: {formattedDuration}
       <Tooltip>
         <TooltipTrigger asChild>
           <Info

@@ -1,10 +1,10 @@
 /**
  * Open Bharat Digital Consent by IDfy
  * Copyright (c) 2025 Baldor Technologies Private Limited (IDfy)
- * 
+ *
  * This software is licensed under the Privy Public License.
  * See LICENSE.md for the full terms of use.
- * 
+ *
  * Unauthorized copying, modification, distribution, or commercial use
  * is strictly prohibited without prior written permission from IDfy.
  */
@@ -16,6 +16,7 @@ import prisma from "@/lib/prisma";
 import { WebhookEventType } from "@prisma/client";
 import { generateDprmLink } from "./dprm-service";
 import { triggerWebhookEvent } from "./webhook-service";
+import { getAllUserAttributes } from "./user-attributes-service";
 
 // Consent creation interfaces
 export interface ConsentCreationData {
@@ -29,6 +30,8 @@ export interface ConsentCreationData {
   businessProcessRuleId: string;
   businessUnitId: string;
   userAttributeNames: string[];
+  userAttributeAction?: string;
+  resourceId?: string;
   majorDataPrincipalId?: string;
   parentConsentId?: string;
   language: string;
@@ -52,7 +55,7 @@ export interface ConsentCreationResult {
 export async function createConsents(
   noticePublicId: string,
   selections: BusinessProcessRuleSelection[],
-  language: string = "en"
+  language: string = "en",
 ): Promise<ConsentCreationResult> {
   try {
     // Get the notice with full business process data
@@ -87,7 +90,7 @@ export async function createConsents(
     let majorDataPrincipalId: string | undefined = undefined;
     if (notice.forMinor && notice.metadata) {
       const majorMetadata = notice.metadata.find(
-        (m) => m.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID
+        (m) => m.key === NOTICE_METADATA_KEYS.MAJOR_DATA_PRINCIPAL_ID,
       );
       if (majorMetadata) {
         majorDataPrincipalId = majorMetadata.value;
@@ -114,40 +117,66 @@ export async function createConsents(
         },
         select: {
           consentPurposeId: true,
-          consentDuration: true, // in hours
+          consentDuration: true, // in minutes
         },
       });
 
-    // Create a map for quick lookup: consentPurposeId -> duration in hours
+    // Create a map for quick lookup: consentPurposeId -> duration in minutes
     const durationsMap = new Map<number, number | null>(
       consentDurationsMap.map((item) => [
         item.consentPurposeId,
         item.consentDuration,
-      ])
+      ]),
     );
 
     const requestId = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const referenceId = notice.referenceId || `ref_${Date.now()}`;
+    const resourceId = notice.metadata?.find(
+      (m) => m.key === NOTICE_METADATA_KEYS.RESOURCE_ID,
+    )?.value;
+    const selectedUserAttributeNames = new Set<string>();
+
+    selectedRules.forEach((selection) => {
+      const rule = businessProcess.businessProcessRules.find(
+        (r) => r.id === selection.ruleId,
+      );
+      rule?.processingPurpose.userAttributeNames.forEach((name) =>
+        selectedUserAttributeNames.add(name),
+      );
+    });
+
+    const userAttributes = await getAllUserAttributes();
+    const piiActionByAttributeName = new Map(
+      userAttributes
+        .filter((attribute) => selectedUserAttributeNames.has(attribute.name))
+        .map((attribute) => [attribute.name, attribute.piiAction || "ALLOW"]),
+    );
+
+    const getUserAttributeActionPayload = (attributeNames: string[]) =>
+      JSON.stringify(
+        attributeNames.map((name) => ({
+          name,
+          action: piiActionByAttributeName.get(name) || "ALLOW",
+        })),
+      );
 
     // Prepare consent creation data
     const consentData: ConsentCreationData[] = selectedRules.map(
       (selection) => {
         const rule = businessProcess.businessProcessRules.find(
-          (r) => r.id === selection.ruleId
+          (r) => r.id === selection.ruleId,
         );
         if (!rule) {
-          throw new Error(
-            `Process rule not found for ID: ${selection.ruleId}`
-          );
+          throw new Error(`Process rule not found for ID: ${selection.ruleId}`);
         }
 
-        // Each selected consent purpose has its own duration (stored in hours).
+        // Purpose-level duration is configured by the provider and takes priority.
+        // Notice-level duration is only a fallback for older notices/processes.
         let expiresAt: Date | undefined = undefined;
-        const configuredDuration = durationsMap.get(rule.consentPurpose.id);
+        const configuredDuration =
+          durationsMap.get(rule.consentPurpose.id) ?? notice.consentDuration;
         if (configuredDuration && configuredDuration > 0) {
-          expiresAt = new Date(
-            Date.now() + configuredDuration * 60 * 60 * 1000
-          );
+          expiresAt = new Date(Date.now() + configuredDuration * 60 * 1000);
         }
 
         return {
@@ -161,20 +190,41 @@ export async function createConsents(
           businessProcessRuleId: rule.publicId,
           businessUnitId: businessProcess.businessUnit.publicId,
           userAttributeNames: rule.processingPurpose.userAttributeNames,
+          userAttributeAction: getUserAttributeActionPayload(
+            rule.processingPurpose.userAttributeNames,
+          ),
+          resourceId,
           majorDataPrincipalId, // Add major data principal ID if present
           language,
           status: "accepted",
           consentDuration: configuredDuration ?? undefined,
           expiresAt,
         };
-      }
+      },
     );
 
     // Create consents in the database
     try {
       const createdConsents = await prisma.consent.createMany({
-        data: consentData,
+        data: consentData.map(
+          ({ userAttributeAction, resourceId, ...consent }) => consent,
+        ),
       });
+
+      await Promise.all(
+        consentData.map(
+          (consent) =>
+            prisma.$executeRaw`
+            UPDATE consents
+            SET
+              user_attribute_action = ${consent.userAttributeAction},
+              resource_id = ${consent.resourceId || null}::uuid
+            WHERE request_id = ${consent.requestId}
+              AND business_process_rule_id = ${consent.businessProcessRuleId}
+              AND data_principal_id = ${consent.dataPrincipalId}
+          `,
+        ),
+      );
 
       // Get the created consent records with full details for webhook
       const createdConsentRecords = await prisma.consent.findMany({
@@ -255,6 +305,7 @@ export async function createConsents(
         action: consent.status,
         inserted_at: consent.insertedAt.toISOString(),
         updated_at: consent.updatedAt.toISOString(),
+        expires_at: consent.expiresAt ? consent.expiresAt.toISOString() : null,
         mandatory: consent.businessProcessRule.mandatory,
         parent_consent_id: consent.parentConsentId,
         performed_by: "self",
@@ -270,17 +321,23 @@ export async function createConsents(
         const first = createdConsentRecords[0];
 
         // Generate notice links
-        const { generateNoticeLinkFromObject } = await import("./notices-service");
+        const { generateNoticeLinkFromObject } = await import(
+          "./notices-service"
+        );
         const noticeLink = await generateNoticeLinkFromObject(notice, false);
         const embedLink = await generateNoticeLinkFromObject(notice, true);
 
         // Generate timeline link (DPRM link with timeline path)
-        const basePath = process.env.BASE_PATH || process.env.AUTH_URL || "http://localhost:3000";
+        const basePath =
+          process.env.BASE_PATH ||
+          process.env.AUTH_URL ||
+          "http://localhost:3000";
         const dprmAccessToken = dprmLink.split("/").pop(); // Extract token from DPRM link
         const timelineLink = `${basePath}/principal/consents/timeline/${notice.dataPrincipalId}/${dprmAccessToken}?type=data_principal_id&data_fiduciary_id=${first.businessUnit.code}&data_principal_ids[]=${notice.dataPrincipalId}`;
 
         // Get data_fiduciary_id from environment or business unit code
-        const dataFiduciaryId = process.env.DATA_FIDUCIARY_ID || first.businessUnit.code;
+        const dataFiduciaryId =
+          process.env.DATA_FIDUCIARY_ID || first.businessUnit.code;
 
         // Build consents array with full structure matching the expected format
         const consentsArray = submittedConsents.map((consent) => ({
@@ -308,7 +365,7 @@ export async function createConsents(
           action: consent.action,
           inserted_at: consent.inserted_at,
           updated_at: consent.updated_at,
-          expires_at: null, // Will be populated if consent has expiry
+          expires_at: consent.expires_at,
           mandatory: consent.mandatory,
           revocable_by_principal: consent.revocable_by_principal,
           reconsentable_by_principal: consent.reconsentable_by_principal,
@@ -354,7 +411,7 @@ export async function createConsents(
         }).catch((webhookError) => {
           console.error(
             "Failed to trigger CONSENT_CREATED webhook:",
-            webhookError
+            webhookError,
           );
         });
       }
@@ -369,7 +426,7 @@ export async function createConsents(
       if (
         createError.code === "P2002" ||
         createError.message?.includes(
-          "duplicate key value violates unique constraint"
+          "duplicate key value violates unique constraint",
         )
       ) {
         // Return success with 0 consents created since duplicates were prevented
@@ -540,7 +597,7 @@ export interface UserAttributeWithProcessingPurposes {
  * Gets top 5 user attributes with their processing purposes
  */
 export async function getLatestActiveConsents(
-  dataPrincipalId: string
+  dataPrincipalId: string,
 ): Promise<UserAttributeWithProcessingPurposes[]> {
   try {
     // Step 1: Single raw query to get top 5 attributes with their processing purpose IDs
@@ -594,7 +651,7 @@ export async function getLatestActiveConsents(
 
     // Create a map for quick lookup
     const processingPurposeMap = new Map(
-      processingPurposes.map((pp) => [pp.publicId, pp])
+      processingPurposes.map((pp) => [pp.publicId, pp]),
     );
 
     // Step 4: Build the result
@@ -671,7 +728,7 @@ export function groupConsentsByLatestRule(consents: any[]): Map<string, any> {
  * @returns Array of formatted consent objects
  */
 export function formatConsentsForValidation(
-  consents: any[]
+  consents: any[],
 ): ValidatedConsent[] {
   const now = Date.now();
 
@@ -840,7 +897,7 @@ export async function expireConsents() {
           {
             maxWait: 5000, // Wait max 5 seconds to start transaction
             timeout: 10000, // Transaction timeout after 10 seconds
-          }
+          },
         );
 
         // If no more consents to expire, break the loop
@@ -880,7 +937,7 @@ export async function expireConsents() {
         });
 
         const consentDetailsMap = new Map(
-          consentsWithDetails.map((c) => [c.publicId, c])
+          consentsWithDetails.map((c) => [c.publicId, c]),
         );
 
         result.expiredConsents.forEach((consent) => {
@@ -896,9 +953,10 @@ export async function expireConsents() {
               : null;
 
           // Extract data processor IDs for webhook targeting
-          const dataProcessorIds = details.processingPurpose.processingPurposeToDataProcessors
-            .map((dp) => dp.dataProcessor.ouId)
-            .filter((id): id is string => id !== null);
+          const dataProcessorIds =
+            details.processingPurpose.processingPurposeToDataProcessors
+              .map((dp) => dp.dataProcessor.ouId)
+              .filter((id): id is string => id !== null);
 
           triggerWebhookEvent(
             WebhookEventType.CONSENT_EXPIRED,
@@ -922,11 +980,11 @@ export async function expireConsents() {
               updated_at: consent.updatedAt.toISOString(),
               expired_at: consent.expiresAt.toISOString(),
             },
-            dataProcessorIds
+            dataProcessorIds,
           ).catch((webhookError) => {
             console.error(
               `Failed to trigger CONSENT_EXPIRED webhook for ${consent.publicId}:`,
-              webhookError
+              webhookError,
             );
           });
         });
@@ -937,7 +995,7 @@ export async function expireConsents() {
       } catch (batchError) {
         console.error(
           `[${now.toISOString()}] Error in batch processing:`,
-          batchError
+          batchError,
         );
 
         if (
@@ -946,7 +1004,7 @@ export async function expireConsents() {
             batchError.message.includes("timeout"))
         ) {
           console.error(
-            `[${now.toISOString()}] Transaction timeout - stopping batch processing`
+            `[${now.toISOString()}] Transaction timeout - stopping batch processing`,
           );
           break;
         }
@@ -961,7 +1019,7 @@ export async function expireConsents() {
   } catch (error) {
     console.error(
       `[${new Date().toISOString()}] Error expiring consents:`,
-      error
+      error,
     );
     throw error;
   }
@@ -972,7 +1030,7 @@ export async function expireConsents() {
  * Returns the count of active consents and unique business processes (services)
  */
 export async function getActiveConsentsOverview(
-  dataPrincipalId: string
+  dataPrincipalId: string,
 ): Promise<{
   activeConsentsCount: number;
   servicesCount: number;
@@ -996,7 +1054,7 @@ export async function getActiveConsentsOverview(
 
     // Get unique business processes (services)
     const uniqueBusinessProcessIds = new Set(
-      activeConsents.map((consent) => consent.businessProcessId)
+      activeConsents.map((consent) => consent.businessProcessId),
     );
     const servicesCount = uniqueBusinessProcessIds.size;
 
@@ -1007,7 +1065,7 @@ export async function getActiveConsentsOverview(
   } catch (error) {
     console.error(
       `[${new Date().toISOString()}] Error fetching active consents overview:`,
-      error
+      error,
     );
     throw error;
   }
@@ -1016,7 +1074,7 @@ export async function getActiveConsentsOverview(
 export async function fetchConsentHistoryFromDB(
   dataPrincipalId: string,
   referenceId: string,
-  businessProcessCode: string
+  businessProcessCode: string,
 ) {
   const consents = await prisma.consent.findMany({
     where: {

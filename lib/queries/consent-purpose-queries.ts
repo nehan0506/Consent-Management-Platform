@@ -10,6 +10,7 @@
  */
 
 import prisma from "@/lib/prisma";
+import { getAllUserAttributes } from "@/lib/services/user-attributes-service";
 
 export interface StepData {
   consentPurpose?: any;
@@ -18,6 +19,11 @@ export interface StepData {
   userAttributes?: any[];
   purposesOfProcessing?: any[];
   dataProcessors?: any[];
+}
+
+async function getUserAttributesForForms() {
+  const userAttributes = await getAllUserAttributes();
+  return userAttributes.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export async function fetchConsentPurposeData(
@@ -60,9 +66,7 @@ export async function fetchProcessingPurposesData(
     }
 
     // Fetch user attributes for the form
-    data.userAttributes = await prisma.userAttribute.findMany({
-      orderBy: { name: "asc" },
-    });
+    data.userAttributes = await getUserAttributesForForms();
 
     // Fetch purposes of processing for dropdowns
     data.purposesOfProcessing = await prisma.purposeOfProcessing.findMany({
@@ -115,9 +119,7 @@ export async function fetchDataProcessorsData(
     }
 
     // Fetch user attributes
-    data.userAttributes = await prisma.userAttribute.findMany({
-      orderBy: { name: "asc" },
-    });
+    data.userAttributes = await getUserAttributesForForms();
 
     // Fetch data processors
     data.dataProcessors = await prisma.dataProcessor.findMany({
@@ -190,9 +192,7 @@ export async function fetchReviewData(
         },
       });
 
-    const userAttributes = await prisma.userAttribute.findMany({
-      orderBy: { name: "asc" },
-    });
+    const userAttributes = await getUserAttributesForForms();
 
     const purposesOfProcessing = await prisma.purposeOfProcessing.findMany({
       orderBy: { name: "asc" },
@@ -278,9 +278,7 @@ export async function fetchAllConsentPurposeFormData(
     }
 
     // Fetch reference data (always needed)
-    data.userAttributes = await prisma.userAttribute.findMany({
-      orderBy: { name: "asc" },
-    });
+    data.userAttributes = await getUserAttributesForForms();
 
     data.purposesOfProcessing = await prisma.purposeOfProcessing.findMany({
       orderBy: { name: "asc" },

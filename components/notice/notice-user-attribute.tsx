@@ -33,13 +33,31 @@ export function NoticeUserAttribute({
   variant = "badge",
   showPiiIndicator = true,
 }: NoticeUserAttributeProps) {
+  const renderIndicators = () => (
+    <>
+      {showPiiIndicator && userAttribute.pii && (
+        <span className="rounded-full bg-yellow-100 px-1.5 py-0.5 text-[10px] font-medium text-yellow-800">
+          PII
+        </span>
+      )}
+      {userAttribute.piiAction && (
+        <span className="rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700">
+          {userAttribute.piiAction}
+        </span>
+      )}
+    </>
+  );
+
   const renderBadgeVariant = () => (
     <NoticeBadge
       variant="secondary"
       onClick={onToggle}
       className={cn(disabled && "opacity-50 cursor-not-allowed", className)}
     >
-      <span className="flex items-center gap-1">{userAttribute.name}</span>
+      <span className="flex flex-wrap items-center gap-1">
+        {userAttribute.name}
+        {renderIndicators()}
+      </span>
     </NoticeBadge>
   );
 
@@ -58,11 +76,7 @@ export function NoticeUserAttribute({
     >
       <div className="flex items-center gap-2 flex-1">
         <span className="font-medium">{userAttribute.name}</span>
-        {showPiiIndicator && userAttribute.pii && (
-          <span className="text-xs px-1.5 py-0.5 bg-yellow-100 text-yellow-800 rounded">
-            PII
-          </span>
-        )}
+        {renderIndicators()}
       </div>
       {onToggle && (
         <div className="w-4 h-4">

@@ -5,10 +5,10 @@ module.exports = [
 /**
  * Open Bharat Digital Consent by IDfy
  * Copyright (c) 2025 Baldor Technologies Private Limited (IDfy)
- * 
+ *
  * This software is licensed under the Privy Public License.
  * See LICENSE.md for the full terms of use.
- * 
+ *
  * Unauthorized copying, modification, distribution, or commercial use
  * is strictly prohibited without prior written permission from IDfy.
  */ // lib/consent-diff.ts
@@ -20,21 +20,23 @@ __turbopack_context__.s([
 ]);
 // --- 2. Helper Functions ---
 /**
- * Converts a duration in hours (from the DB) into a human-readable string.
- */ function formatDuration(hours) {
-    if (hours === null || typeof hours === "undefined") {
+ * Converts a duration in minutes (from the DB) into a human-readable string.
+ */ function formatDuration(minutes) {
+    if (minutes === null || typeof minutes === "undefined") {
         return "Not specified";
     }
-    if (hours > 720) {
+    if (minutes >= 60 * 24 * 30) {
         // Approx > 1 month
-        const years = Math.floor(hours / 8760);
+        const years = Math.floor(minutes / (60 * 24 * 365));
         if (years > 0) return `${years} year(s)`;
-        const months = Math.floor(hours / 720);
+        const months = Math.floor(minutes / (60 * 24 * 30));
         if (months > 0) return `${months} month(s)`;
     }
-    const days = Math.floor(hours / 24);
+    const days = Math.floor(minutes / (60 * 24));
     if (days > 0) return `${days} day(s)`;
-    return `${hours} hour(s)`;
+    const hours = Math.floor(minutes / 60);
+    if (hours > 0) return `${hours} hour(s)`;
+    return `${minutes} minute(s)`;
 }
 function regroupBpData(bp) {
     const serviceData = {
@@ -1409,6 +1411,7 @@ var __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$ex
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$consents$2d$service$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/services/consents-service.ts [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$webhook$2d$service$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/services/webhook-service.ts [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$artifact$2d$creation$2d$service$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/services/artifact-creation-service.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$user$2d$attributes$2d$service$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/services/user-attributes-service.ts [app-route] (ecmascript)");
 ;
 ;
 ;
@@ -1416,6 +1419,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$artifact$
 ;
 ;
 ;
+;
+async function getUserAttributesByNames(names) {
+    const namesSet = new Set(names);
+    const userAttributes = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$user$2d$attributes$2d$service$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getAllUserAttributes"])();
+    return userAttributes.filter((attribute)=>namesSet.has(attribute.name));
+}
 // Notice submission validation functions
 function validateAtLeastOneRuleSelected(selections) {
     const selectedCount = selections.filter((s)=>s.selected).length;
@@ -1656,20 +1665,7 @@ async function getBusinessProcessWithFullDataById(businessProcessId) {
             rule.processingPurpose.userAttributeNames.forEach((name)=>userAttributeNames.add(name));
         });
         // Fetch user attributes
-        const userAttributes = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].userAttribute.findMany({
-            where: {
-                name: {
-                    in: Array.from(userAttributeNames)
-                }
-            },
-            select: {
-                id: true,
-                name: true,
-                pii: true,
-                translations: true,
-                supportedLanguages: true
-            }
-        });
+        const userAttributes = await getUserAttributesByNames(userAttributeNames);
         // Create a map for quick lookup by name
         const userAttributesMap = new Map(userAttributes.map((ua)=>[
                 ua.name,
@@ -1805,20 +1801,7 @@ async function getNoticeWithFullDataByPublicId(publicId) {
             rule.processingPurpose.userAttributeNames.forEach((name)=>userAttributeNames.add(name));
         });
         // Fetch user attributes
-        const userAttributes = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].userAttribute.findMany({
-            where: {
-                name: {
-                    in: Array.from(userAttributeNames)
-                }
-            },
-            select: {
-                id: true,
-                name: true,
-                pii: true,
-                translations: true,
-                supportedLanguages: true
-            }
-        });
+        const userAttributes = await getUserAttributesByNames(userAttributeNames);
         // Create a map for quick lookup by name
         const userAttributesMap = new Map(userAttributes.map((ua)=>[
                 ua.name,
@@ -1847,7 +1830,7 @@ async function getNoticeWithFullDataByPublicId(publicId) {
                             name: rule.consentPurpose.name,
                             code: rule.consentPurpose.code,
                             description: rule.consentPurpose.description,
-                            consentDuration: consentDurationMap.get(rule.consentPurpose.id) || null,
+                            consentDuration: consentDurationMap.get(rule.consentPurpose.id) ?? notice.consentDuration ?? null,
                             mandatory: false,
                             translations: rule.consentPurpose.translations,
                             supportedLanguages: rule.consentPurpose.supportedLanguages
@@ -1948,20 +1931,7 @@ async function getBusinessProcessesByCode(code, version) {
                 rule.processingPurpose.userAttributeNames.forEach((name)=>allUserAttributeNames.add(name));
             });
         });
-        const userAttributes = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].userAttribute.findMany({
-            where: {
-                name: {
-                    in: Array.from(allUserAttributeNames)
-                }
-            },
-            select: {
-                id: true,
-                name: true,
-                pii: true,
-                translations: true,
-                supportedLanguages: true
-            }
-        });
+        const userAttributes = await getUserAttributesByNames(allUserAttributeNames);
         const userAttributesMap = new Map(userAttributes.map((ua)=>[
                 ua.name,
                 ua

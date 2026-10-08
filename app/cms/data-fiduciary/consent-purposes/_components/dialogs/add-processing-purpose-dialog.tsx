@@ -196,6 +196,9 @@ export function AddProcessingPurposeDialog({
     (p) => p.id === formData.purposeOfProcessingId
   );
 
+  const getUserAttribute = (attributeName: string) =>
+    userAttributes.find((attribute) => attribute.name === attributeName);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[700px] h-[600px] flex flex-col">
@@ -353,9 +356,7 @@ export function AddProcessingPurposeDialog({
                 {formData.userAttributeNames.length > 0 ? (
                   <div className="flex flex-wrap gap-2 p-3 border rounded-lg bg-muted/50">
                     {formData.userAttributeNames.map((attrName) => {
-                      const attr = userAttributes.find(
-                        (a) => a.name === attrName
-                      );
+                      const attr = getUserAttribute(attrName);
                       return attr ? (
                         <Badge
                           key={attrName}
@@ -363,6 +364,16 @@ export function AddProcessingPurposeDialog({
                           className="text-xs flex items-center gap-1 bg-white"
                         >
                           {attrName}
+                          {attr.pii && (
+                            <span className="rounded-full bg-muted px-1.5 py-0.5 text-[10px] font-medium">
+                              PII
+                            </span>
+                          )}
+                          {attr.piiAction && (
+                            <span className="rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700">
+                              {attr.piiAction}
+                            </span>
+                          )}
                           <button
                             type="button"
                             onClick={(e) => {
@@ -435,6 +446,11 @@ export function AddProcessingPurposeDialog({
                               {attribute.pii && (
                                 <Badge variant="secondary" className="text-xs">
                                   PII
+                                </Badge>
+                              )}
+                              {attribute.piiAction && (
+                                <Badge variant="outline" className="text-xs">
+                                  {attribute.piiAction}
                                 </Badge>
                               )}
                             </div>

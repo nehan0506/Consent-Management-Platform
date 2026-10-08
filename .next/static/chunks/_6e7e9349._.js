@@ -482,10 +482,10 @@ function UserAttributeView(param) {
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                         className: "text-2xl font-bold tracking-tight",
-                                        children: (userAttribute === null || userAttribute === void 0 ? void 0 : userAttribute.name) || "User Attribute"
+                                        children: (userAttribute === null || userAttribute === void 0 ? void 0 : userAttribute.name) || "Purpose Attribute"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                        lineNumber: 70,
+                                        lineNumber: 71,
                                         columnNumber: 13
                                     }, this),
                                     (userAttribute === null || userAttribute === void 0 ? void 0 : userAttribute.updatedAt) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -497,7 +497,7 @@ function UserAttributeView(param) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                        lineNumber: 74,
+                                        lineNumber: 75,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -506,13 +506,13 @@ function UserAttributeView(param) {
                                         children: (userAttribute === null || userAttribute === void 0 ? void 0 : userAttribute.pii) ? "PII" : "NON-PII"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                        lineNumber: 78,
+                                        lineNumber: 79,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                lineNumber: 69,
+                                lineNumber: 70,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$action$2d$buttons$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["EditButton"], {
@@ -522,27 +522,27 @@ function UserAttributeView(param) {
                                 children: "Edit"
                             }, void 0, false, {
                                 fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                lineNumber: 89,
+                                lineNumber: 90,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                        lineNumber: 68,
+                        lineNumber: 69,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         className: "text-muted-foreground",
-                        children: "View user attribute details"
+                        children: "View purpose attribute details"
                     }, void 0, false, {
                         fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                        lineNumber: 97,
+                        lineNumber: 98,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                lineNumber: 67,
+                lineNumber: 68,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -558,7 +558,7 @@ function UserAttributeView(param) {
                                     children: "General Information"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                    lineNumber: 105,
+                                    lineNumber: 106,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -571,10 +571,10 @@ function UserAttributeView(param) {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             className: "font-medium text-muted-foreground",
-                                                            children: "User Attribute Name:"
+                                                            children: "Purpose Attribute Name:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                            lineNumber: 110,
+                                                            lineNumber: 111,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -582,13 +582,13 @@ function UserAttributeView(param) {
                                                             children: (userAttribute === null || userAttribute === void 0 ? void 0 : userAttribute.name) || "Not specified"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                            lineNumber: 113,
+                                                            lineNumber: 114,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                    lineNumber: 109,
+                                                    lineNumber: 110,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -598,7 +598,7 @@ function UserAttributeView(param) {
                                                             children: "PII Status:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                            lineNumber: 118,
+                                                            lineNumber: 119,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -606,19 +606,43 @@ function UserAttributeView(param) {
                                                             children: (userAttribute === null || userAttribute === void 0 ? void 0 : userAttribute.pii) ? "PII" : "Non-PII"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                            lineNumber: 121,
+                                                            lineNumber: 122,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                    lineNumber: 117,
+                                                    lineNumber: 118,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "font-medium text-muted-foreground",
+                                                            children: "PII Action:"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
+                                                            lineNumber: 127,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                            className: "mt-1",
+                                                            children: (userAttribute === null || userAttribute === void 0 ? void 0 : userAttribute.piiAction) || "ALLOW"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
+                                                            lineNumber: 130,
+                                                            columnNumber: 19
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
+                                                    lineNumber: 126,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                            lineNumber: 108,
+                                            lineNumber: 109,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -631,7 +655,7 @@ function UserAttributeView(param) {
                                                             children: "Created At:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                            lineNumber: 130,
+                                                            lineNumber: 139,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -639,13 +663,13 @@ function UserAttributeView(param) {
                                                             children: (userAttribute === null || userAttribute === void 0 ? void 0 : userAttribute.createdAt) ? formatDateTime(userAttribute.createdAt) : "Not available"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                            lineNumber: 133,
+                                                            lineNumber: 142,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                    lineNumber: 129,
+                                                    lineNumber: 138,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -655,7 +679,7 @@ function UserAttributeView(param) {
                                                             children: "Updated At:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                            lineNumber: 140,
+                                                            lineNumber: 149,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -663,36 +687,36 @@ function UserAttributeView(param) {
                                                             children: (userAttribute === null || userAttribute === void 0 ? void 0 : userAttribute.updatedAt) ? formatDateTime(userAttribute.updatedAt) : "Not available"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                            lineNumber: 143,
+                                                            lineNumber: 152,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                    lineNumber: 139,
+                                                    lineNumber: 148,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                            lineNumber: 128,
+                                            lineNumber: 137,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                    lineNumber: 106,
+                                    lineNumber: 107,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                            lineNumber: 104,
+                            lineNumber: 105,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                        lineNumber: 103,
+                        lineNumber: 104,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -702,10 +726,10 @@ function UserAttributeView(param) {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                     className: "font-semibold mb-4",
-                                    children: "User Attribute in 22 Indian Languages"
+                                    children: "Purpose Attribute in 22 Indian Languages"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                    lineNumber: 157,
+                                    lineNumber: 166,
                                     columnNumber: 13
                                 }, this),
                                 userAttribute.supportedLanguages && userAttribute.supportedLanguages.filter((code)=>code !== "en").length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -734,56 +758,56 @@ function UserAttributeView(param) {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                    lineNumber: 169,
+                                                    lineNumber: 180,
                                                     columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     children: (translation === null || translation === void 0 ? void 0 : translation.name) || "-"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                                    lineNumber: 172,
+                                                    lineNumber: 183,
                                                     columnNumber: 25
                                                 }, this)
                                             ]
                                         }, langCode, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                            lineNumber: 168,
+                                            lineNumber: 179,
                                             columnNumber: 23
                                         }, this);
                                     })
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                    lineNumber: 160,
+                                    lineNumber: 171,
                                     columnNumber: 15
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-sm text-muted-foreground",
                                     children: "No translations available. Add translations from the edit page."
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                                    lineNumber: 180,
+                                    lineNumber: 191,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                            lineNumber: 156,
+                            lineNumber: 165,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                        lineNumber: 155,
+                        lineNumber: 164,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-                lineNumber: 101,
+                lineNumber: 102,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/cms/data-fiduciary/user-attributes/_components/user-attribute-view.tsx",
-        lineNumber: 65,
+        lineNumber: 66,
         columnNumber: 5
     }, this);
 }

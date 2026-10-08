@@ -20,6 +20,7 @@ interface UserAttributeWithDetails {
   id: number;
   name: string;
   pii: boolean;
+  piiAction: string | null;
   supportedLanguages: string[];
   translations: Prisma.JsonValue | null;
   createdAt: Date;
@@ -120,6 +121,14 @@ export function UserAttributeView({
                   </span>
                   <p className="mt-1">
                     {userAttribute?.pii ? "PII" : "Non-PII"}
+                  </p>
+                </div>
+                <div>
+                  <span className="font-medium text-muted-foreground">
+                    PII Action:
+                  </span>
+                  <p className="mt-1">
+                    {userAttribute?.piiAction || "ALLOW"}
                   </p>
                 </div>
               </div>

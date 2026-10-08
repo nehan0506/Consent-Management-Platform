@@ -10,6 +10,7 @@
  */
 
 import prisma from "@/lib/prisma";
+import { getAllUserAttributes } from "@/lib/services/user-attributes-service";
 import {
   BusinessProcessState,
   detectBreakingChanges,
@@ -38,6 +39,7 @@ interface BusinessProcessFormData {
   name: string;
   code: string;
   businessUnitId: number;
+  resourceId?: string;
   grantDescription: string;
   revokeDescription?: string;
   reconsentDescription?: string;
@@ -49,7 +51,7 @@ interface BusinessProcessFormData {
   legalDocuments?: Record<string, string>;
 }
 
-function getConsentDurationInHours(
+function getConsentDurationInMinutes(
   consentConfig: ConsentPurposeConfig,
 ): number | null {
   if (consentConfig.durationType !== "custom_duration") {
@@ -65,19 +67,19 @@ function getConsentDurationInHours(
 
   switch (consentConfig.durationUnit || "days") {
     case "minutes":
-      return duration / 60;
-    case "hours":
       return duration;
+    case "hours":
+      return duration * 60;
     case "days":
-      return duration * 24;
+      return duration * 24 * 60;
     case "weeks":
-      return duration * 24 * 7;
+      return duration * 24 * 7 * 60;
     case "months":
-      return duration * 24 * 30;
+      return duration * 24 * 30 * 60;
     case "years":
-      return duration * 24 * 365;
+      return duration * 24 * 365 * 60;
     default:
-      return duration * 24;
+      return duration * 24 * 60;
   }
 }
 
@@ -87,7 +89,7 @@ async function syncConsentPurposeDurations(
   consentPurposes: ConsentPurposeConfig[],
 ) {
   for (const consentConfig of consentPurposes) {
-    const consentDuration = getConsentDurationInHours(consentConfig);
+    const consentDuration = getConsentDurationInMinutes(consentConfig);
 
     const updateResult = await tx.businessProcessToConsentPurpose.updateMany({
       where: {
@@ -109,6 +111,29 @@ async function syncConsentPurposeDurations(
       });
     }
   }
+}
+
+function normalizeResourceId(resourceId?: string | null): string | null {
+  if (typeof resourceId !== "string") {
+    return null;
+  }
+
+  const trimmed = resourceId.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
+async function setBusinessProcessResourceId(
+  tx: any,
+  businessProcessId: number,
+  resourceId?: string | null,
+) {
+  const normalizedResourceId = normalizeResourceId(resourceId);
+
+  await tx.$executeRaw`
+    UPDATE business_processes
+    SET resource_id = ${normalizedResourceId}::uuid
+    WHERE id = ${businessProcessId}
+  `;
 }
 
 // Basic CRUD operations for business processes
@@ -311,6 +336,7 @@ export async function createBusinessProcess(data: {
   creationType?: string;
   createdBy: string;
   businessUnitId: number;
+  resourceId?: string;
 }) {
   try {
     const businessProcess = await prisma.businessProcess.create({
@@ -329,6 +355,11 @@ export async function createBusinessProcess(data: {
         businessUnitId: data.businessUnitId,
       },
     });
+    await prisma.$executeRaw`
+      UPDATE business_processes
+      SET resource_id = ${normalizeResourceId(data.resourceId)}::uuid
+      WHERE id = ${businessProcess.id}
+    `;
     return businessProcess;
   } catch (error) {
     console.error("Error creating business process:", error);
@@ -350,13 +381,20 @@ export async function updateBusinessProcess(
     legalDocuments?: any;
     creationType?: string;
     businessUnitId?: number;
+    resourceId?: string | null;
   },
 ) {
   try {
+    const { resourceId, ...businessProcessData } = data;
     const businessProcess = await prisma.businessProcess.update({
       where: { id },
-      data,
+      data: businessProcessData,
     });
+    await prisma.$executeRaw`
+      UPDATE business_processes
+      SET resource_id = ${normalizeResourceId(resourceId)}::uuid
+      WHERE id = ${id}
+    `;
     return businessProcess;
   } catch (error) {
     console.error("Error updating business process:", error);
@@ -425,6 +463,11 @@ export async function saveOrUpdateBusinessProcess(
           where: { id: businessProcessId },
           data: updateData,
         });
+        await setBusinessProcessResourceId(
+          tx,
+          businessProcess.id,
+          formData.resourceId,
+        );
 
         // Only update consent purposes if they are provided
         if (formData.consentPurposes && formData.consentPurposes.length > 0) {
@@ -455,20 +498,25 @@ export async function saveOrUpdateBusinessProcess(
             businessUnitId: formData.businessUnitId,
           },
         });
+        await setBusinessProcessResourceId(
+          tx,
+          businessProcess.id,
+          formData.resourceId,
+        );
       }
 
       // 2. Create BusinessProcessToConsentPurpose records and BusinessProcessRules
       // Only do this if consent purposes are provided and not empty
       if (formData.consentPurposes && formData.consentPurposes.length > 0) {
         for (const consentConfig of formData.consentPurposes) {
-          const durationInHours = getConsentDurationInHours(consentConfig);
+          const durationInMinutes = getConsentDurationInMinutes(consentConfig);
 
           // Create BusinessProcessToConsentPurpose record
           await tx.businessProcessToConsentPurpose.create({
             data: {
               businessProcessId: businessProcess.id,
               consentPurposeId: consentConfig.consentPurposeId,
-              consentDuration: durationInHours,
+              consentDuration: durationInMinutes,
             },
           });
 
@@ -542,17 +590,22 @@ export async function saveBusinessProcess(
           businessUnitId: formData.businessUnitId,
         },
       });
+      await setBusinessProcessResourceId(
+        tx,
+        businessProcess.id,
+        formData.resourceId,
+      );
 
       // 2. Create BusinessProcessToConsentPurpose records and BusinessProcessRules
       for (const consentConfig of formData.consentPurposes) {
-        const durationInHours = getConsentDurationInHours(consentConfig);
+        const durationInMinutes = getConsentDurationInMinutes(consentConfig);
 
         // Create BusinessProcessToConsentPurpose record
         await tx.businessProcessToConsentPurpose.create({
           data: {
             businessProcessId: businessProcess.id,
             consentPurposeId: consentConfig.consentPurposeId,
-            consentDuration: durationInHours,
+            consentDuration: durationInMinutes,
           },
         });
 
@@ -635,9 +688,9 @@ export async function getBusinessProcessFormData() {
     const [consentPurposes, userAttributes, dataProcessors] = await Promise.all(
       [
         getPublishedConsentPurposes(),
-        prisma.userAttribute.findMany({
-          orderBy: { name: "asc" },
-        }),
+        getAllUserAttributes().then((attributes) =>
+          attributes.sort((a, b) => a.name.localeCompare(b.name)),
+        ),
         prisma.dataProcessor.findMany({
           where: { active: true },
           orderBy: { brandName: "asc" },
@@ -766,6 +819,11 @@ export async function saveOrUpdateBusinessProcessWithVersioning(
               createdBy,
             },
           });
+          await setBusinessProcessResourceId(
+            tx,
+            newBP.id,
+            clientState.step1Data.resourceId,
+          );
 
           bpId = newBP.id;
           isNewVersion = true;
@@ -790,6 +848,11 @@ export async function saveOrUpdateBusinessProcessWithVersioning(
               publishedAt: bpStatus === "published" ? new Date() : null,
             },
           });
+          await setBusinessProcessResourceId(
+            tx,
+            bpId,
+            clientState.step1Data.resourceId,
+          );
         }
       } else if (bpId) {
         // Update existing (no breaking changes or draft)
@@ -814,6 +877,11 @@ export async function saveOrUpdateBusinessProcessWithVersioning(
           where: { id: bpId },
           data: updateData,
         });
+        await setBusinessProcessResourceId(
+          tx,
+          bpId,
+          clientState.step1Data.resourceId,
+        );
       } else {
         const translationsToSave = clientState.step4Data?.translations || {};
         const legalDocsToSave = clientState.step3Data?.legalDocuments || {};
@@ -842,6 +910,11 @@ export async function saveOrUpdateBusinessProcessWithVersioning(
             createdBy,
           },
         });
+        await setBusinessProcessResourceId(
+          tx,
+          newBP.id,
+          clientState.step1Data.resourceId,
+        );
         bpId = newBP.id;
       }
 
@@ -888,14 +961,14 @@ export async function saveOrUpdateBusinessProcessWithVersioning(
         // Create new rules (for new versions, new BPs, or when Step 2 has changes)
         const consentPurposes = clientState.consentPurposes || [];
         for (const consentConfig of consentPurposes) {
-          const durationInHours = getConsentDurationInHours(consentConfig);
+          const durationInMinutes = getConsentDurationInMinutes(consentConfig);
 
           // Create BusinessProcessToConsentPurpose record
           await tx.businessProcessToConsentPurpose.create({
             data: {
               businessProcessId: bpId,
               consentPurposeId: consentConfig.consentPurposeId,
-              consentDuration: durationInHours,
+              consentDuration: durationInMinutes,
             },
           });
 
@@ -1185,6 +1258,11 @@ export async function propagateConsentPurposeVersionToBusinessProcesses(
       },
       include: { businessProcessToConsentPurposes: true },
     });
+    await prisma.$executeRaw`
+      UPDATE business_processes
+      SET resource_id = ${normalizeResourceId(bp.resourceId)}::uuid
+      WHERE id = ${createdBP.id}
+    `;
 
     // 6. Create CP ID map for rule lookup
     const oldCPIdToNewCPIdMap = new Map<number, number>();

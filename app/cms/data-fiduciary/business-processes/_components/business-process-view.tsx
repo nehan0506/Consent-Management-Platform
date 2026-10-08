@@ -62,26 +62,28 @@ export function BusinessProcessView({
     });
   };
 
-  // Helper function to convert duration to display format (from hours to days)
+  // Helper function to convert duration to display format (from minutes)
   const convertDurationToDays = (config: any) => {
+    const durationInMinutes = Number(config.consentDuration || 0);
+
     if (
       config.durationType === "until_purpose_met" ||
-      config.durationType === undefined
+      !Number.isFinite(durationInMinutes) ||
+      durationInMinutes <= 0
     ) {
       return "Until purpose met";
     }
 
-    const durationInHours = config.consentDuration || 0;
-    if (durationInHours < 1) {
-      const durationInMinutes = Math.round(durationInHours * 60);
+    if (durationInMinutes < 60) {
       return `${durationInMinutes} ${durationInMinutes === 1 ? "minute" : "minutes"}`;
     }
-    if (durationInHours < 24) {
-      return `${durationInHours} ${durationInHours === 1 ? "hour" : "hours"}`;
+    const durationInHours = durationInMinutes / 60;
+    if (durationInMinutes < 24 * 60) {
+      return `${Number(durationInHours.toFixed(2))} ${durationInHours === 1 ? "hour" : "hours"}`;
     }
-    const durationInDays = Math.round(durationInHours / 24);
+    const durationInDays = durationInMinutes / (24 * 60);
 
-    return `${durationInDays} days`;
+    return `${Number(durationInDays.toFixed(2))} days`;
   };
 
   const handleEdit = () => {

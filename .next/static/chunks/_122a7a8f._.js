@@ -201,6 +201,42 @@ const initialState = {
     eulas: [],
     baseline: null
 };
+function convertMinutesToDuration(minutes) {
+    if (minutes < 60) {
+        return {
+            consentDuration: minutes,
+            durationUnit: "minutes"
+        };
+    }
+    if (Number.isInteger(minutes / (60 * 24 * 365))) {
+        return {
+            consentDuration: minutes / (60 * 24 * 365),
+            durationUnit: "years"
+        };
+    }
+    if (Number.isInteger(minutes / (60 * 24 * 30))) {
+        return {
+            consentDuration: minutes / (60 * 24 * 30),
+            durationUnit: "months"
+        };
+    }
+    if (Number.isInteger(minutes / (60 * 24 * 7))) {
+        return {
+            consentDuration: minutes / (60 * 24 * 7),
+            durationUnit: "weeks"
+        };
+    }
+    if (Number.isInteger(minutes / (60 * 24))) {
+        return {
+            consentDuration: minutes / (60 * 24),
+            durationUnit: "days"
+        };
+    }
+    return {
+        consentDuration: minutes / 60,
+        durationUnit: "hours"
+    };
+}
 function businessProcessReducer(state, action) {
     let newState;
     switch(action.type){
@@ -281,6 +317,7 @@ function businessProcessReducer(state, action) {
                 name: businessProcess.name || "",
                 code: businessProcess.code || "",
                 businessUnitId: businessProcess.businessUnitId || 0,
+                resourceId: businessProcess.resourceId || "",
                 grantDescription: businessProcess.grantDescription || "",
                 revokeDescription: businessProcess.revokeDescription || "",
                 reconsentDescription: businessProcess.reconsentDescription || ""
@@ -303,22 +340,15 @@ function businessProcessReducer(state, action) {
                         retentionDurationUnit: rule.retentionDurationUnit
                     };
                 });
-                // Convert hours back to duration
+                // Convert stored minutes back to duration
                 let durationType = "until_purpose_met";
                 let consentDuration;
                 let durationUnit;
                 if (relation.consentDuration !== null && relation.consentDuration !== undefined && relation.consentDuration > 0) {
                     durationType = "custom_duration";
-                    if (relation.consentDuration < 1) {
-                        consentDuration = Math.round(relation.consentDuration * 60);
-                        durationUnit = "minutes";
-                    } else if (relation.consentDuration < 24) {
-                        consentDuration = relation.consentDuration;
-                        durationUnit = "hours";
-                    } else {
-                        consentDuration = Math.round(relation.consentDuration / 24);
-                        durationUnit = "days";
-                    }
+                    const convertedDuration = convertMinutesToDuration(relation.consentDuration);
+                    consentDuration = convertedDuration.consentDuration;
+                    durationUnit = convertedDuration.durationUnit;
                 }
                 return {
                     id: index + 1,
@@ -396,7 +426,7 @@ function BusinessProcessProvider(param) {
         children: children
     }, void 0, false, {
         fileName: "[project]/contexts/business-process-context.tsx",
-        lineNumber: 279,
+        lineNumber: 321,
         columnNumber: 5
     }, this);
 }
@@ -439,6 +469,42 @@ var _s = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
+function convertMinutesToDuration(minutes) {
+    if (minutes < 60) {
+        return {
+            consentDuration: minutes,
+            durationUnit: "minutes"
+        };
+    }
+    if (Number.isInteger(minutes / (60 * 24 * 365))) {
+        return {
+            consentDuration: minutes / (60 * 24 * 365),
+            durationUnit: "years"
+        };
+    }
+    if (Number.isInteger(minutes / (60 * 24 * 30))) {
+        return {
+            consentDuration: minutes / (60 * 24 * 30),
+            durationUnit: "months"
+        };
+    }
+    if (Number.isInteger(minutes / (60 * 24 * 7))) {
+        return {
+            consentDuration: minutes / (60 * 24 * 7),
+            durationUnit: "weeks"
+        };
+    }
+    if (Number.isInteger(minutes / (60 * 24))) {
+        return {
+            consentDuration: minutes / (60 * 24),
+            durationUnit: "days"
+        };
+    }
+    return {
+        consentDuration: minutes / 60,
+        durationUnit: "hours"
+    };
+}
 function BaselineInitializer(param) {
     let { data, isEdit } = param;
     _s();
@@ -455,6 +521,7 @@ function BaselineInitializer(param) {
                     name: businessProcess.name || "",
                     code: businessProcess.code || "",
                     businessUnitId: businessProcess.businessUnitId || 0,
+                    resourceId: businessProcess.resourceId || "",
                     grantDescription: businessProcess.grantDescription || "",
                     revokeDescription: businessProcess.revokeDescription || "",
                     reconsentDescription: businessProcess.reconsentDescription || ""
@@ -478,22 +545,15 @@ function BaselineInitializer(param) {
                                 };
                             }
                         }["BaselineInitializer.useEffect.processingRules"]);
-                        // Convert hours back to duration
+                        // Convert stored minutes back to duration
                         let durationType = "until_purpose_met";
                         let consentDuration;
                         let durationUnit;
                         if (relation.consentDuration !== null && relation.consentDuration !== undefined && relation.consentDuration > 0) {
                             durationType = "custom_duration";
-                            if (relation.consentDuration < 1) {
-                                consentDuration = Math.round(relation.consentDuration * 60);
-                                durationUnit = "minutes";
-                            } else if (relation.consentDuration < 24) {
-                                consentDuration = relation.consentDuration;
-                                durationUnit = "hours";
-                            } else {
-                                consentDuration = Math.round(relation.consentDuration / 24);
-                                durationUnit = "days";
-                            }
+                            const convertedDuration = convertMinutesToDuration(relation.consentDuration);
+                            consentDuration = convertedDuration.consentDuration;
+                            durationUnit = convertedDuration.durationUnit;
                         }
                         return {
                             id: index + 1,
@@ -1402,6 +1462,7 @@ const businessProcessSchema = __TURBOPACK__imported__module__$5b$project$5d2f$no
     name: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(3, "Name should be at least 3 characters long").max(255, "Name must be less than 255 characters"),
     code: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1, "Code is required").max(50, "Code must be less than 50 characters"),
     businessUnitId: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().min(1, "Department is required"),
+    resourceId: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().trim().uuid("Resource ID must be a valid UUID").optional().or(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].literal("")),
     grantDescription: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(8, "Grant description should be at least 8 characters long").max(1000, "Grant description must be less than 1000 characters"),
     revokeDescription: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().optional(),
     reconsentDescription: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().optional()
@@ -1471,9 +1532,10 @@ var _s = __turbopack_context__.k.signature();
 ;
 function Step1Form(param) {
     let { data, isEdit, businessProcessId } = param;
-    var _data_businessProcess, _state_step1Data, _data_businessProcess1, _state_step1Data1, _data_businessProcess2, _state_step1Data2, _data_businessProcess3, _state_step1Data3, _data_businessProcess4, _state_step1Data4, _data_businessProcess5, _state_step1Data5, _data_businessProcess6;
+    var _data_businessProcess, _state_step1Data, _data_businessProcess1, _state_step1Data1, _data_businessProcess2, _state_step1Data2, _data_businessProcess3, _state_step1Data3, _data_businessProcess4, _state_step1Data4, _data_businessProcess5, _state_step1Data5, _data_businessProcess6, _state_step1Data6, _data_businessProcess7;
     _s();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const searchParams = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSearchParams"])();
     const { state, dispatch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$business$2d$process$2d$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useBusinessProcessContext"])();
     const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [businessUnitComboboxOpen, setBusinessUnitComboboxOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
@@ -1484,9 +1546,10 @@ function Step1Form(param) {
             name: ((_data_businessProcess = data.businessProcess) === null || _data_businessProcess === void 0 ? void 0 : _data_businessProcess.name) || ((_state_step1Data = state.step1Data) === null || _state_step1Data === void 0 ? void 0 : _state_step1Data.name) || "",
             code: ((_data_businessProcess1 = data.businessProcess) === null || _data_businessProcess1 === void 0 ? void 0 : _data_businessProcess1.code) || ((_state_step1Data1 = state.step1Data) === null || _state_step1Data1 === void 0 ? void 0 : _state_step1Data1.code) || (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$schemas$2f$business$2d$process$2d$schemas$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["generateRandomCode"])(),
             businessUnitId: ((_data_businessProcess2 = data.businessProcess) === null || _data_businessProcess2 === void 0 ? void 0 : _data_businessProcess2.businessUnitId) || ((_state_step1Data2 = state.step1Data) === null || _state_step1Data2 === void 0 ? void 0 : _state_step1Data2.businessUnitId) || undefined,
-            grantDescription: ((_data_businessProcess3 = data.businessProcess) === null || _data_businessProcess3 === void 0 ? void 0 : _data_businessProcess3.grantDescription) || ((_state_step1Data3 = state.step1Data) === null || _state_step1Data3 === void 0 ? void 0 : _state_step1Data3.grantDescription) || "",
-            revokeDescription: ((_data_businessProcess4 = data.businessProcess) === null || _data_businessProcess4 === void 0 ? void 0 : _data_businessProcess4.revokeDescription) || ((_state_step1Data4 = state.step1Data) === null || _state_step1Data4 === void 0 ? void 0 : _state_step1Data4.revokeDescription) || "",
-            reconsentDescription: ((_data_businessProcess5 = data.businessProcess) === null || _data_businessProcess5 === void 0 ? void 0 : _data_businessProcess5.reconsentDescription) || ((_state_step1Data5 = state.step1Data) === null || _state_step1Data5 === void 0 ? void 0 : _state_step1Data5.reconsentDescription) || ""
+            resourceId: ((_data_businessProcess3 = data.businessProcess) === null || _data_businessProcess3 === void 0 ? void 0 : _data_businessProcess3.resourceId) || ((_state_step1Data3 = state.step1Data) === null || _state_step1Data3 === void 0 ? void 0 : _state_step1Data3.resourceId) || searchParams.get("resource_id") || "",
+            grantDescription: ((_data_businessProcess4 = data.businessProcess) === null || _data_businessProcess4 === void 0 ? void 0 : _data_businessProcess4.grantDescription) || ((_state_step1Data4 = state.step1Data) === null || _state_step1Data4 === void 0 ? void 0 : _state_step1Data4.grantDescription) || "",
+            revokeDescription: ((_data_businessProcess5 = data.businessProcess) === null || _data_businessProcess5 === void 0 ? void 0 : _data_businessProcess5.revokeDescription) || ((_state_step1Data5 = state.step1Data) === null || _state_step1Data5 === void 0 ? void 0 : _state_step1Data5.revokeDescription) || "",
+            reconsentDescription: ((_data_businessProcess6 = data.businessProcess) === null || _data_businessProcess6 === void 0 ? void 0 : _data_businessProcess6.reconsentDescription) || ((_state_step1Data6 = state.step1Data) === null || _state_step1Data6 === void 0 ? void 0 : _state_step1Data6.reconsentDescription) || ""
         }
     });
     const watchedCode = form.watch("code");
@@ -1538,7 +1601,7 @@ function Step1Form(param) {
                 children: "Step 1. General Settings"
             }, void 0, false, {
                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                lineNumber: 147,
+                lineNumber: 153,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1551,7 +1614,7 @@ function Step1Form(param) {
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "space-y-6 px-6 py-6",
                             children: [
-                                isEdit && ((_data_businessProcess6 = data.businessProcess) === null || _data_businessProcess6 === void 0 ? void 0 : _data_businessProcess6.version) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                isEdit && ((_data_businessProcess7 = data.businessProcess) === null || _data_businessProcess7 === void 0 ? void 0 : _data_businessProcess7.version) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "rounded-lg border border-blue-200 bg-blue-50 p-4",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1564,7 +1627,7 @@ function Step1Form(param) {
                                                             className: "h-2 w-2 rounded-full bg-blue-500"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                            lineNumber: 161,
+                                                            lineNumber: 167,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1575,13 +1638,13 @@ function Step1Form(param) {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                            lineNumber: 162,
+                                                            lineNumber: 168,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                    lineNumber: 160,
+                                                    lineNumber: 166,
                                                     columnNumber: 21
                                                 }, this),
                                                 data.businessProcess.updatedAt && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1593,13 +1656,13 @@ function Step1Form(param) {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                    lineNumber: 167,
+                                                    lineNumber: 173,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                            lineNumber: 159,
+                                            lineNumber: 165,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1612,7 +1675,7 @@ function Step1Form(param) {
                                                     children: data.businessProcess.code
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                    lineNumber: 177,
+                                                    lineNumber: 183,
                                                     columnNumber: 21
                                                 }, this),
                                                 data.businessProcess.status === "published" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1620,19 +1683,19 @@ function Step1Form(param) {
                                                     children: "Published"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                    lineNumber: 181,
+                                                    lineNumber: 187,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                            lineNumber: 175,
+                                            lineNumber: 181,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                    lineNumber: 158,
+                                    lineNumber: 164,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1647,7 +1710,7 @@ function Step1Form(param) {
                                                         children: "Basic Information"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                        lineNumber: 194,
+                                                        lineNumber: 200,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1669,13 +1732,13 @@ function Step1Form(param) {
                                                                                         children: "*"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                        lineNumber: 206,
+                                                                                        lineNumber: 212,
                                                                                         columnNumber: 31
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 204,
+                                                                                lineNumber: 210,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -1684,29 +1747,29 @@ function Step1Form(param) {
                                                                                     ...field
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                    lineNumber: 209,
+                                                                                    lineNumber: 215,
                                                                                     columnNumber: 31
                                                                                 }, void 0)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 208,
+                                                                                lineNumber: 214,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 214,
+                                                                                lineNumber: 220,
                                                                                 columnNumber: 29
                                                                             }, void 0)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                        lineNumber: 203,
+                                                                        lineNumber: 209,
                                                                         columnNumber: 27
                                                                     }, void 0);
                                                                 }
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                lineNumber: 199,
+                                                                lineNumber: 205,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -1726,13 +1789,13 @@ function Step1Form(param) {
                                                                                         children: "*"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                        lineNumber: 227,
+                                                                                        lineNumber: 233,
                                                                                         columnNumber: 31
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 225,
+                                                                                lineNumber: 231,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Popover"], {
@@ -1753,23 +1816,23 @@ function Step1Form(param) {
                                                                                                         className: "ml-2 h-4 w-4 shrink-0 opacity-50"
                                                                                                     }, void 0, false, {
                                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                                        lineNumber: 251,
+                                                                                                        lineNumber: 257,
                                                                                                         columnNumber: 37
                                                                                                     }, void 0)
                                                                                                 ]
                                                                                             }, void 0, true, {
                                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                                lineNumber: 235,
+                                                                                                lineNumber: 241,
                                                                                                 columnNumber: 35
                                                                                             }, void 0)
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                            lineNumber: 234,
+                                                                                            lineNumber: 240,
                                                                                             columnNumber: 33
                                                                                         }, void 0)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                        lineNumber: 233,
+                                                                                        lineNumber: 239,
                                                                                         columnNumber: 31
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PopoverContent"], {
@@ -1782,7 +1845,7 @@ function Step1Form(param) {
                                                                                                     placeholder: "Search departments..."
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                                    lineNumber: 261,
+                                                                                                    lineNumber: 267,
                                                                                                     columnNumber: 35
                                                                                                 }, void 0),
                                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$command$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CommandList"], {
@@ -1791,7 +1854,7 @@ function Step1Form(param) {
                                                                                                             children: "No department found."
                                                                                                         }, void 0, false, {
                                                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                                            lineNumber: 263,
+                                                                                                            lineNumber: 269,
                                                                                                             columnNumber: 37
                                                                                                         }, void 0),
                                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$command$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CommandGroup"], {
@@ -1806,7 +1869,7 @@ function Step1Form(param) {
                                                                                                                             className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("mr-2 h-4 w-4", field.value === unit.id ? "opacity-100" : "opacity-0")
                                                                                                                         }, void 0, false, {
                                                                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                                                            lineNumber: 276,
+                                                                                                                            lineNumber: 282,
                                                                                                                             columnNumber: 43
                                                                                                                         }, void 0),
                                                                                                                         unit.name,
@@ -1816,52 +1879,52 @@ function Step1Form(param) {
                                                                                                                     ]
                                                                                                                 }, unit.id, true, {
                                                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                                                    lineNumber: 268,
+                                                                                                                    lineNumber: 274,
                                                                                                                     columnNumber: 41
                                                                                                                 }, void 0))
                                                                                                         }, void 0, false, {
                                                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                                            lineNumber: 266,
+                                                                                                            lineNumber: 272,
                                                                                                             columnNumber: 37
                                                                                                         }, void 0)
                                                                                                     ]
                                                                                                 }, void 0, true, {
                                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                                    lineNumber: 262,
+                                                                                                    lineNumber: 268,
                                                                                                     columnNumber: 35
                                                                                                 }, void 0)
                                                                                             ]
                                                                                         }, void 0, true, {
                                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                            lineNumber: 260,
+                                                                                            lineNumber: 266,
                                                                                             columnNumber: 33
                                                                                         }, void 0)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                        lineNumber: 255,
+                                                                                        lineNumber: 261,
                                                                                         columnNumber: 31
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 229,
+                                                                                lineNumber: 235,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 292,
+                                                                                lineNumber: 298,
                                                                                 columnNumber: 29
                                                                             }, void 0)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                        lineNumber: 224,
+                                                                        lineNumber: 230,
                                                                         columnNumber: 27
                                                                     }, void 0);
                                                                 }
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                lineNumber: 220,
+                                                                lineNumber: 226,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -1880,7 +1943,7 @@ function Step1Form(param) {
                                                                                         children: "(Optional)"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                        lineNumber: 305,
+                                                                                        lineNumber: 311,
                                                                                         columnNumber: 31
                                                                                     }, void 0),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1888,13 +1951,13 @@ function Step1Form(param) {
                                                                                         children: "*"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                        lineNumber: 308,
+                                                                                        lineNumber: 314,
                                                                                         columnNumber: 31
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 303,
+                                                                                lineNumber: 309,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -1905,12 +1968,12 @@ function Step1Form(param) {
                                                                                     className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])(isEdit && "bg-muted cursor-not-allowed")
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                    lineNumber: 311,
+                                                                                    lineNumber: 317,
                                                                                     columnNumber: 31
                                                                                 }, void 0)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 310,
+                                                                                lineNumber: 316,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             isEdit && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1918,48 +1981,104 @@ function Step1Form(param) {
                                                                                 children: "Code cannot be changed after creation"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 321,
+                                                                                lineNumber: 327,
                                                                                 columnNumber: 31
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 325,
+                                                                                lineNumber: 331,
                                                                                 columnNumber: 29
                                                                             }, void 0)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                        lineNumber: 302,
+                                                                        lineNumber: 308,
                                                                         columnNumber: 27
                                                                     }, void 0);
                                                                 }
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                lineNumber: 298,
+                                                                lineNumber: 304,
+                                                                columnNumber: 23
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
+                                                                control: form.control,
+                                                                name: "resourceId",
+                                                                render: (param)=>{
+                                                                    let { field } = param;
+                                                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormItem"], {
+                                                                        children: [
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormLabel"], {
+                                                                                children: [
+                                                                                    "Resource ID",
+                                                                                    " ",
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                        className: "text-neutral-200",
+                                                                                        children: "(Optional)"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
+                                                                                        lineNumber: 343,
+                                                                                        columnNumber: 31
+                                                                                    }, void 0)
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
+                                                                                lineNumber: 341,
+                                                                                columnNumber: 29
+                                                                            }, void 0),
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
+                                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
+                                                                                    placeholder: "Dataset/resource UUID",
+                                                                                    ...field
+                                                                                }, void 0, false, {
+                                                                                    fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
+                                                                                    lineNumber: 348,
+                                                                                    columnNumber: 31
+                                                                                }, void 0)
+                                                                            }, void 0, false, {
+                                                                                fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
+                                                                                lineNumber: 347,
+                                                                                columnNumber: 29
+                                                                            }, void 0),
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
+                                                                                fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
+                                                                                lineNumber: 353,
+                                                                                columnNumber: 29
+                                                                            }, void 0)
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
+                                                                        lineNumber: 340,
+                                                                        columnNumber: 27
+                                                                    }, void 0);
+                                                                }
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
+                                                                lineNumber: 336,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                        lineNumber: 197,
+                                                        lineNumber: 203,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                lineNumber: 193,
+                                                lineNumber: 199,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                            lineNumber: 192,
+                                            lineNumber: 198,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "lg:col-span-1 hidden lg:block"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                            lineNumber: 334,
+                                            lineNumber: 362,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1971,7 +2090,7 @@ function Step1Form(param) {
                                                         children: "Process Descriptions"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                        lineNumber: 339,
+                                                        lineNumber: 367,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1993,13 +2112,13 @@ function Step1Form(param) {
                                                                                         children: "*"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                        lineNumber: 351,
+                                                                                        lineNumber: 379,
                                                                                         columnNumber: 31
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 349,
+                                                                                lineNumber: 377,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2009,29 +2128,29 @@ function Step1Form(param) {
                                                                                     ...field
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                    lineNumber: 354,
+                                                                                    lineNumber: 382,
                                                                                     columnNumber: 31
                                                                                 }, void 0)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 353,
+                                                                                lineNumber: 381,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 360,
+                                                                                lineNumber: 388,
                                                                                 columnNumber: 29
                                                                             }, void 0)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                        lineNumber: 348,
+                                                                        lineNumber: 376,
                                                                         columnNumber: 27
                                                                     }, void 0);
                                                                 }
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                lineNumber: 344,
+                                                                lineNumber: 372,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -2049,13 +2168,13 @@ function Step1Form(param) {
                                                                                         children: "(Optional)"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                        lineNumber: 373,
+                                                                                        lineNumber: 401,
                                                                                         columnNumber: 31
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 371,
+                                                                                lineNumber: 399,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2065,29 +2184,29 @@ function Step1Form(param) {
                                                                                     ...field
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                    lineNumber: 378,
+                                                                                    lineNumber: 406,
                                                                                     columnNumber: 31
                                                                                 }, void 0)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 377,
+                                                                                lineNumber: 405,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 384,
+                                                                                lineNumber: 412,
                                                                                 columnNumber: 29
                                                                             }, void 0)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                        lineNumber: 370,
+                                                                        lineNumber: 398,
                                                                         columnNumber: 27
                                                                     }, void 0);
                                                                 }
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                lineNumber: 366,
+                                                                lineNumber: 394,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormField"], {
@@ -2105,13 +2224,13 @@ function Step1Form(param) {
                                                                                         children: "(Optional)"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                        lineNumber: 397,
+                                                                                        lineNumber: 425,
                                                                                         columnNumber: 31
                                                                                     }, void 0)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 395,
+                                                                                lineNumber: 423,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormControl"], {
@@ -2121,73 +2240,73 @@ function Step1Form(param) {
                                                                                     ...field
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                    lineNumber: 402,
+                                                                                    lineNumber: 430,
                                                                                     columnNumber: 31
                                                                                 }, void 0)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 401,
+                                                                                lineNumber: 429,
                                                                                 columnNumber: 29
                                                                             }, void 0),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$form$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormMessage"], {}, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                                lineNumber: 408,
+                                                                                lineNumber: 436,
                                                                                 columnNumber: 29
                                                                             }, void 0)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                        lineNumber: 394,
+                                                                        lineNumber: 422,
                                                                         columnNumber: 27
                                                                     }, void 0);
                                                                 }
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                                lineNumber: 390,
+                                                                lineNumber: 418,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                        lineNumber: 342,
+                                                        lineNumber: 370,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                                lineNumber: 338,
+                                                lineNumber: 366,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                            lineNumber: 337,
+                                            lineNumber: 365,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                    lineNumber: 190,
+                                    lineNumber: 196,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                            lineNumber: 155,
+                            lineNumber: 161,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                        lineNumber: 154,
+                        lineNumber: 160,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                    lineNumber: 153,
+                    lineNumber: 159,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                lineNumber: 152,
+                lineNumber: 158,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2202,7 +2321,7 @@ function Step1Form(param) {
                             children: "Cancel"
                         }, void 0, false, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                            lineNumber: 424,
+                            lineNumber: 452,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2216,7 +2335,7 @@ function Step1Form(param) {
                                         className: "h-4 w-4 mr-2 animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                                        lineNumber: 435,
+                                        lineNumber: 463,
                                         columnNumber: 17
                                     }, this),
                                     "Processing..."
@@ -2224,30 +2343,31 @@ function Step1Form(param) {
                             }, void 0, true) : "Next"
                         }, void 0, false, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                            lineNumber: 427,
+                            lineNumber: 455,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                    lineNumber: 423,
+                    lineNumber: 451,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-                lineNumber: 422,
+                lineNumber: 450,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step1-form.tsx",
-        lineNumber: 145,
+        lineNumber: 151,
         columnNumber: 5
     }, this);
 }
-_s(Step1Form, "fVxPlKXigg9n7NFLmWiqrooEqp8=", false, function() {
+_s(Step1Form, "ksIlC6Cb/HFTEaw4WHcUVzO7ymw=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSearchParams"],
         __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$business$2d$process$2d$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useBusinessProcessContext"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hook$2d$form$2f$dist$2f$index$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useForm"]
     ];
@@ -3175,6 +3295,37 @@ function AddConsentPurposeDialog(param) {
         const attribute = userAttributes.find((attr)=>attr.id === id);
         return (attribute === null || attribute === void 0 ? void 0 : attribute.name) || "Attribute ".concat(id);
     };
+    const getUserAttribute = (name)=>userAttributes.find((attribute)=>attribute.name === name);
+    const renderAttributeBadge = (attrName)=>{
+        const attr = getUserAttribute(attrName);
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
+            variant: "secondary",
+            className: "text-xs flex items-center gap-1",
+            children: [
+                attrName,
+                (attr === null || attr === void 0 ? void 0 : attr.pii) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                    className: "rounded-full bg-muted px-1.5 py-0.5 text-[10px] font-medium",
+                    children: "PII"
+                }, void 0, false, {
+                    fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
+                    lineNumber: 272,
+                    columnNumber: 11
+                }, this),
+                (attr === null || attr === void 0 ? void 0 : attr.piiAction) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                    className: "rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700",
+                    children: attr.piiAction
+                }, void 0, false, {
+                    fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
+                    lineNumber: 277,
+                    columnNumber: 11
+                }, this)
+            ]
+        }, attrName, true, {
+            fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
+            lineNumber: 265,
+            columnNumber: 7
+        }, this);
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
         open: open,
         onOpenChange: onOpenChange,
@@ -3190,12 +3341,12 @@ function AddConsentPurposeDialog(param) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                        lineNumber: 262,
+                        lineNumber: 289,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                    lineNumber: 261,
+                    lineNumber: 288,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3211,7 +3362,7 @@ function AddConsentPurposeDialog(param) {
                                             children: "Purpose Master"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                            lineNumber: 269,
+                                            lineNumber: 296,
                                             columnNumber: 15
                                         }, this),
                                         publishedConsentPurposes.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3221,12 +3372,12 @@ function AddConsentPurposeDialog(param) {
                                                 children: "No published consent purposes available. Please publish consent purposes first before creating processes."
                                             }, void 0, false, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                lineNumber: 272,
+                                                lineNumber: 299,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                            lineNumber: 271,
+                                            lineNumber: 298,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Popover"], {
@@ -3257,12 +3408,12 @@ function AddConsentPurposeDialog(param) {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                        lineNumber: 297,
+                                                                        lineNumber: 324,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                    lineNumber: 296,
+                                                                    lineNumber: 323,
                                                                     columnNumber: 29
                                                                 }, this) : null;
                                                             })() : "Select a purpose master...",
@@ -3270,18 +3421,18 @@ function AddConsentPurposeDialog(param) {
                                                                 className: "ml-2 h-4 w-4 shrink-0 opacity-50"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                lineNumber: 309,
+                                                                lineNumber: 336,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                        lineNumber: 283,
+                                                        lineNumber: 310,
                                                         columnNumber: 19
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                    lineNumber: 282,
+                                                    lineNumber: 309,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PopoverContent"], {
@@ -3293,7 +3444,7 @@ function AddConsentPurposeDialog(param) {
                                                                 placeholder: "Search consent purposes..."
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                lineNumber: 314,
+                                                                lineNumber: 341,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$command$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CommandList"], {
@@ -3302,7 +3453,7 @@ function AddConsentPurposeDialog(param) {
                                                                         children: publishedConsentPurposes.length === 0 ? "No published consent purposes available. Please publish consent purposes first." : "No consent purpose found."
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                        lineNumber: 316,
+                                                                        lineNumber: 343,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$command$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CommandGroup"], {
@@ -3316,7 +3467,7 @@ function AddConsentPurposeDialog(param) {
                                                                                         className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("mr-2 h-4 w-4", formData.consentPurposeId === purpose.id ? "opacity-100" : "opacity-0")
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                        lineNumber: 332,
+                                                                                        lineNumber: 359,
                                                                                         columnNumber: 29
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3333,7 +3484,7 @@ function AddConsentPurposeDialog(param) {
                                                                                                 ]
                                                                                             }, void 0, true, {
                                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                                lineNumber: 341,
+                                                                                                lineNumber: 368,
                                                                                                 columnNumber: 31
                                                                                             }, this),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3345,54 +3496,54 @@ function AddConsentPurposeDialog(param) {
                                                                                                 ]
                                                                                             }, void 0, true, {
                                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                                lineNumber: 348,
+                                                                                                lineNumber: 375,
                                                                                                 columnNumber: 31
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                        lineNumber: 340,
+                                                                                        lineNumber: 367,
                                                                                         columnNumber: 29
                                                                                     }, this)
                                                                                 ]
                                                                             }, purpose.id, true, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                lineNumber: 323,
+                                                                                lineNumber: 350,
                                                                                 columnNumber: 27
                                                                             }, this);
                                                                         })
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                        lineNumber: 321,
+                                                                        lineNumber: 348,
                                                                         columnNumber: 23
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                lineNumber: 315,
+                                                                lineNumber: 342,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                        lineNumber: 313,
+                                                        lineNumber: 340,
                                                         columnNumber: 19
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                    lineNumber: 312,
+                                                    lineNumber: 339,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                            lineNumber: 278,
+                                            lineNumber: 305,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                    lineNumber: 268,
+                                    lineNumber: 295,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3402,7 +3553,7 @@ function AddConsentPurposeDialog(param) {
                                             children: "Consent Duration Configuration"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                            lineNumber: 364,
+                                            lineNumber: 391,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3426,7 +3577,7 @@ function AddConsentPurposeDialog(param) {
                                                                     id: "until_purpose_met"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                    lineNumber: 388,
+                                                                    lineNumber: 415,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
@@ -3435,13 +3586,13 @@ function AddConsentPurposeDialog(param) {
                                                                     children: "Until Purpose Met"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                    lineNumber: 392,
+                                                                    lineNumber: 419,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                            lineNumber: 387,
+                                                            lineNumber: 414,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3452,7 +3603,7 @@ function AddConsentPurposeDialog(param) {
                                                                     id: "custom_duration"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                    lineNumber: 400,
+                                                                    lineNumber: 427,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
@@ -3461,19 +3612,19 @@ function AddConsentPurposeDialog(param) {
                                                                     children: "Custom Duration"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                    lineNumber: 404,
+                                                                    lineNumber: 431,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                            lineNumber: 399,
+                                                            lineNumber: 426,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                    lineNumber: 367,
+                                                    lineNumber: 394,
                                                     columnNumber: 17
                                                 }, this),
                                                 formData.durationType === "custom_duration" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3492,12 +3643,12 @@ function AddConsentPurposeDialog(param) {
                                                                         }))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                lineNumber: 417,
+                                                                lineNumber: 444,
                                                                 columnNumber: 23
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                            lineNumber: 416,
+                                                            lineNumber: 443,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3512,12 +3663,12 @@ function AddConsentPurposeDialog(param) {
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                            lineNumber: 449,
+                                                                            lineNumber: 476,
                                                                             columnNumber: 27
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                        lineNumber: 448,
+                                                                        lineNumber: 475,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -3527,7 +3678,7 @@ function AddConsentPurposeDialog(param) {
                                                                                 children: "Minutes"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                lineNumber: 452,
+                                                                                lineNumber: 479,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3535,7 +3686,7 @@ function AddConsentPurposeDialog(param) {
                                                                                 children: "Hours"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                lineNumber: 453,
+                                                                                lineNumber: 480,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3543,7 +3694,7 @@ function AddConsentPurposeDialog(param) {
                                                                                 children: "Days"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                lineNumber: 454,
+                                                                                lineNumber: 481,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3551,7 +3702,7 @@ function AddConsentPurposeDialog(param) {
                                                                                 children: "Weeks"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                lineNumber: 455,
+                                                                                lineNumber: 482,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3559,7 +3710,7 @@ function AddConsentPurposeDialog(param) {
                                                                                 children: "Months"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                lineNumber: 456,
+                                                                                lineNumber: 483,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3567,42 +3718,42 @@ function AddConsentPurposeDialog(param) {
                                                                                 children: "Years"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                lineNumber: 457,
+                                                                                lineNumber: 484,
                                                                                 columnNumber: 27
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                        lineNumber: 451,
+                                                                        lineNumber: 478,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                lineNumber: 431,
+                                                                lineNumber: 458,
                                                                 columnNumber: 23
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                            lineNumber: 430,
+                                                            lineNumber: 457,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                    lineNumber: 415,
+                                                    lineNumber: 442,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                            lineNumber: 365,
+                                            lineNumber: 392,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                    lineNumber: 363,
+                                    lineNumber: 390,
                                     columnNumber: 13
                                 }, this),
                                 formData.consentPurposeId > 0 && processingPurposes.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3612,7 +3763,7 @@ function AddConsentPurposeDialog(param) {
                                             children: "Processing Rules"
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                            lineNumber: 469,
+                                            lineNumber: 496,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3627,14 +3778,14 @@ function AddConsentPurposeDialog(param) {
                                                                     children: "Purpose Sub Master"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                    lineNumber: 474,
+                                                                    lineNumber: 501,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
                                                                     children: "Purpose Attributes"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                    lineNumber: 475,
+                                                                    lineNumber: 502,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -3642,7 +3793,7 @@ function AddConsentPurposeDialog(param) {
                                                                     children: "Mandatory"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                    lineNumber: 476,
+                                                                    lineNumber: 503,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -3650,7 +3801,7 @@ function AddConsentPurposeDialog(param) {
                                                                     children: "Re-consentable by Principal"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                    lineNumber: 477,
+                                                                    lineNumber: 504,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -3658,7 +3809,7 @@ function AddConsentPurposeDialog(param) {
                                                                     children: "Revocable by Principal"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                    lineNumber: 480,
+                                                                    lineNumber: 507,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -3666,18 +3817,18 @@ function AddConsentPurposeDialog(param) {
                                                                     children: "Retention Duration"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                    lineNumber: 483,
+                                                                    lineNumber: 510,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                            lineNumber: 473,
+                                                            lineNumber: 500,
                                                             columnNumber: 23
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                        lineNumber: 472,
+                                                        lineNumber: 499,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -3691,30 +3842,22 @@ function AddConsentPurposeDialog(param) {
                                                                         children: pp.name
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                        lineNumber: 497,
+                                                                        lineNumber: 524,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
                                                                         className: "border-r",
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                             className: "flex flex-wrap gap-1",
-                                                                            children: rule.userAttributeNames.map((attrName)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
-                                                                                    variant: "secondary",
-                                                                                    className: "text-xs",
-                                                                                    children: attrName
-                                                                                }, attrName, false, {
-                                                                                    fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                    lineNumber: 503,
-                                                                                    columnNumber: 35
-                                                                                }, this))
+                                                                            children: rule.userAttributeNames.map(renderAttributeBadge)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                            lineNumber: 501,
+                                                                            lineNumber: 528,
                                                                             columnNumber: 31
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                        lineNumber: 500,
+                                                                        lineNumber: 527,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -3724,12 +3867,12 @@ function AddConsentPurposeDialog(param) {
                                                                             onCheckedChange: (checked)=>handleProcessingRuleUpdate(pp.id, "mandatory", checked)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                            lineNumber: 514,
+                                                                            lineNumber: 535,
                                                                             columnNumber: 31
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                        lineNumber: 513,
+                                                                        lineNumber: 534,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -3739,12 +3882,12 @@ function AddConsentPurposeDialog(param) {
                                                                             onCheckedChange: (checked)=>handleProcessingRuleUpdate(pp.id, "reconsentableByPrincipal", checked)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                            lineNumber: 526,
+                                                                            lineNumber: 547,
                                                                             columnNumber: 31
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                        lineNumber: 525,
+                                                                        lineNumber: 546,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -3755,12 +3898,12 @@ function AddConsentPurposeDialog(param) {
                                                                             onCheckedChange: (checked)=>handleProcessingRuleUpdate(pp.id, "revocableByPrincipal", checked)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                            lineNumber: 538,
+                                                                            lineNumber: 559,
                                                                             columnNumber: 31
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                        lineNumber: 537,
+                                                                        lineNumber: 558,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -3775,7 +3918,7 @@ function AddConsentPurposeDialog(param) {
                                                                                     onChange: (e)=>handleProcessingRuleUpdate(pp.id, "retentionDurationValue", parseInt(e.target.value) || 0)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                    lineNumber: 552,
+                                                                                    lineNumber: 573,
                                                                                     columnNumber: 33
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -3786,12 +3929,12 @@ function AddConsentPurposeDialog(param) {
                                                                                             className: "h-8 w-24",
                                                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
                                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                                lineNumber: 576,
+                                                                                                lineNumber: 597,
                                                                                                 columnNumber: 37
                                                                                             }, this)
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                            lineNumber: 575,
+                                                                                            lineNumber: 596,
                                                                                             columnNumber: 35
                                                                                         }, this),
                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -3801,7 +3944,7 @@ function AddConsentPurposeDialog(param) {
                                                                                                     children: "Days"
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                                    lineNumber: 579,
+                                                                                                    lineNumber: 600,
                                                                                                     columnNumber: 37
                                                                                                 }, this),
                                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3809,7 +3952,7 @@ function AddConsentPurposeDialog(param) {
                                                                                                     children: "Weeks"
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                                    lineNumber: 580,
+                                                                                                    lineNumber: 601,
                                                                                                     columnNumber: 37
                                                                                                 }, this),
                                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3817,7 +3960,7 @@ function AddConsentPurposeDialog(param) {
                                                                                                     children: "Months"
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                                    lineNumber: 581,
+                                                                                                    lineNumber: 602,
                                                                                                     columnNumber: 37
                                                                                                 }, this),
                                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3825,65 +3968,65 @@ function AddConsentPurposeDialog(param) {
                                                                                                     children: "Years"
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                                    lineNumber: 584,
+                                                                                                    lineNumber: 605,
                                                                                                     columnNumber: 37
                                                                                                 }, this)
                                                                                             ]
                                                                                         }, void 0, true, {
                                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                            lineNumber: 578,
+                                                                                            lineNumber: 599,
                                                                                             columnNumber: 35
                                                                                         }, this)
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                                    lineNumber: 565,
+                                                                                    lineNumber: 586,
                                                                                     columnNumber: 33
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                            lineNumber: 551,
+                                                                            lineNumber: 572,
                                                                             columnNumber: 31
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                        lineNumber: 550,
+                                                                        lineNumber: 571,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, pp.id, true, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                                lineNumber: 496,
+                                                                lineNumber: 523,
                                                                 columnNumber: 27
                                                             }, this);
                                                         })
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                        lineNumber: 488,
+                                                        lineNumber: 515,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                                lineNumber: 471,
+                                                lineNumber: 498,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                            lineNumber: 470,
+                                            lineNumber: 497,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                    lineNumber: 468,
+                                    lineNumber: 495,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                            lineNumber: 266,
+                            lineNumber: 293,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3895,7 +4038,7 @@ function AddConsentPurposeDialog(param) {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                    lineNumber: 600,
+                                    lineNumber: 621,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3907,30 +4050,30 @@ function AddConsentPurposeDialog(param) {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                                    lineNumber: 603,
+                                    lineNumber: 624,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                            lineNumber: 599,
+                            lineNumber: 620,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-                    lineNumber: 265,
+                    lineNumber: 292,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-            lineNumber: 260,
+            lineNumber: 287,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/dialogs/add-consent-purpose-dialog.tsx",
-        lineNumber: 259,
+        lineNumber: 286,
         columnNumber: 5
     }, this);
 }
@@ -8648,6 +8791,30 @@ function Step6Form(param) {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
                                                     lineNumber: 378,
                                                     columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "font-medium text-muted-foreground",
+                                                            children: "Resource ID:"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
+                                                            lineNumber: 389,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                            className: "mt-1 break-all",
+                                                            children: (step1Data === null || step1Data === void 0 ? void 0 : step1Data.resourceId) || (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.resourceId) || "Not specified"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
+                                                            lineNumber: 392,
+                                                            columnNumber: 19
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
+                                                    lineNumber: 388,
+                                                    columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
@@ -8665,36 +8832,12 @@ function Step6Form(param) {
                                                             children: "Grant Description:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 393,
-                                                            columnNumber: 19
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "mt-1",
-                                                            children: (step1Data === null || step1Data === void 0 ? void 0 : step1Data.grantDescription) || (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.grantDescription) || "No description provided"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 396,
-                                                            columnNumber: 19
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                    lineNumber: 392,
-                                                    columnNumber: 17
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "font-medium text-muted-foreground",
-                                                            children: "Revoke Description:"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
                                                             lineNumber: 403,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                             className: "mt-1",
-                                                            children: (step1Data === null || step1Data === void 0 ? void 0 : step1Data.revokeDescription) || (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.revokeDescription) || "No description provided"
+                                                            children: (step1Data === null || step1Data === void 0 ? void 0 : step1Data.grantDescription) || (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.grantDescription) || "No description provided"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
                                                             lineNumber: 406,
@@ -8710,7 +8853,7 @@ function Step6Form(param) {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             className: "font-medium text-muted-foreground",
-                                                            children: "Reconsent Description:"
+                                                            children: "Revoke Description:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
                                                             lineNumber: 413,
@@ -8718,7 +8861,7 @@ function Step6Form(param) {
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                             className: "mt-1",
-                                                            children: (step1Data === null || step1Data === void 0 ? void 0 : step1Data.reconsentDescription) || (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.reconsentDescription) || "No description provided"
+                                                            children: (step1Data === null || step1Data === void 0 ? void 0 : step1Data.revokeDescription) || (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.revokeDescription) || "No description provided"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
                                                             lineNumber: 416,
@@ -8729,11 +8872,35 @@ function Step6Form(param) {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
                                                     lineNumber: 412,
                                                     columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "font-medium text-muted-foreground",
+                                                            children: "Reconsent Description:"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
+                                                            lineNumber: 423,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                            className: "mt-1",
+                                                            children: (step1Data === null || step1Data === void 0 ? void 0 : step1Data.reconsentDescription) || (businessProcess === null || businessProcess === void 0 ? void 0 : businessProcess.reconsentDescription) || "No description provided"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
+                                                            lineNumber: 426,
+                                                            columnNumber: 19
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
+                                                    lineNumber: 422,
+                                                    columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                            lineNumber: 391,
+                                            lineNumber: 401,
                                             columnNumber: 15
                                         }, this)
                                     ]
@@ -8756,7 +8923,7 @@ function Step6Form(param) {
                                     children: "List of Purpose Master"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                    lineNumber: 427,
+                                    lineNumber: 437,
                                     columnNumber: 13
                                 }, this),
                                 contextConsentPurposes.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8771,7 +8938,7 @@ function Step6Form(param) {
                                                             children: "Purpose Master"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 434,
+                                                            lineNumber: 444,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -8779,7 +8946,7 @@ function Step6Form(param) {
                                                             children: "Consent Duration"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 437,
+                                                            lineNumber: 447,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -8787,7 +8954,7 @@ function Step6Form(param) {
                                                             children: "Purpose Sub Master"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 440,
+                                                            lineNumber: 450,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -8795,7 +8962,7 @@ function Step6Form(param) {
                                                             children: "Attributes"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 443,
+                                                            lineNumber: 453,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -8803,7 +8970,7 @@ function Step6Form(param) {
                                                             children: "Mandatory"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 446,
+                                                            lineNumber: 456,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -8811,7 +8978,7 @@ function Step6Form(param) {
                                                             children: "Re-consentable by Principal"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 449,
+                                                            lineNumber: 459,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -8819,7 +8986,7 @@ function Step6Form(param) {
                                                             children: "Revocable by Principal"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 452,
+                                                            lineNumber: 462,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -8827,18 +8994,18 @@ function Step6Form(param) {
                                                             children: "Retention Duration"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 455,
+                                                            lineNumber: 465,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                    lineNumber: 433,
+                                                    lineNumber: 443,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                lineNumber: 432,
+                                                lineNumber: 442,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -8854,7 +9021,7 @@ function Step6Form(param) {
                                                                     children: config.consentPurposeName || ((_config_consentPurpose = config.consentPurpose) === null || _config_consentPurpose === void 0 ? void 0 : _config_consentPurpose.name) || config.name || "Unnamed Purpose"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 468,
+                                                                    lineNumber: 478,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -8862,7 +9029,7 @@ function Step6Form(param) {
                                                                     children: convertDurationToDays(config)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 474,
+                                                                    lineNumber: 484,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -8871,13 +9038,13 @@ function Step6Form(param) {
                                                                     children: "No processing rules configured"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 477,
+                                                                    lineNumber: 487,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             ]
                                                         }, "".concat(config.id, "-empty"), true, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 467,
+                                                            lineNumber: 477,
                                                             columnNumber: 27
                                                         }, this);
                                                     }
@@ -8892,7 +9059,7 @@ function Step6Form(param) {
                                                                     children: config.consentPurposeName || ((_config_consentPurpose = config.consentPurpose) === null || _config_consentPurpose === void 0 ? void 0 : _config_consentPurpose.name) || config.name || "Unnamed Purpose"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 491,
+                                                                    lineNumber: 501,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 ruleIndex === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -8901,7 +9068,7 @@ function Step6Form(param) {
                                                                     children: convertDurationToDays(config)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 502,
+                                                                    lineNumber: 512,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -8909,7 +9076,7 @@ function Step6Form(param) {
                                                                     children: rule.processingPurposeName || "Unknown Processing Purpose"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 509,
+                                                                    lineNumber: 519,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -8923,7 +9090,7 @@ function Step6Form(param) {
                                                                                     children: attrName
                                                                                 }, i, false, {
                                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                                    lineNumber: 518,
+                                                                                    lineNumber: 528,
                                                                                     columnNumber: 33
                                                                                 }, this)),
                                                                             (!rule.userAttributes || rule.userAttributes.length === 0) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -8931,18 +9098,18 @@ function Step6Form(param) {
                                                                                 children: "No attributes"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                                lineNumber: 528,
+                                                                                lineNumber: 538,
                                                                                 columnNumber: 33
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                        lineNumber: 514,
+                                                                        lineNumber: 524,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 513,
+                                                                    lineNumber: 523,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -8952,12 +9119,12 @@ function Step6Form(param) {
                                                                         disabled: true
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                        lineNumber: 535,
+                                                                        lineNumber: 545,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 534,
+                                                                    lineNumber: 544,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -8967,12 +9134,12 @@ function Step6Form(param) {
                                                                         disabled: true
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                        lineNumber: 538,
+                                                                        lineNumber: 548,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 537,
+                                                                    lineNumber: 547,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -8982,43 +9149,43 @@ function Step6Form(param) {
                                                                         disabled: true
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                        lineNumber: 541,
+                                                                        lineNumber: 551,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 540,
+                                                                    lineNumber: 550,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
                                                                     children: rule.retentionDurationValue && rule.retentionDurationUnit ? "".concat(rule.retentionDurationValue, " ").concat(rule.retentionDurationUnit) : "-"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 543,
+                                                                    lineNumber: 553,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, "".concat(config.id, "-").concat(ruleIndex), true, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 489,
+                                                            lineNumber: 499,
                                                             columnNumber: 25
                                                         }, this);
                                                     });
                                                 })
                                             }, void 0, false, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                lineNumber: 460,
+                                                lineNumber: 470,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                        lineNumber: 431,
+                                        lineNumber: 441,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                    lineNumber: 430,
+                                    lineNumber: 440,
                                     columnNumber: 15
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "rounded-lg border border-dashed p-8 text-center",
@@ -9027,18 +9194,18 @@ function Step6Form(param) {
                                         children: "No consent purposes selected"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                        lineNumber: 557,
+                                        lineNumber: 567,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                    lineNumber: 556,
+                                    lineNumber: 566,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                            lineNumber: 426,
+                            lineNumber: 436,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9049,7 +9216,7 @@ function Step6Form(param) {
                                     children: "List of Redirectional URLs"
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                    lineNumber: 565,
+                                    lineNumber: 575,
                                     columnNumber: 13
                                 }, this),
                                 contextEulas.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9064,7 +9231,7 @@ function Step6Form(param) {
                                                             children: "Redirectional URL Name"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 572,
+                                                            lineNumber: 582,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -9072,18 +9239,18 @@ function Step6Form(param) {
                                                             children: "Link"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                            lineNumber: 575,
+                                                            lineNumber: 585,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                    lineNumber: 571,
+                                                    lineNumber: 581,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                lineNumber: 570,
+                                                lineNumber: 580,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -9095,7 +9262,7 @@ function Step6Form(param) {
                                                                 children: eula.title
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                lineNumber: 584,
+                                                                lineNumber: 594,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -9108,7 +9275,7 @@ function Step6Form(param) {
                                                                             children: eula.link
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                            lineNumber: 589,
+                                                                            lineNumber: 599,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -9120,45 +9287,45 @@ function Step6Form(param) {
                                                                                 className: "h-3 w-3"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                                lineNumber: 601,
+                                                                                lineNumber: 611,
                                                                                 columnNumber: 31
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                            lineNumber: 595,
+                                                                            lineNumber: 605,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                    lineNumber: 588,
+                                                                    lineNumber: 598,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                                lineNumber: 587,
+                                                                lineNumber: 597,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, eula.id || index, true, {
                                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                        lineNumber: 580,
+                                                        lineNumber: 590,
                                                         columnNumber: 23
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                                lineNumber: 578,
+                                                lineNumber: 588,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                        lineNumber: 569,
+                                        lineNumber: 579,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                    lineNumber: 568,
+                                    lineNumber: 578,
                                     columnNumber: 15
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "rounded-lg border border-dashed p-8 text-center",
@@ -9167,18 +9334,18 @@ function Step6Form(param) {
                                         children: "No Redirectional URLs added"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                        lineNumber: 612,
+                                        lineNumber: 622,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                    lineNumber: 611,
+                                    lineNumber: 621,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                            lineNumber: 564,
+                            lineNumber: 574,
                             columnNumber: 11
                         }, this)
                     ]
@@ -9204,7 +9371,7 @@ function Step6Form(param) {
                             children: "Previous"
                         }, void 0, false, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                            lineNumber: 624,
+                            lineNumber: 634,
                             columnNumber: 11
                         }, this),
                         !isEdit && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -9219,7 +9386,7 @@ function Step6Form(param) {
                                         className: "mr-2 h-4 w-4 animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                        lineNumber: 637,
+                                        lineNumber: 647,
                                         columnNumber: 19
                                     }, this),
                                     "Saving..."
@@ -9227,7 +9394,7 @@ function Step6Form(param) {
                             }, void 0, true) : "Save as Draft"
                         }, void 0, false, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                            lineNumber: 628,
+                            lineNumber: 638,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -9241,7 +9408,7 @@ function Step6Form(param) {
                                         className: "mr-2 h-4 w-4 animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                                        lineNumber: 653,
+                                        lineNumber: 663,
                                         columnNumber: 17
                                     }, this),
                                     isEdit ? "Updating..." : "Publishing..."
@@ -9249,18 +9416,18 @@ function Step6Form(param) {
                             }, void 0, true) : isEdit ? "Update" : "Publish"
                         }, void 0, false, {
                             fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                            lineNumber: 645,
+                            lineNumber: 655,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                    lineNumber: 623,
+                    lineNumber: 633,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                lineNumber: 622,
+                lineNumber: 632,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$cms$2f$data$2d$fiduciary$2f$business$2d$processes$2f$_components$2f$version$2d$warning$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["VersionWarningDialog"], {
@@ -9275,7 +9442,7 @@ function Step6Form(param) {
                 breakingChanges: breakingChangeInfo.breakingChanges
             }, void 0, false, {
                 fileName: "[project]/app/cms/data-fiduciary/business-processes/_components/step6-form.tsx",
-                lineNumber: 666,
+                lineNumber: 676,
                 columnNumber: 7
             }, this)
         ]

@@ -22,6 +22,7 @@ export type UserAttribute = {
   id: number;
   name: string;
   pii: boolean;
+  piiAction: string | null;
   supportedLanguages: string[];
   translations?: Prisma.JsonValue | null;
   createdAt: Date;
@@ -76,6 +77,15 @@ export function UserAttributesTable({
           </div>
         );
       },
+    },
+    {
+      accessorKey: "piiAction",
+      header: "PII Action",
+      cell: ({ row }) => (
+        <Badge variant="outline">
+          {(row.getValue("piiAction") as string | null) || "ALLOW"}
+        </Badge>
+      ),
     },
     {
       accessorKey: "supportedLanguages",

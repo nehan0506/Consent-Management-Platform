@@ -298,6 +298,7 @@ var __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$ex
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$consents$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/services/consents-service.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$webhook$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/services/webhook-service.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$artifact$2d$creation$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/services/artifact-creation-service.ts [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$user$2d$attributes$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/services/user-attributes-service.ts [app-rsc] (ecmascript)");
 ;
 ;
 ;
@@ -305,6 +306,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$artifact$
 ;
 ;
 ;
+;
+async function getUserAttributesByNames(names) {
+    const namesSet = new Set(names);
+    const userAttributes = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2f$user$2d$attributes$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAllUserAttributes"])();
+    return userAttributes.filter((attribute)=>namesSet.has(attribute.name));
+}
 // Notice submission validation functions
 function validateAtLeastOneRuleSelected(selections) {
     const selectedCount = selections.filter((s)=>s.selected).length;
@@ -545,20 +552,7 @@ async function getBusinessProcessWithFullDataById(businessProcessId) {
             rule.processingPurpose.userAttributeNames.forEach((name)=>userAttributeNames.add(name));
         });
         // Fetch user attributes
-        const userAttributes = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].userAttribute.findMany({
-            where: {
-                name: {
-                    in: Array.from(userAttributeNames)
-                }
-            },
-            select: {
-                id: true,
-                name: true,
-                pii: true,
-                translations: true,
-                supportedLanguages: true
-            }
-        });
+        const userAttributes = await getUserAttributesByNames(userAttributeNames);
         // Create a map for quick lookup by name
         const userAttributesMap = new Map(userAttributes.map((ua)=>[
                 ua.name,
@@ -694,20 +688,7 @@ async function getNoticeWithFullDataByPublicId(publicId) {
             rule.processingPurpose.userAttributeNames.forEach((name)=>userAttributeNames.add(name));
         });
         // Fetch user attributes
-        const userAttributes = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].userAttribute.findMany({
-            where: {
-                name: {
-                    in: Array.from(userAttributeNames)
-                }
-            },
-            select: {
-                id: true,
-                name: true,
-                pii: true,
-                translations: true,
-                supportedLanguages: true
-            }
-        });
+        const userAttributes = await getUserAttributesByNames(userAttributeNames);
         // Create a map for quick lookup by name
         const userAttributesMap = new Map(userAttributes.map((ua)=>[
                 ua.name,
@@ -837,20 +818,7 @@ async function getBusinessProcessesByCode(code, version) {
                 rule.processingPurpose.userAttributeNames.forEach((name)=>allUserAttributeNames.add(name));
             });
         });
-        const userAttributes = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].userAttribute.findMany({
-            where: {
-                name: {
-                    in: Array.from(allUserAttributeNames)
-                }
-            },
-            select: {
-                id: true,
-                name: true,
-                pii: true,
-                translations: true,
-                supportedLanguages: true
-            }
-        });
+        const userAttributes = await getUserAttributesByNames(allUserAttributeNames);
         const userAttributesMap = new Map(userAttributes.map((ua)=>[
                 ua.name,
                 ua

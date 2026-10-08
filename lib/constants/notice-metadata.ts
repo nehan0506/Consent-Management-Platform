@@ -18,6 +18,11 @@
 
 export const NOTICE_METADATA_KEYS = {
   /**
+   * Key for storing the resource/entity ID linked to a notice.
+   */
+  RESOURCE_ID: "resource_id",
+
+  /**
    * Key for storing the major (parent/guardian) data principal ID
    * Used when a notice is created for a minor
    */

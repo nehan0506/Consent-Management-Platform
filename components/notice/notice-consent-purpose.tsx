@@ -23,7 +23,11 @@ import { ChevronDownIcon } from "lucide-react";
 import { NoticeSelectButton } from "./notice-select-button";
 import { useHighContrast } from "@/contexts/high-contrast-context";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { NoticeConsentDuration } from "./notice-consent-duration";
+import {
+  formatConsentDuration,
+  NoticeConsentDuration,
+} from "./notice-consent-duration";
+import { useNoticeTranslation } from "@/hooks/use-notice-translation";
 
 interface NoticeConsentPurposeProps {
   consentPurpose: ConsentPurposeData;
@@ -52,6 +56,7 @@ export function NoticeConsentPurpose({
 }: NoticeConsentPurposeProps) {
   const { isHighContrast } = useHighContrast();
   const isMobile = useIsMobile();
+  const { t } = useNoticeTranslation();
 
   const renderContent = () => (
     <div className="space-y-4 pt-4">
@@ -85,11 +90,7 @@ export function NoticeConsentPurpose({
                 <div className="mt-1">
                   <span className="px-2 py-1 bg-warning-100 text-warning-700 rounded text-xs font-normal border border-warning-200">
                     Consent Duration:{" "}
-                    {consentPurpose.consentDuration
-                      ? consentPurpose.consentDuration < 24
-                        ? `${consentPurpose.consentDuration} ${consentPurpose.consentDuration === 1 ? "Hour" : "Hours"}`
-                        : `${Math.floor(consentPurpose.consentDuration / 24)} Days`
-                      : "Until Purpose Met"}
+                    {formatConsentDuration(consentPurpose.consentDuration, t)}
                   </span>
                 </div>
               )}
@@ -128,11 +129,7 @@ export function NoticeConsentPurpose({
                 <div className="mt-1">
                   <span className="px-2 py-1 bg-warning-100 text-warning-700 rounded text-xs font-normal border border-warning-200">
                     Consent Duration:{" "}
-                    {consentPurpose.consentDuration
-                      ? consentPurpose.consentDuration < 24
-                        ? `${consentPurpose.consentDuration} ${consentPurpose.consentDuration === 1 ? "Hour" : "Hours"}`
-                        : `${Math.floor(consentPurpose.consentDuration / 24)} Days`
-                      : "Until Purpose Met"}
+                    {formatConsentDuration(consentPurpose.consentDuration, t)}
                   </span>
                 </div>
               )}

@@ -13,7 +13,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -63,6 +63,7 @@ interface Step1FormProps {
 
 export function Step1Form({ data, isEdit, businessProcessId }: Step1FormProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { state, dispatch } = useBusinessProcessContext();
   const [isLoading, setIsLoading] = useState(false);
   const [businessUnitComboboxOpen, setBusinessUnitComboboxOpen] =
@@ -81,6 +82,11 @@ export function Step1Form({ data, isEdit, businessProcessId }: Step1FormProps) {
         data.businessProcess?.businessUnitId ||
         state.step1Data?.businessUnitId ||
         undefined,
+      resourceId:
+        data.businessProcess?.resourceId ||
+        state.step1Data?.resourceId ||
+        searchParams.get("resource_id") ||
+        "",
       grantDescription:
         data.businessProcess?.grantDescription ||
         state.step1Data?.grantDescription ||
@@ -322,6 +328,28 @@ export function Step1Form({ data, isEdit, businessProcessId }: Step1FormProps) {
                                 Code cannot be changed after creation
                               </p>
                             )}
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="resourceId"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              Resource ID{" "}
+                              <span className="text-neutral-200">
+                                (Optional)
+                              </span>
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Dataset/resource UUID"
+                                {...field}
+                              />
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}

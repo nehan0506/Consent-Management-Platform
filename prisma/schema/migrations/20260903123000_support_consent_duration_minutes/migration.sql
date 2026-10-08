@@ -1,4 +1,4 @@
--- Store canonical hours as floating-point values so durations shorter than one hour are supported.
+-- Use floating-point values for consent_duration.
 -- Existing integer values keep the same meaning and value.
 ALTER TABLE "business_processes_to_consent_purposes"
 ALTER COLUMN "consent_duration" TYPE DOUBLE PRECISION
